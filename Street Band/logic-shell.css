@@ -1,0 +1,181 @@
+/* Street Band — Logic Pro–style shell: window title strip, control bar, layout,
+ * Inspector, Library / Browser panes, menus, toast. Loaded after every FL sheet. */
+:root{
+ --lg-bg:#1e1e1e;--lg-bg2:#262626;--lg-panel:#2b2b2b;--lg-panel2:#323232;--lg-line:#151515;--lg-edge:#3a3a3a;
+ --lg-text:#d8d8d8;--lg-dim:#9a9a9a;--lg-faint:#6c6c6c;--lg-accent:#3d8bf7;--lg-yellow:#b59a2a;--lg-yellow-hi:#cdb03a;
+ --lg-font:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Arial,sans-serif;
+ --logic-titlebar:26px;--logic-bar:54px;--logic-inspector:236px;--logic-browser:272px;
+}
+html,body{background:var(--lg-bg)!important;color:var(--lg-text);font:12px var(--lg-font)!important}
+body button,body input,body select,body textarea{font-family:var(--lg-font)}
+.logic-legacy,.logic-lcd-raw,.status-bar{display:none!important}
+
+/* ---- Control bar ---- */
+header.logic-control-bar{height:calc(var(--logic-titlebar) + var(--logic-bar))!important;display:flex;flex-direction:column;padding:0!important;background:linear-gradient(#333,#2a2a2a)!important;border-bottom:1px solid #0e0e0e!important;box-shadow:0 1px 0 #3a3a3a!important;position:relative;z-index:30;gap:0}
+.logic-titlebar{height:var(--logic-titlebar);display:flex;align-items:center;gap:8px;padding:0 8px;background:#262626;border-bottom:1px solid #1a1a1a;min-width:0}
+.logic-titlebar .brand{width:18px;height:18px;flex:0 0 18px}.logic-titlebar .brand svg{width:18px;height:18px;display:block}
+.logic-app-name{font-weight:600;font-size:12px;color:#e6e6e6;white-space:nowrap}
+.logic-titlebar nav#main-menu{display:flex;gap:0;padding:0!important;background:none!important;border:0!important;height:auto!important}
+.logic-titlebar nav#main-menu button{background:none!important;border:0!important;box-shadow:none!important;color:#d6d6d6!important;font:12px var(--lg-font)!important;letter-spacing:0!important;padding:2px 8px!important;min-height:20px!important;border-radius:4px!important}
+.logic-titlebar nav#main-menu button{transition:background-color .08s ease}
+.logic-titlebar nav#main-menu button:hover{background:rgba(255,255,255,.07)!important;color:#fff!important}
+.logic-titlebar nav#main-menu button.menu-open{background:rgba(255,255,255,.18)!important;color:#fff!important}
+.logic-titlebar .hint-display{flex:1;min-width:0;display:flex;gap:8px;align-items:baseline;justify-content:center;background:none!important;border:0!important;height:auto!important;padding:0!important;width:auto!important;box-shadow:none!important}
+.logic-titlebar .hint-display strong{font:600 12px var(--lg-font)!important;color:#c9c9c9!important;white-space:nowrap}
+.logic-titlebar .hint-display span{font:11px var(--lg-font)!important;color:#8a8a8a!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.logic-titlebar .session-status{display:flex;align-items:center;gap:5px;font:10px var(--lg-font)!important;color:#8a8a8a!important;background:none!important;border:0!important}
+.logic-titlebar .session-status i{width:6px;height:6px;border-radius:50%;background:#5c5c5c;display:inline-block}
+.logic-titlebar .cloud-button{height:20px!important;min-height:20px!important;padding:0 8px!important;border-radius:5px!important;background:#3a3a3a!important;border:1px solid #4a4a4a!important;color:#d8d8d8!important;font:11px var(--lg-font)!important;box-shadow:none!important;display:flex;align-items:center;gap:4px;width:auto!important}
+.logic-titlebar .cloud-button i{width:6px;height:6px;border-radius:50%;background:#6b6b6b;display:inline-block}.logic-titlebar .cloud-button i.connected{background:#4fc35a}
+
+.logic-bar-row{height:var(--logic-bar);display:flex;align-items:center;gap:10px;padding:0 10px;min-width:0}
+.logic-bar-left,.logic-bar-right{display:flex;align-items:center;gap:4px;flex:1 1 0;min-width:0}
+.logic-bar-right{justify-content:flex-end}
+.logic-bar-center{display:flex;align-items:center;gap:8px;flex:0 0 auto}
+.logic-bar-sep{width:1px;height:22px;background:#444;margin:0 4px;flex:0 0 1px}
+.logic-control-bar .logic-bar-row button{width:30px;height:28px!important;min-height:28px!important;padding:0!important;display:inline-flex;align-items:center;justify-content:center;border-radius:6px!important;border:0!important;background:transparent!important;box-shadow:none!important;color:#cfcfcf!important;font-size:15px;flex:0 0 auto}
+.logic-control-bar .logic-bar-row button:hover:not(:disabled){background:#3b3b3b!important;color:#fff!important}
+.logic-control-bar .logic-bar-row button.lit,.logic-control-bar .logic-bar-row button[aria-pressed="true"]{background:#4a4a4a!important;color:#fff!important}
+.logic-control-bar .logic-bar-row button:disabled{opacity:.35}
+.logic-control-bar svg.logic-icon,.logic-control-bar .studio-icon{width:18px;height:18px}
+.logic-control-bar .window-buttons{background:none!important;border:0!important;padding:0!important;height:auto!important}
+.logic-control-bar .window-buttons button{background-image:none!important}
+/* Transport */
+.logic-transport{display:flex;align-items:center;gap:6px;padding:4px 8px;background:#232323;border-radius:10px;box-shadow:inset 0 0 0 1px #3a3a3a}
+.logic-control-bar .logic-transport .transport-btn{width:32px!important;height:30px!important;border-radius:8px!important;font-size:15px!important;color:#e9e9e9!important}
+.logic-control-bar #record{color:#e5453c!important;font-size:19px!important;margin:0!important}
+.logic-control-bar #record.recording{background:#5a2420!important}
+.logic-control-bar #play.playing{color:#4fd25b!important}
+.logic-control-bar #logic-cycle.lit{background:var(--lg-yellow)!important;color:#1c1c1c!important}
+/* LCD */
+.logic-lcd{display:flex;align-items:stretch;height:44px;background:#141414;border-radius:9px;box-shadow:inset 0 0 0 1px #2e2e2e;padding:0 6px;color:#e8e8e8;font-variant-numeric:tabular-nums;cursor:default}
+.logic-lcd-cell{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 9px;min-width:44px;position:relative}
+.logic-lcd-cell+.logic-lcd-cell::before{content:"";position:absolute;left:0;top:9px;bottom:9px;width:1px;background:#2c2c2c}
+.logic-lcd-cell b{font:300 23px/1 var(--lg-font);letter-spacing:.5px}
+.logic-lcd-cell small{font:600 7.5px/1.2 var(--lg-font);letter-spacing:.8px;color:#8d8d8d;margin-top:2px}
+/* The FL toolbar rule gives #tempo flex:0 0 55px + order:3; in this column cell that made the input 55px tall over KEEP/TEMPO and swallowed left clicks on the mode label. */
+.logic-lcd-tempo input#tempo{flex:0 0 auto!important;order:0!important;margin:0!important;width:66px!important;height:22px!important;background:transparent!important;border:0!important;color:#e8e8e8!important;font:400 17px var(--lg-font)!important;text-align:center;padding:0!important;box-shadow:none!important}
+.logic-lcd-tempo input#tempo:focus{background:#262626!important;border-radius:4px}
+.logic-lcd-tempo small:first-of-type{font-size:7px;color:#bdbdbd;margin-top:0}
+.logic-lcd-tempo-mode{cursor:pointer;border-radius:2px;position:relative;z-index:1}.logic-lcd-tempo-mode:hover,.logic-lcd-tempo-mode:focus-visible{color:#fff!important;background:#3a3a3a;outline:none}
+.logic-lcd-tempo.logic-tempo-adapting .logic-lcd-tempo-mode{color:#f2b33d!important}.logic-lcd-tempo.logic-tempo-adapting input#tempo{opacity:.6}
+.logic-lcd-sig b{font:500 13px/1.25 var(--lg-font)}
+.logic-control-bar #metronome{font-size:17px!important}
+.logic-control-bar #metronome.lit,.logic-control-bar #metronome.active{background:#6f4fb8!important;color:#fff!important}
+.logic-control-bar .monitor{display:flex;align-items:center;gap:6px;height:28px;padding:0 6px;border-radius:6px;background:#202020;box-shadow:inset 0 0 0 1px #333;cursor:pointer;width:auto!important;border:0!important}
+.logic-control-bar .monitor canvas{width:70px;height:18px;opacity:.75}
+.logic-control-bar .monitor span{font:10px var(--lg-font)!important;color:#8d8d8d!important;white-space:nowrap}
+.logic-control-bar .toolbar-monitor-level{display:flex;align-items:center}
+.logic-control-bar .toolbar-actions{display:flex;gap:2px;background:none!important;border:0!important}
+@media(max-width:1250px){.logic-control-bar .monitor{display:none}.logic-titlebar .session-status{display:none}}
+@media(max-width:1000px){.logic-lcd-sig,.logic-control-bar .toolbar-actions{display:none}.logic-app-name{display:none}}
+
+/* ---- Layout ---- */
+.main-layout{height:calc(100% - var(--logic-titlebar) - var(--logic-bar) - 1px)!important;display:flex;background:var(--lg-bg)}
+.main-layout>#desktop{order:2;flex:1 1 0;min-width:0;background:var(--lg-bg)!important}
+.desktop-mark{opacity:.04!important;color:#fff!important}
+
+/* Inspector (I) */
+.logic-inspector{order:0;flex:0 0 var(--logic-inspector);width:var(--logic-inspector);background:#262626;border-right:1px solid #111;overflow:auto;display:flex;flex-direction:column;scrollbar-width:thin}
+body:not(.logic-show-inspector) .logic-inspector{display:none}
+.logic-insp-section{border-bottom:1px solid #1a1a1a}
+.logic-insp-section>summary{list-style:none;cursor:default;padding:8px 10px;font:12px var(--lg-font);color:#bdbdbd;display:flex;gap:4px;align-items:center}
+.logic-insp-section>summary::-webkit-details-marker{display:none}
+.logic-insp-section>summary::before{content:"›";display:inline-block;width:10px;color:#8d8d8d;transition:transform .12s}
+.logic-insp-section[open]>summary::before{transform:rotate(90deg)}
+.logic-insp-section>summary b{font-weight:600;color:#e6e6e6;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.logic-insp-row{display:flex;justify-content:space-between;gap:8px;padding:2px 12px 2px 22px;font-size:11px;color:#9a9a9a}
+.logic-insp-row b{font-weight:400;color:#dadada;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.logic-insp-empty{margin:4px 22px 8px;color:#777;font-size:11px}
+.logic-insp-actions{display:flex;gap:6px;padding:6px 12px 10px 22px}
+.logic-insp-actions button{min-height:20px!important;padding:0 8px!important;font-size:11px!important;border-radius:5px!important;background:#3a3a3a!important;border:1px solid #4a4a4a!important;box-shadow:none!important;color:#ddd!important}
+.logic-insp-strips{display:flex;flex:1;min-height:330px;border-top:1px solid #1a1a1a}
+.logic-strip{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;padding:8px 6px;border-right:1px solid #1a1a1a;min-width:0}
+.logic-strip:last-child{border-right:0}
+.logic-strip-slot{width:100%;height:18px;border-radius:3px;background:#323232;color:#9a9a9a;font-size:10px;text-align:center;line-height:18px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.logic-strip-slot.eq{background:#202020;color:#5f9dd9}
+.logic-strip-slot.output{background:#3a3a3a;color:#cfcfcf}
+.logic-strip-db{font-size:10px;color:#d6d6d6;background:#181818;border-radius:3px;padding:1px 6px;min-width:38px;text-align:center}
+.logic-strip-fader{writing-mode:vertical-lr;direction:rtl;width:22px;height:120px;flex:1 1 120px;accent-color:#bdbdbd}
+.logic-strip-ms{display:flex;gap:4px;min-height:20px}
+.logic-strip-ms button{width:22px!important;height:18px!important;min-height:18px!important;padding:0!important;font:600 10px var(--lg-font)!important;border-radius:3px!important;background:#3c3c3c!important;border:0!important;box-shadow:none!important;color:#d0d0d0!important}
+.logic-strip-m.on{background:#3d8bf7!important;color:#fff!important}.logic-strip-s.on{background:#e3c23c!important;color:#111!important}
+.logic-strip-name{font-size:10px;color:#e0e0e0;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;background:#333;border-radius:3px;padding:2px 6px}
+/* Knobs (track header + strips) */
+.logic-knob{--pan-angle:0deg;display:inline-block;width:20px;height:20px;border-radius:50%;background:radial-gradient(circle at 50% 40%,#5a5a5a,#2c2c2c 70%);box-shadow:inset 0 0 0 1px #151515,0 1px 0 #3e3e3e;position:relative;cursor:ns-resize;flex:0 0 auto;touch-action:none}
+.logic-knob::after{content:"";position:absolute;left:50%;top:2px;width:2px;height:7px;margin-left:-1px;background:#e8e8e8;border-radius:1px;transform-origin:50% 8px;transform:rotate(var(--pan-angle))}
+.logic-knob.disabled,.logic-knob[aria-disabled="true"]{opacity:.45;cursor:default}
+
+/* Library (Y, left) and Browser / Loops (F / O, right) share the cloud browser */
+.main-layout>aside.browser{order:3;flex:0 0 var(--logic-browser)!important;width:var(--logic-browser)!important;min-width:var(--logic-browser)!important;background:#262626!important;border-left:1px solid #111!important;border-right:0!important}
+body.logic-show-library .main-layout>aside.browser{order:-1;border-left:0!important;border-right:1px solid #111!important}
+body:not(.logic-show-right-browser):not(.logic-show-library) .main-layout>aside.browser{display:none}
+aside.browser>.panel-heading{background:#2b2b2b!important;border-bottom:1px solid #1a1a1a!important;height:28px!important;color:#cfcfcf!important}
+aside.browser>.panel-heading>span{font:600 12px var(--lg-font)!important;color:#d8d8d8!important}
+aside.browser .browser-tabs{background:#262626!important;border-bottom:1px solid #1a1a1a!important}
+aside.browser .browser-tabs button{border-radius:5px!important;border:0!important;background:transparent!important;color:#a8a8a8!important}
+aside.browser .browser-tabs button.selected{background:#4a4a4a!important;color:#fff!important;border:0!important}
+aside.browser .browser-search{background:#1b1b1b!important;border:1px solid #333!important;border-radius:6px!important}
+aside.browser .browser-search input{background:transparent!important;color:#ddd!important}
+aside.browser #browser-tree{background:#262626!important;color:#d0d0d0}
+aside.browser .browser-footer{background:#222!important;border-top:1px solid #1a1a1a!important}
+body.logic-show-library aside.browser>.panel-heading>span{font-size:0!important}
+body.logic-show-library aside.browser>.panel-heading>span::before{content:"Library";font:600 12px var(--lg-font)}
+
+/* ---- Shared popup menu / dialogs / toast in Logic's dark style ---- */
+#context-menu.context-menu,.context-menu{background:#2e2e2ef2!important;border:1px solid #4a4a4a!important;border-radius:7px!important;box-shadow:0 10px 30px #000a!important;padding:4px!important;backdrop-filter:blur(8px)}
+.context-menu button{font:12.5px var(--lg-font)!important;color:#e6e6e6!important;border-radius:4px!important;background:transparent!important;border:0!important;box-shadow:none!important}
+.context-menu button:hover:not(:disabled),.context-menu button:focus-visible,.context-menu button.menu-active:not(:disabled),.context-menu .menu-sub.open>button{background:#3d6fd8!important;color:#fff!important}
+.context-menu button:disabled{color:#777!important;opacity:1!important}
+.context-menu button small{color:#999!important;font:12px var(--lg-font)!important}
+.context-menu hr{border:0!important;border-top:1px solid #474747!important;margin:4px 6px!important}
+.context-menu .menu-check{color:#e6e6e6!important}
+dialog.studio-dialog{background:#2b2b2b!important;color:#ddd!important;border:1px solid #474747!important;border-radius:10px!important;font:12px var(--lg-font)!important}
+dialog.studio-dialog>header{background:#333!important;color:#e6e6e6!important;font:600 12.5px var(--lg-font)!important;border-bottom:1px solid #1f1f1f!important}
+dialog.studio-dialog button.primary{background:#3d6fd8!important;border-color:#3d6fd8!important;color:#fff!important}
+#toast{background:#2e2e2ef2!important;color:#eee!important;border:1px solid #4a4a4a!important;border-radius:8px!important;font:12px var(--lg-font)!important;box-shadow:0 8px 24px #0009!important}
+
+/* Window title row: project name centred like Logic ("Untitled - Tracks"); status text lives beside the LCD */
+.logic-titlebar{position:relative}
+.logic-titlebar .hint-display{position:absolute!important;left:50%;top:0;transform:translateX(-50%);height:var(--logic-titlebar)!important;display:block!important;line-height:var(--logic-titlebar);max-width:28%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;pointer-events:none;flex:none!important}
+.logic-titlebar .hint-display strong{display:inline!important;font:600 12px/var(--logic-titlebar) var(--lg-font)!important;color:#bdbdbd!important}
+.logic-titlebar .hint-display strong::after{content:" - Tracks";font-weight:400;color:#8f8f8f}
+.logic-titlebar .session-status{margin-left:auto}
+.logic-bar-right #hint.logic-status-line{flex:0 1 220px;min-width:0;font:10.5px/1.25 var(--lg-font);color:#8a8a8a;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;text-align:right}
+@media(max-width:1250px){.logic-bar-right #hint.logic-status-line{display:none}}
+
+/* LCD: bar/beat/div/tick, time, display-mode menu (Beats & Project / Beats & Time / Beats / Time / Custom) */
+.logic-lcd-cell.logic-lcd-pos{min-width:30px;padding:0 6px}.logic-lcd-cell.logic-lcd-pos[data-lcd="beats"]{min-width:38px}
+.logic-lcd-fine b{font-size:17px;color:#cfcfcf}.logic-lcd-fine+.logic-lcd-fine::before,.logic-lcd-pos+.logic-lcd-pos::before{display:none}
+.logic-lcd-time b{font:400 15px/1.2 var(--lg-font);letter-spacing:.4px;color:#dcdcdc}
+.logic-lcd.lcd-unconfirmed .logic-lcd-pos b,.logic-lcd.lcd-unconfirmed .logic-lcd-time b{opacity:.72}
+.logic-lcd-mode{flex:0 0 14px;width:14px;margin-left:2px;padding:0;border:0;background:transparent;color:#8d8d8d;cursor:pointer;align-self:stretch;position:relative}
+.logic-lcd-mode::after{content:"";position:absolute;left:3px;top:50%;margin-top:-2px;border:4px solid transparent;border-top-color:currentColor}.logic-lcd-mode:hover{color:#fff}
+.logic-lcd[data-lcd-mode="beats-project"] [data-lcd="fine"],.logic-lcd[data-lcd-mode="beats-project"] [data-lcd="time"]{display:none}
+.logic-lcd[data-lcd-mode="beats-time"] [data-lcd="fine"],.logic-lcd[data-lcd-mode="beats-time"] .logic-lcd-tempo,.logic-lcd[data-lcd-mode="beats-time"] .logic-lcd-sig{display:none}
+.logic-lcd[data-lcd-mode="beats"] [data-lcd="time"],.logic-lcd[data-lcd-mode="beats"] .logic-lcd-tempo,.logic-lcd[data-lcd-mode="beats"] .logic-lcd-sig{display:none}
+.logic-lcd[data-lcd-mode="time"] [data-lcd="beats"],.logic-lcd[data-lcd-mode="time"] [data-lcd="fine"],.logic-lcd[data-lcd-mode="time"] .logic-lcd-tempo,.logic-lcd[data-lcd-mode="time"] .logic-lcd-sig{display:none}
+
+/* Key Commands window (⌥K) */
+.logic-keycmd-dialog{width:min(860px,94vw)}
+.logic-keycmd-search{width:100%;margin:6px 0 8px;padding:5px 8px;border-radius:5px;border:1px solid #4a4a4a;background:#1e1e1e;color:#e6e6e6;font:inherit}
+.logic-keycmd-list{max-height:60vh;overflow:auto;border:1px solid #3a3a3a;border-radius:5px}
+.logic-keycmd-row{display:grid;grid-template-columns:minmax(0,2.4fr) 96px minmax(0,1fr) minmax(0,2.6fr);gap:10px;align-items:baseline;padding:3px 8px;font-size:12px;border-bottom:1px solid #303030}
+.logic-keycmd-row[hidden]{display:none}
+.logic-keycmd-row.off>span,.logic-keycmd-row.off>small{color:#9a9a9a}
+.logic-keycmd-row kbd{font:inherit;color:#e1b33b;white-space:nowrap}
+.logic-keycmd-row small{font-size:11px;color:#b8b8b8}
+
+/* LCD stability: each changing readout has a fixed box sized for its widest value, with tabular digits, so playback never shifts the header. */
+.logic-lcd,.logic-lcd b,.logic-lcd input{font-variant-numeric:tabular-nums lining-nums!important;font-feature-settings:"tnum" 1,"lnum" 1!important}
+.logic-lcd{flex:0 0 auto;contain:layout}
+.logic-lcd-cell b{display:block;white-space:nowrap}
+.logic-lcd-cell.logic-lcd-pos[data-lcd="beats"]{width:40px;min-width:40px;padding:0 4px;box-sizing:border-box}
+.logic-lcd-cell.logic-lcd-pos[data-lcd="beats"]:has(#lcd-bar){width:66px;min-width:66px}
+#lcd-bar{text-align:right;width:4ch}
+#lcd-beat{text-align:center;width:2ch}
+.logic-lcd-cell.logic-lcd-fine{width:36px;min-width:36px;padding:0 3px;box-sizing:border-box}
+#lcd-div{width:2ch;text-align:center}#lcd-tick{width:3ch;text-align:center}
+.logic-lcd-cell.logic-lcd-time{width:124px;min-width:124px;box-sizing:border-box}
+#lcd-time{width:12ch;text-align:center}
+.logic-lcd-sig{min-width:44px;box-sizing:border-box}

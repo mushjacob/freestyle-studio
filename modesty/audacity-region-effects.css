@@ -1,0 +1,8 @@
+.au-region-effect-dialog{min-width:420px;max-width:min(640px,calc(100vw - 32px))}.au-region-effect-form{display:grid;gap:12px}.au-region-effect-form label{display:flex;align-items:center;justify-content:space-between;gap:16px}.au-region-effect-select{min-width:220px}.au-region-description{max-width:560px;line-height:1.4}.au-region-parameters{display:grid;gap:10px}.au-region-parameters input[type=number],.au-region-parameters select{width:140px}.au-region-effect-form footer{display:flex;justify-content:flex-end;gap:8px}.au-region-state{min-height:1.4em;white-space:pre-wrap}.au-region-preview-audio{width:100%}
+/* Audacity-style Amplify / Normalize dialogs */
+.au-effect-form{display:grid;gap:8px;min-width:320px}
+.au-effect-form label{display:flex;align-items:center;gap:8px;justify-content:space-between}
+.au-effect-form input[type=number]{width:7em;text-align:right}
+.au-effect-form .au-amp-slider{width:100%}
+.au-effect-form .au-effect-state{min-height:1.2em;margin:0;font-size:12px}
+.au-effect-form footer{display:flex;justify-content:flex-end;gap:8px}

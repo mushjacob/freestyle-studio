@@ -1,0 +1,19 @@
+/* Playlist Tempo lane (view over the project timing map) and the timing-warped grid. */
+.tempo-track{height:var(--lane);display:flex;border-top:1px solid #152b38;position:sticky;bottom:0;z-index:7;background:#233844}
+.tempo-track .tempo-track-label{display:block;color:#f0c27a;position:sticky;left:0}
+.tempo-track .tempo-close{position:absolute;top:2px;right:3px;width:16px;height:16px;padding:0;border:0;background:transparent;color:#8c9aa4;cursor:pointer;font-size:13px;line-height:14px}
+.tempo-track .tempo-close:hover{color:#e6eef2}
+.tempo-lane-grid{flex:1;position:relative;overflow:hidden;cursor:crosshair;outline:none;background-color:#233844;background-image:var(--warp-grid,linear-gradient(90deg,#192e3b 1px,transparent 1px),linear-gradient(90deg,#243946 1px,transparent 1px));background-size:var(--warp-grid-size,var(--grid-major,var(--bar)) 100%,var(--grid-mid,calc(var(--bar)/4)) 100%);background-repeat:var(--warp-grid-repeat,repeat)}
+.tempo-lane-grid:focus-visible{box-shadow:inset 0 0 0 1px #f0c27a88}
+.tempo-curve{position:absolute;left:0;top:0;pointer-events:none}
+.tempo-curve-fill{fill:#f0c27a22;stroke:none}
+.tempo-curve-line{fill:none;stroke:#f0c27a;stroke-width:1.5px;stroke-linejoin:round}
+.tempo-point{position:absolute;width:11px;height:11px;margin:-6px 0 0 -6px;border-radius:50%;background:#f0c27a;border:1px solid #3a2a12;box-shadow:0 0 0 1px #00000044;cursor:grab;z-index:2}
+.tempo-point.ramp{border-radius:2px;transform:rotate(45deg)}
+.tempo-point.selected{background:#fff2d4;box-shadow:0 0 0 2px #f0c27a}
+.tempo-scale{position:absolute;right:4px;font-size:8px;color:#7f929e;transform:translateY(-50%);pointer-events:none}
+.tempo-readout{position:absolute;padding:1px 5px;font-size:10px;color:#f4e3c2;background:#1b2a33ee;border:1px solid #f0c27a66;border-radius:2px;pointer-events:none;white-space:nowrap;z-index:3}
+.tempo-note{position:absolute;left:8px;top:8px;font-size:11px;color:#8c9aa4}
+/* Grid lines come from the timing map while it has tempo or meter changes (see renderTimelineGeometry). */
+.timing-warped .automation-lane-grid{background-image:var(--warp-grid);background-size:var(--warp-grid-size);background-repeat:no-repeat}
+#playlist .timing-warped .lane-grid{background-image:var(--warp-grid);background-size:var(--warp-grid-size);background-repeat:no-repeat}

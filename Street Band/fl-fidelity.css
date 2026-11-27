@@ -1,0 +1,194 @@
+/* Native FL Studio 2025 proportions, measured at a 1728 CSS-pixel viewport.
+   Geometry stays overridable by the window manager's inline positions.
+   Transport/ruler cursors and time-to-pixel geometry live in style.css/app.js. */
+@font-face {
+  font-family:"Vegetable FL UI";
+  src:local("Open Sans"),url("assets/fonts/OpenSans-Regular.ttf") format("truetype");
+  font-style:normal;font-weight:400;font-display:swap;
+}
+@font-face {
+  font-family:"Vegetable FL Condensed";
+  src:local("Roboto Condensed"),url("assets/fonts/RobotoCondensed-Regular.ttf") format("truetype");
+  font-style:normal;font-weight:400;font-display:swap;
+}
+@font-face {
+  font-family:"Vegetable FL Narrow";
+  src:local("Cuprum"),url("assets/fonts/Cuprum.ttf") format("truetype");
+  font-style:normal;font-weight:400;font-display:swap;
+}
+:root {
+  --bg:#4a555c;--panel:#566269;--text:#c9d0d2;--dim:#96a2a8;
+  --edge:#303d45;--orange:#f3ad65;--green:#b3dc74;
+}
+html,body {font-family:"Vegetable FL UI",Arial,sans-serif;font-size:11px;background:#4d5961}
+button,input,select,textarea {font-family:inherit}
+button {border-radius:2px;box-shadow:inset 0 1px #ffffff0c,0 1px #26323a50}
+select,input:not([type=range]),textarea {border-radius:2px}
+.toolbar {background:#566269;box-shadow:0 1px #69747a;border-bottom:1px solid #303d44}
+.top-row {gap:5px;padding:4px 6px;border-bottom-color:#424e56}
+.top-row nav {background:#5a686c;border:1px solid #3d4a50;padding:2px 3px;border-radius:2px}
+.top-row nav button {font-family:"Vegetable FL Narrow","Arial Narrow",Arial,sans-serif;font-size:15px;font-weight:400;padding:0 4px;letter-spacing:0}
+.brand {width:25px;margin-right:1px}
+.brand svg {width:25px;height:30px}
+.transport {gap:1px;margin-left:1px}
+.transport-btn {width:32px;border-color:#35424a;background:linear-gradient(#4d5b62,#3c474f);box-shadow:inset 0 1px #ffffff0a,0 1px #323b41}
+.transport .mode {width:32px;font-family:"Vegetable FL Condensed",Arial,sans-serif;font-size:11px;line-height:15px}
+.transport .mode span {font-family:inherit;font-size:10px;line-height:14px}
+.transport-btn.record {margin:0 3px;width:30px;height:30px}
+#tempo {font-family:"Vegetable FL Condensed","Arial Narrow",Arial,sans-serif;width:61px;height:29px;font-size:19px;letter-spacing:-.4px;border-color:#35434b;box-shadow:inset 0 1px #fff4;background:linear-gradient(#d7dedb,#b1bdbc)}
+.time-display {font-family:"Vegetable FL Narrow","Arial Narrow",Arial,sans-serif;font-size:31px;font-weight:400;line-height:32px;padding-left:10px;letter-spacing:1px;background:#35484c;box-shadow:inset 0 1px 3px #1b2b3055}
+.time-display small {font-family:"Vegetable FL Condensed",Arial,sans-serif;font-size:7px;letter-spacing:.6px;top:0}
+.monitor {background:#36434b;border-color:#35424a}
+.monitor span {font-family:"Vegetable FL Condensed",Arial,sans-serif;font-size:8px;letter-spacing:.2px}
+.brand-title {font-family:"Vegetable FL Condensed",Arial,sans-serif;font-size:12px;letter-spacing:1px;color:#bac4c7}
+.brand-title span {display:none}
+.brand-title b {font-weight:400}
+.cloud-button {font-family:"Vegetable FL Condensed",Arial,sans-serif;font-size:12px;height:29px;padding:0 8px;margin-left:7px}
+.second-row {padding:3px 6px;gap:4px;background:#535f67}
+.hint-display {width:267px;background:#3e4b53;border-color:#34424a;box-shadow:inset 0 1px 2px #24323c44;padding:2px 6px}
+.hint-display strong,.hint-display span {font-family:"Vegetable FL Condensed",Arial,sans-serif;font-size:11px;line-height:12px}
+.hint-display span {margin-top:1px;color:#9aaab1}
+.window-buttons {gap:2px;margin-right:3px}
+.window-buttons button {width:32px;min-height:29px}
+.second-row>button {height:29px;min-height:29px}
+.snap-label {gap:4px;padding:0 4px;font-family:"Vegetable FL Condensed",Arial,sans-serif;font-size:11px}
+.snap-label select {height:27px;padding:2px 4px;width:64px}
+#pattern-select {height:27px;font-family:"Vegetable FL Condensed",Arial,sans-serif;font-size:14px;width:136px;padding:2px 6px;background:#b2bec0}
+.session-status {font-family:"Vegetable FL Condensed",Arial,sans-serif;font-size:9px;letter-spacing:.5px;padding:4px}
+.session-status i {box-shadow:none;margin-right:5px}
+.browser {width:200px;background:#303e47;border-right:2px solid #26343d}
+.panel-heading {height:28px;background:linear-gradient(#4c5a62,#47555d);border-bottom:1px solid #303f48;padding:0 6px;gap:6px;box-shadow:inset 0 1px #74808730}
+.panel-heading>span {font-family:"Vegetable FL UI",Arial,sans-serif;font-size:11px;font-weight:400;letter-spacing:0}
+.panel-heading b {font-family:"Vegetable FL UI",Arial,sans-serif;font-size:11px;font-weight:400;color:#9dabb2}
+.panel-heading button {border-radius:1px;min-height:20px}
+.panel-heading>select {height:20px;padding:1px 3px;font-size:10px;border-color:#35444d;background:#3d4c55}
+.panel-actions {gap:0}
+.panel-actions button {min-width:20px;padding:0 3px;color:#aab8be}
+.browser>.panel-heading {height:28px;padding-left:8px;background:#3e4d56}
+.browser-tabs {padding:3px 4px 4px;min-height:35px;border-bottom-color:#27353f}
+.browser-tabs button {height:26px;min-height:26px;width:28px}
+.browser-search {margin:5px 6px 4px;background:#283741;border:1px solid #23323c;border-radius:2px}
+.browser-search input {font-family:"Vegetable FL Condensed",Arial,sans-serif;font-size:11px;padding:4px}
+#browser-tree {padding:2px 4px;scrollbar-width:thin}
+.browser-folder {font-family:"Vegetable FL Condensed",Arial,sans-serif;font-size:12px;padding:7px 4px 5px}
+.browser-item {font-family:"Vegetable FL Condensed",Arial,sans-serif;font-size:11px}
+.browser-footer {height:110px;padding:7px 10px;background:#2b3943;border-top-color:#40505b}
+.browser-footer strong {font-family:"Vegetable FL Condensed",Arial,sans-serif;font-size:11px}
+.browser-footer>span {display:none}
+.cloud-library-browser {font-family:"Vegetable FL Condensed",Arial,sans-serif}
+#desktop {--fl-left-width:clamp(485px,32.8%,510px);background:#505d65}
+.desktop-mark {opacity:.35;bottom:23px;right:25px;font-family:"Vegetable FL Condensed",Arial,sans-serif;font-size:13px;letter-spacing:2px}
+.desktop-mark svg {width:42px;height:42px}
+.playlist-window {left:var(--fl-left-width);top:0;right:0;bottom:0;border-left:1px solid #2a3943;border-top:0;background:#35454f;z-index:7}
+.playlist-window>.panel-heading {height:28px}
+.playlist-tools {gap:0}
+.playlist-tools button {width:21px;padding:0 2px;min-height:20px}
+.pattern-picker {width:160px;padding:0 4px;background:#34444e;border-right:3px solid #263640}
+.picker-label {height:28px;padding-left:4px;font-family:"Vegetable FL Condensed",Arial,sans-serif;font-size:10px;letter-spacing:.3px;color:#9cabb2}
+.pattern-tile {padding:5px 5px;margin-bottom:3px;border-radius:1px;font-family:"Vegetable FL Condensed",Arial,sans-serif;font-size:12px;background:#44535c;box-shadow:inset 0 1px #ffffff09}
+.pattern-tile.selected {background:#65716e;color:#e7eddf;box-shadow:inset 0 0 0 1px #a0ad8e55}
+.pattern-tile svg {height:18px;margin-top:3px;opacity:.85}
+.arrangement-scroll {background:#30414a}
+.track-lane {border-bottom-color:#253640}
+.track-label {background:linear-gradient(90deg,#49575f,#414f58);border-right-color:#293b46;color:#a6b3bb;font-family:"Vegetable FL Condensed",Arial,sans-serif;font-size:12px;padding:5px 6px}
+.track-label small {font-family:inherit;font-size:10px;color:#8599a3;margin-top:4px}
+.track-label .track-enable {width:7px;height:7px;bottom:7px;right:7px;box-shadow:0 0 0 1px #263943,0 1px 1px #17252c}
+.lane-grid {background-color:#30414a;background-image:linear-gradient(90deg,#20323d 1px,transparent 1px),linear-gradient(90deg,#2a3b45 1px,transparent 1px)}
+.track-lane:nth-child(even) .lane-grid {background-color:#32434c}
+.clip {border-radius:1px;box-shadow:1px 1px #1d303a88}
+.clip-title {font-family:"Vegetable FL Condensed",Arial,sans-serif;font-size:10px;line-height:13px;padding:1px 4px}
+.clip svg {padding:4px 2px}
+.floating-window {border:1px solid #2d3d47;box-shadow:1px 2px 5px #192a3566;background:#5c696f}
+.rack-window {left:0;top:0;width:var(--fl-left-width);min-width:485px;z-index:9;box-shadow:1px 2px 5px #1f303b66}
+.rack-window .panel-heading {height:28px}
+.rack-window #rack-channels {padding:19px 9px 16px 13.5px;background:#5e6b70}
+.rack-channel {height:27px;gap:0;margin-bottom:3px}
+.rack-channel:last-child {margin-bottom:0}
+.channel-enable {width:7px;height:7px;margin-right:6.5px;background:#afdd72;box-shadow:0 0 0 1px #3d4b50;border-color:#739958}
+.rack-channel>.pan {margin-right:1px}
+.rack-channel>.volume {margin-right:6px}
+.channel-number {flex:0 0 32.5px;width:32.5px;margin-right:10px;height:24px;min-height:24px;font-family:"Vegetable FL Condensed",Arial,sans-serif;font-size:11px;padding:0 2px;background:linear-gradient(#6f7b7e,#59696f);border-color:#43535b}
+.channel-name {width:80px;margin-right:7.5px;height:25px;min-height:25px;font-family:"Vegetable FL Condensed",Arial,sans-serif;font-size:12px;padding:2px 5px;border-color:#40515a;border-bottom:2px solid #3a4c55;background:linear-gradient(#738084,#607077);box-shadow:inset 0 1px #a5afb038}
+.channel-selected {height:21px;width:4px;margin:0 22px 0 0;background:#4c5d60;border-color:#3d4f57}
+.steps {flex:0 0 240px;width:240px;height:20px;min-width:240px;grid-template-columns:repeat(16,12px);gap:3.2px}
+.step {height:19px;min-height:19px;border-radius:2px;border-color:#3d4c54;background:linear-gradient(#7d8789 0%,#879193 13%,#51616a 22%,#5a6970 82%,#43545d);box-shadow:0 1px #30434b99,inset 1px 0 #a0aaac35}
+.step:nth-child(8n+5),.step:nth-child(8n+6),.step:nth-child(8n+7),.step:nth-child(8n+8) {background:linear-gradient(#968689 0%,#a18e90 13%,#73676f 22%,#796d73 82%,#594f59)}
+.step.on {background:linear-gradient(#efcfb2 0%,#ffe0bd 13%,#c49c7e 22%,#dbb18f 82%,#92775e);border-color:#a38a6c;box-shadow:0 1px #34444b88,inset 1px 0 #ffe5c16b}
+.step:nth-child(8n+5).on,.step:nth-child(8n+6).on,.step:nth-child(8n+7).on,.step:nth-child(8n+8).on {background:linear-gradient(#eeb6ac,#f6c0b7 13%,#b78380 22%,#cf9890 82%,#8a6462);border-color:#aa8179}
+.note-preview {flex:0 0 240px;width:240px;height:21px;background:#4d5f53;border-color:#42554d}
+.rack-bottom {height:28px;background:#53636b;border-top-color:#4a5b64;padding:0 8px;font-family:"Vegetable FL Condensed",Arial,sans-serif;font-size:11px}
+.rack-bottom>span {font-size:10px}
+.mixer-window {left:16px;top:42%;bottom:9px;width:1080px;height:auto;min-width:620px;min-height:350px;z-index:4}
+.mixer-body {background:#4a5961}
+.mixer-strips {background:#45565e}
+.mixer-strip {display:grid;grid-template-columns:18px 1fr;grid-template-rows:21px 125px 18px 31px minmax(90px,1fr) 17px 19px;align-items:center;justify-items:center;min-width:44px;width:44px;padding:0 3px 6px;background:linear-gradient(90deg,#526169,#485a63);border-right:1px solid #354751}
+.mixer-strip.master {min-width:49px;width:49px;margin-right:5px}
+.mixer-strip.selected {background:linear-gradient(90deg,#61766c,#53685f)}
+.strip-number {grid-row:1;grid-column:1/-1;width:100%;text-align:center;font-family:"Vegetable FL Condensed",Arial,sans-serif;font-size:11px;line-height:20px;margin:0;padding:0;color:#a4b4bb}
+.strip-name {grid-row:2;grid-column:1;width:18px;height:112px;max-width:none;writing-mode:vertical-rl;transform:rotate(180deg);text-align:left;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:"Vegetable FL Condensed",Arial,sans-serif;font-size:11px;line-height:18px;padding:0;margin:0;color:#a6b7be}
+.meter-and-fader {display:contents}
+.mixer-strip .meter {grid-row:2;grid-column:2;width:13px;height:120px;align-self:center;border-color:#30443e;background:repeating-linear-gradient(to top,#273d32 0,#273d32 3px,#334c3d 3px,#334c3d 4px)}
+.mixer-strip.selected .meter {border-color:#9ccf68}
+.mixer-strip .fader-track {grid-row:5;grid-column:1/-1;width:17px;height:100%;min-height:90px;margin:0;background:linear-gradient(90deg,transparent 6px,#263b45 6px,#263b45 9px,transparent 9px)}
+.mixer-strip .strip-db {grid-row:6;grid-column:1/-1;margin:0;font-family:"Vegetable FL Condensed",Arial,sans-serif;font-size:9px;line-height:15px;color:#a1b3bd}
+.mixer-strip .mixer-pan {grid-row:4;grid-column:1/-1;width:25px!important;height:25px!important;min-height:25px!important;align-self:center;margin:0}
+.mixer-strip .mixer-pan:after {left:11px;top:3px;height:6px;transform-origin:50% 9px}
+.mixer-strip .strip-controls {display:contents}
+.mixer-strip .strip-light {grid-row:3;grid-column:1/-1;width:8px;height:8px;border-color:#536e44;box-shadow:0 0 0 1px #354b49}
+.mixer-strip .strip-controls .mute {grid-row:7;grid-column:1;justify-self:start}
+.mixer-strip .strip-controls .solo {grid-row:7;grid-column:2;justify-self:end}
+.mixer-strip .strip-controls button {font-family:"Vegetable FL Condensed",Arial,sans-serif;font-size:9px;min-height:15px;height:15px;width:15px;border-radius:1px}
+.effect-rack {width:203px;background:#40535e;border-left-color:#324751;padding:6px}
+.effects-title,.effect-slot,.effects-label,.output-select {font-family:"Vegetable FL Condensed",Arial,sans-serif}
+.effects-title {font-size:12px}
+.effect-slot {height:25px;margin-bottom:3px;font-size:11px;background:#3b505c;border-color:#314751;border-bottom-color:#5b6c76}
+.effect-slot small {font-size:9px}
+.effects-label {font-size:9px;letter-spacing:.4px}
+.piano-window {box-shadow:1px 2px 5px #192a3566}
+.piano-tools button {padding:0 2px;width:22px}
+#piano .panel-heading>span {font-family:"Vegetable FL UI",Arial,sans-serif;font-size:11px;font-weight:400}
+.piano-key {font-family:"Vegetable FL Condensed",Arial,sans-serif;font-size:10px;padding-top:5px}
+.piano-note {border-radius:1px;font-family:"Vegetable FL Condensed",Arial,sans-serif;font-size:10px;padding:1px 3px}
+.velocity-panel label {font-family:"Vegetable FL Condensed",Arial,sans-serif;font-size:12px}
+.velocity-panel label b {font-family:inherit;font-size:10px}
+.status-bar {background:#34444f;border-top-color:#253a47;font-family:"Vegetable FL Condensed",Arial,sans-serif;font-size:10px;gap:16px;padding:0 7px}
+.status-bar>button {font-family:inherit;font-size:10px;letter-spacing:.2px}
+.context-menu {padding:3px;background:#44565f;border-color:#253943;box-shadow:2px 3px 5px #172a3566}
+.context-menu button {font-family:"Vegetable FL Condensed",Arial,sans-serif;font-size:12px;min-height:25px;padding:4px 8px}
+.context-menu button small {font-family:inherit;font-size:10px;color:#a0b0b9}
+.studio-dialog {border-radius:2px;background:#52636c;border-color:#344955;box-shadow:2px 4px 10px #162b3766}
+.studio-dialog::backdrop {background:#172c372f;backdrop-filter:none}
+.studio-dialog header {font-family:"Vegetable FL Condensed",Arial,sans-serif;font-size:14px;padding:3px 8px;min-height:29px;background:#4a5d68;border-bottom-color:#324a58}
+.studio-dialog header button {height:22px;min-height:22px;font-size:19px}
+.dialog-content {padding:14px}
+.dialog-content p {font-size:11px;line-height:1.5;color:#c2cdd2}
+.dialog-content label {font-family:"Vegetable FL Condensed",Arial,sans-serif;font-size:12px;color:#c2cfd4;margin:10px 0 5px}
+.dialog-content input:not([type=range]),.dialog-content select {padding:5px}
+.dialog-content button {padding:4px 10px}
+@media(max-width:1200px) {
+  .browser {width:183px}
+  #desktop {--fl-left-width:485px}
+  .brand-title {display:none}
+  .hint-display {width:221px}
+  .cloud-button {margin-left:auto}
+  .mixer-window {width:930px}
+}
+@media(max-width:1050px) {
+  .browser {width:160px}
+  .playlist-window {left:0}
+  .rack-window {left:5px;top:5px;width:470px;z-index:9}
+  .mixer-window {left:10px;width:calc(100% - 20px);min-width:580px;top:46%;height:auto}
+  .pattern-picker {width:130px}
+  .hint-display {width:190px}
+}
+/* Multi-column popup with ▸ submenus and ✓ states (context-menu.js; FL channel menu). */
+.context-menu .menu-columns{display:flex;align-items:stretch}
+.context-menu .menu-column{min-width:200px}
+.context-menu .menu-column+.menu-column{border-left:1px solid #53616a;margin-left:3px;padding-left:3px}
+.context-menu .menu-sub{position:relative}
+.context-menu .context-submenu{display:none;position:absolute;left:100%;top:-4px;min-width:180px;z-index:1}
+.context-menu .menu-sub.open>.context-submenu{display:block}
+.context-menu button{position:relative;padding-left:22px}
+.context-menu .menu-check{position:absolute;left:6px;color:#c9e5a2}
+.context-menu button:disabled{color:#7d8d96;cursor:default}
+.context-menu button:disabled:hover{background:none}

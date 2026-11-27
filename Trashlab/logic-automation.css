@@ -1,0 +1,24 @@
+/* Trashlab — Logic track automation (A): header popup + mode, one curve over the whole track lane. */
+/* Logic shows automation on the tracks themselves; FL-style automation clip rows stay hidden. */
+#track-lanes>.automation-tracks,#track-lanes .automation-inline,#track-lanes .automation-row-tag{display:none!important}
+/* The parameter popup and mode button get their own row at the bottom of the track header;
+ * the header's own rows (name, M S R I, volume, pan) move up to make room — nothing is covered. */
+#playlist .track-lane.logic-auto-row>.track-label{position:relative!important;padding-bottom:20px!important;align-items:flex-start!important;padding-top:3px!important}
+.logic-auto-header{position:absolute;left:22px;right:6px;bottom:3px;height:16px;display:flex;align-items:center;gap:4px;min-width:0;z-index:2}
+.logic-auto-header button{all:unset;box-sizing:border-box;height:16px;padding:0 6px;border-radius:3px;background:#3a3a3a;color:#dcdcdc;font:500 10px/16px var(--lg-font,-apple-system,sans-serif);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;box-shadow:inset 0 1px 0 #ffffff12}
+.logic-auto-header .logic-auto-param{flex:1 1 auto;min-width:0;max-width:150px}
+.logic-auto-header .logic-auto-param::after{content:" ⌃⌄";font-size:8px;color:#9a9a9a}
+.logic-auto-header .logic-auto-mode{flex:0 0 auto;background:#2f3a31;color:#4fd36a}
+.logic-auto-header button:hover{background:#474747}
+.logic-auto-header button:focus-visible{outline:2px solid #3d8bf7}
+.lane-grid{position:relative}
+.logic-auto-overlay{position:absolute;inset:0;z-index:6;cursor:crosshair;background:#00000026;touch-action:none}
+.logic-auto-segment{position:absolute;top:0;bottom:0;min-width:2px}
+.logic-auto-segment svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.logic-auto-line{fill:none;stroke:#ffd23f;stroke-width:1.6}
+.logic-auto-extend{position:absolute;height:0;border-top:1.6px solid #ffd23f;opacity:.85;pointer-events:none}
+.logic-auto-segment.saving .logic-auto-line{stroke-dasharray:4 3}
+.logic-auto-segment.save-error .logic-auto-line{stroke:#ff6b5a}
+.logic-auto-point{position:absolute;width:7px;height:7px;margin:-4px 0 0 -4px;border-radius:50%;background:#ffd23f;border:1px solid #6b5300;cursor:grab;z-index:1}
+.logic-auto-point.selected{background:#fff;border-color:#ffd23f;box-shadow:0 0 0 2px #ffd23f66}
+.logic-auto-empty{position:absolute;left:8px;top:50%;transform:translateY(-50%);font:10px var(--lg-font,-apple-system,sans-serif);color:#bdbdbd99;pointer-events:none;white-space:nowrap}

@@ -1,0 +1,6 @@
+/* Separate from editable .piano-note nodes: ghosts never intercept drawing,
+   selection, erasing, dragging, or the velocity editor. */
+.piano-ghost-layer{position:absolute;inset:0;pointer-events:none;user-select:none}
+.piano-ghost-note{position:absolute;height:19px;min-width:1px;border:1px solid #a3adb3;border-bottom:2px solid #65737b;border-radius:1px;background:#89959b;opacity:.38;pointer-events:none}
+.piano-ghost-note.muted{opacity:.24}
+@media(forced-colors:active){.piano-ghost-note{background:GrayText;border-color:GrayText;opacity:.55}}

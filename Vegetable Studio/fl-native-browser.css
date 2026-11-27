@@ -1,0 +1,292 @@
+/* The FL Browser keeps preview transport below the scrolling catalog. */
+.browser .browser-tabs .studio-icon {width:19px;height:19px;}
+/* The native cloud list reserves an artwork-sized cell. Until catalog artwork
+   is supplied, an explicit source glyph fills it without inventing album art. */
+.browser .library-shell .library-sound-row,
+.browser .library-shell .library-asset-row {
+ min-height:44px;
+ gap:4px;
+ padding:4px 3px;
+ border-bottom:1px solid #35485066;
+}
+.browser .library-shell .library-source-icon,
+.browser .library-shell .library-folder-icon {
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ flex:0 0 32px;
+ width:32px;
+ height:32px;
+ min-width:32px;
+ min-height:32px;
+ padding:0;
+ border:1px solid #3d515a;
+ border-radius:1px;
+ background:linear-gradient(#30424a,#263840);
+ color:#8ca2ae;
+}
+.browser .library-source-icon .studio-icon,
+.browser .library-folder-icon .studio-icon {width:20px;height:20px;}
+.browser .library-shell .library-sound-copy,
+.browser .library-shell .library-asset-copy {
+ display:flex;
+ flex-direction:column;
+ justify-content:center;
+ flex:1 1 0;
+ min-width:0;
+ gap:1px;
+}
+.browser .library-shell .library-sound-name,
+.browser .library-shell .library-asset-name {
+ display:block;
+ flex:0 0 auto;
+ width:100%;
+ min-height:18px;
+ margin:0;
+ padding:0;
+ font-family:"Vegetable FL Condensed","Arial Narrow",Arial,sans-serif;
+ font-size:13px;
+ line-height:18px;
+ color:#bdcbd1;
+}
+.browser .library-shell .library-sound-meta,
+.browser .library-shell .library-asset-meta {
+ display:block;
+ overflow:hidden;
+ text-overflow:ellipsis;
+ white-space:nowrap;
+ min-width:0;
+ margin:0;
+ padding:0;
+ font-size:8px;
+ line-height:12px;
+ color:#879faa;
+}
+.browser .library-shell .library-preview-button {
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ flex:0 0 16px;
+ width:16px;
+ min-width:16px;
+ height:26px;
+ min-height:26px;
+ padding:0;
+ color:#a5bbc7;
+}
+.browser .library-preview-button .studio-icon {width:17px;height:17px;}
+.browser .library-shell .library-sound-duration {
+ align-self:flex-start;
+ margin-top:3px;
+ max-width:38px;
+ overflow:hidden;
+ font-size:8px;
+ line-height:16px;
+ color:#869da9;
+ font-variant-numeric:tabular-nums;
+}
+.browser .library-shell .library-sound-row > .library-add,
+.browser .library-shell .library-asset-row > .library-add {
+ position:relative;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ align-self:center;
+ flex:0 0 16px;
+ width:16px;
+ min-width:16px;
+ height:26px;
+ min-height:26px;
+ padding:0;
+ font-size:19px;
+ line-height:24px;
+ color:#a3b8c2;
+}
+.browser .library-shell :is(.library-sound-row,.library-asset-row) > .library-add::before {
+ content:"";
+ position:absolute;
+ width:14px;
+ height:14px;
+ border:1px solid currentColor;
+ border-radius:50%;
+ opacity:.65;
+ pointer-events:none;
+}
+.browser .library-shell .library-sound-row.selected .library-source-icon {border-color:#9d7850;color:#d8b47d;}
+.browser .library-shell .library-sound-row.previewing .library-source-icon {color:#e1aa66;}
+.browser .browser-footer:has(.library-preview-player) {
+ height:156px;
+ min-height:156px;
+ padding:6px 7px 9px;
+ background:#1c2e35;
+ border-top:1px solid #384d56;
+}
+.browser .browser-footer:has(.library-preview-player) .browser-legacy-preview {display:none;}
+.browser #browser-preview-dock {min-width:0;}
+.browser .library-preview-player {
+ display:flex;
+ flex-direction:column;
+ min-width:0;
+ height:140px;
+ gap:4px;
+ color:#aabac3;
+ font-family:"Vegetable FL UI",Arial,sans-serif;
+}
+.browser .library-preview-heading {
+ display:flex;
+ align-items:center;
+ gap:5px;
+ min-height:22px;
+ min-width:0;
+}
+.browser .library-preview-heading .library-preview-title {
+ flex:1;
+ margin:0;
+ font-family:"Vegetable FL Narrow","Arial Narrow",Arial,sans-serif;
+ font-size:14px;
+ font-weight:400;
+ line-height:20px;
+ white-space:nowrap;
+ overflow:hidden;
+ text-overflow:ellipsis;
+ color:#b8c7ce;
+}
+.browser .library-preview-state {
+ flex:0 0 auto;
+ max-width:85px;
+ font-size:9px;
+ line-height:14px;
+ text-align:right;
+ color:#89a0ad;
+ white-space:nowrap;
+ overflow:hidden;
+ text-overflow:ellipsis;
+}
+.browser .library-preview-selection {
+ display:block;
+ min-height:14px;
+ margin:0;
+ font-size:9px;
+ line-height:14px;
+ color:#93aab5;
+ overflow:hidden;
+ text-overflow:ellipsis;
+ white-space:nowrap;
+}
+.browser .library-preview-progress {
+ appearance:none;
+ display:block;
+ width:100%;
+ margin:8px 0 0;
+ padding:0;
+ min-height:14px;
+ height:14px;
+ border:0;
+ background:transparent;
+ accent-color:#a1b4bd;
+ cursor:ew-resize;
+}
+.browser .library-preview-time {
+ align-self:flex-end;
+ font-size:9px;
+ line-height:14px;
+ font-variant-numeric:tabular-nums;
+ color:#8fa4ae;
+}
+.browser .library-preview-controls {
+ display:flex;
+ align-items:center;
+ gap:10px;
+ flex-wrap:wrap;
+ min-height:26px;
+ margin-top:auto;
+}
+.browser .library-preview-controls button {
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ width:24px;
+ min-width:24px;
+ min-height:24px;
+ height:24px;
+ padding:0;
+ border:0;
+ border-radius:2px;
+ background:transparent;
+ box-shadow:none;
+ color:#b2c3cd;
+ font-size:15px;
+ line-height:22px;
+}
+.browser .library-preview-controls button:hover:not(:disabled) {background:#465b6570;color:#e2eaed;}
+.browser .library-preview-controls button[aria-pressed="true"] {color:#ed9b4b;}
+.browser .library-preview-controls button:disabled {opacity:.35;cursor:default;}
+.browser .library-preview-controls .studio-icon {width:18px;height:18px;}
+.browser .library-preview-controls button:focus-visible,
+.browser .library-preview-player input:focus-visible {outline:1px solid #c0d3d8;outline-offset:2px;}
+.browser .library-preview-controls .library-preview-volume {
+ appearance:none;
+ flex:1 0 100%;
+ width:100%;
+ min-width:0;
+ height:14px;
+ min-height:14px;
+ margin:0;
+ padding:0;
+ border:0;
+ background:transparent;
+ accent-color:#f49c43;
+}
+.browser .library-preview-volume::-webkit-slider-runnable-track {
+ height:3px;
+ border-radius:2px;
+ background:linear-gradient(to right,#ed9748 0 var(--preview-level,100%),#b9c5cb var(--preview-level,100%) 100%);
+}
+.browser .library-preview-progress::-webkit-slider-runnable-track {
+ height:2px;
+ border-radius:1px;
+ background:linear-gradient(to right,#b5c6cd 0 var(--preview-position,0%),#536872 var(--preview-position,0%) 100%);
+}
+.browser .library-preview-volume::-webkit-slider-thumb,
+.browser .library-preview-progress::-webkit-slider-thumb {
+ appearance:none;
+ width:11px;
+ height:11px;
+ margin-top:-4px;
+ border:1px solid #182b36;
+ border-radius:50%;
+ background:linear-gradient(120deg,#d4dfe4,#9aaebb 52%,#607a8f);
+ box-shadow:inset 0 1px #e8f0f277,0 1px 1px #07172299;
+}
+.browser .library-preview-progress::-webkit-slider-thumb {width:9px;height:9px;}
+.browser .library-preview-volume::-moz-range-track {height:3px;border-radius:2px;background:#b9c5cb;}
+.browser .library-preview-volume::-moz-range-progress {height:3px;border-radius:2px;background:#ed9748;}
+.browser .library-preview-progress::-moz-range-track {height:2px;background:#536872;}
+.browser .library-preview-progress::-moz-range-progress {height:2px;background:#b5c6cd;}
+.browser .library-preview-volume::-moz-range-thumb,
+.browser .library-preview-progress::-moz-range-thumb {
+ width:10px;height:10px;border:1px solid #182b36;border-radius:50%;
+ background:linear-gradient(120deg,#d4dfe4,#9aaebb 52%,#607a8f);
+}
+.browser .library-preview-player input:disabled {cursor:default;opacity:.35;}
+.browser .library-preview-media {display:none;}
+@media(max-width:1100px) {
+ .browser .library-preview-controls {gap:6px;}
+ .browser .library-preview-state {max-width:65px;font-size:8px;}
+}
+.browser .library-project-folder {display:flex;align-items:center;gap:6px;width:100%;height:27px;padding:0 8px;border:0;border-bottom:1px solid #242d31;background:#354147;color:#c6ccce;text-align:left;font-size:11px;font-weight:600;}
+.browser .library-project-folder .folder-icon {color:#a3b7bd;}
+.browser .library-project-folder[aria-expanded="true"] {background:#414e54;color:#e0c692;}
+.browser .library-project-folder:focus-visible {outline:1px solid #d2a563;outline-offset:-2px;}
+
+/* Browser: Plugin database (plugin-database-browser.js) */
+.browser .plugin-database{margin:6px 6px 8px;font-family:"Vegetable FL UI",Arial,sans-serif;font-size:11px;color:#b8c8d2}
+.browser .plugin-database>summary,.browser .plugin-database-folder>summary{cursor:pointer;padding:4px 4px;user-select:none}
+.browser .plugin-database>summary{background:#2a3f4b;border:1px solid #223540;color:#d5e0e6}
+.browser .plugin-database-folder{margin-left:8px}
+.browser .plugin-database-row{display:flex;justify-content:space-between;gap:6px;padding:3px 6px 3px 16px;cursor:grab;white-space:nowrap}
+.browser .plugin-database-row:hover{background:#39505d;color:#fff}
+.browser .plugin-database-row small{opacity:.55;overflow:hidden;text-overflow:ellipsis}
+.browser .plugin-database-row.unavailable{opacity:.45;cursor:default}
+.browser .plugin-database-empty{margin:4px 16px;opacity:.6}
+.plugin-drop-target{outline:2px dashed #f6a14b;outline-offset:-2px}

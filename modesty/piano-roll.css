@@ -1,0 +1,16 @@
+/* Piano roll additions loaded by piano-roll.js. */
+#piano:focus{outline:none}
+#piano:focus-within .panel-heading{box-shadow:inset 0 -1px #d7ab6c66}
+#piano-select,#piano-typing{font-size:15px}
+#piano-typing.lit{color:#f6c26b}
+#piano-save-state{margin-left:8px;font-size:10px;padding:1px 6px;border-radius:3px;background:#2b3a44;color:#9fb2bc;border:1px solid #40525d}
+#piano-save-state[data-state=saving]{color:#d9c08a}
+#piano-save-state[data-state=saved]{color:#a6c98e}
+#piano-save-state[data-state=uncertain]{color:#ffd28a;border-color:#c99a4b;cursor:pointer}
+#piano-save-state[data-state=error]{color:#ff9b8a;border-color:#a35b50}
+#piano-grid[data-tool=draw]{cursor:crosshair}
+#piano-grid[data-tool=select]{cursor:default}
+#piano-grid[data-tool=erase]{cursor:not-allowed}
+#piano-grid .piano-note{filter:saturate(calc(.45 + var(--note-velocity,.8) * .55)) brightness(calc(.8 + var(--note-velocity,.8) * .25))}
+#piano-grid .piano-note.drawing{opacity:.85}
+.piano-edit-cursor{position:absolute;top:0;bottom:0;width:1px;background:#f6a14b88;pointer-events:none;z-index:1}

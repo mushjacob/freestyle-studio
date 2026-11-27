@@ -1,0 +1,34 @@
+/* Pattern Rack panel (Audacity-styled), owned by pattern-rack-view.js */
+.prack{position:fixed;left:24px;right:24px;bottom:34px;max-height:46vh;z-index:40;display:flex;flex-direction:column;background:#2b2d38;color:#d6dae0;border:1px solid #11131a;border-radius:6px;box-shadow:0 10px 32px rgba(0,0,0,.45);font:12px/1.3 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+.prack.hidden{display:none}
+.prack-head,.prack-foot{display:flex;align-items:center;gap:6px;padding:6px 8px;background:#363947;border-bottom:1px solid #1d1f27;flex-wrap:wrap}
+.prack-foot{border-bottom:0;border-top:1px solid #1d1f27}
+.prack-title{margin-right:6px}
+.prack button,.prack select{background:#dedee3;color:#17181b;border:1px solid #8b8e99;border-radius:3px;padding:2px 8px;font:inherit;cursor:pointer}
+.prack button:disabled,.prack select:disabled{opacity:.45;cursor:default}
+.prack-status{margin-left:auto;font-size:11px;color:#a8b0bd}
+.prack-status[data-kind="saving"]{color:#e6c96a}
+.prack-status[data-kind="error"],.prack-status[data-kind="uncertain"]{color:#ff8f86}
+.prack-tiles{display:flex;gap:4px;padding:6px 8px;overflow-x:auto;border-bottom:1px solid #1d1f27}
+.prack-tile{padding:3px 10px;border-radius:3px;background:#285a77;color:#fff;cursor:grab;white-space:nowrap;user-select:none}
+.prack-tile.selected{outline:2px solid #9fd3ff}
+.prack-rows{overflow:auto;padding:4px 0}
+.prack-row{display:flex;align-items:center;gap:4px;padding:2px 8px}
+.prack-row.muted .prack-steps{opacity:.45}
+.prack-grip{cursor:grab;color:#8f96a3;width:12px;user-select:none}
+.prack-grip[draggable="false"]{cursor:default;opacity:.35}
+.prack .prack-mute,.prack .prack-solo{width:22px;padding:2px 0}
+.prack .prack-mute.on{background:#e3a143}
+.prack .prack-solo.on{background:#7ccf6e}
+.prack-vol{width:70px}
+.prack-name{width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.prack-steps{display:flex;gap:2px;flex:1;overflow-x:auto}
+.prack .prack-step{flex:0 0 18px;height:22px;padding:0;border-radius:2px;background:#4b4f5f;border:1px solid #23252f}
+.prack .prack-step.odd{background:#5c6174}
+.prack .prack-step.bar{margin-left:4px}
+.prack .prack-step.on{background:#f08a3c;border-color:#ffc08a}
+.prack .prack-remove{padding:2px 6px}
+.prack-empty{padding:10px 12px;color:#a8b0bd}
+.prack-hint{color:#8f96a3;font-size:11px}
+.prack-ghost{position:absolute;z-index:30;pointer-events:none;min-width:80px;height:26px;padding:4px 8px;border:1px dashed #9fd3ff;border-radius:3px;background:rgba(40,90,119,.55);color:#fff;font-size:11px}
+.prack-ghost.pending{border-style:solid;background:rgba(40,90,119,.8)}

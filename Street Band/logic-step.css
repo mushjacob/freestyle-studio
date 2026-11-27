@@ -1,0 +1,67 @@
+/* Street Band — Logic Pro Step Sequencer (re-presents the proven Channel Rack step path).
+ * Frame, tabs and header controls come from logic-piano.css (.logic-editor-pane). */
+#rack.logic-editor-pane .rack-title{font:500 12px var(--lg-font);color:var(--lg-dim);margin:0 4px;flex-shrink:0}
+#rack .logic-step-header #rack-menu{order:0;position:static!important;width:auto!important;margin:0!important}
+#rack .logic-step-header>*{order:0!important;margin-left:0!important}
+#rack .logic-step-field{display:flex;align-items:center;gap:5px;color:var(--lg-dim);flex-shrink:0}
+/* Undo the FL header's fixed-width, negatively indented spans that clipped "Length" / "Rate" / "Edit:". */
+#rack.logic-editor-pane>.panel-heading>span{flex:0 0 auto!important;width:auto!important;max-width:none!important;min-width:0!important;text-indent:0!important;overflow:visible!important;padding:0!important;margin:0!important;font:12px var(--lg-font)!important;letter-spacing:0!important;color:var(--lg-dim)!important}
+#rack.logic-editor-pane>.panel-heading>span.rack-title{color:var(--lg-text)!important;font-weight:500!important;margin:0 4px!important}
+#rack.logic-editor-pane>.panel-heading>span.rack-title::before{content:none!important}
+#rack.logic-editor-pane>.panel-heading>#rack-menu{position:static!important;width:auto!important;min-width:0!important;padding:0 8px!important}
+#rack .logic-step-info{display:none}
+#rack #rack-step-page{height:22px!important;font:12px var(--lg-font)!important;padding:0 4px!important;background:#383838!important;border:1px solid #3e3e3e!important;border-radius:5px;color:var(--lg-text)}
+#rack .logic-step-add-row{flex-shrink:0;padding:2px 10px 6px;background:var(--lg-bg)}
+#rack .logic-step-add-row button{min-height:22px!important;height:22px;border:0!important;background:none!important;box-shadow:none!important;color:var(--lg-dim)!important;font:12px var(--lg-font)!important;padding:0 6px!important;margin:0!important;width:auto!important}
+#rack .logic-step-add-row button:hover{color:#fff!important;background:#333!important}
+#rack .rack-bottom[hidden]{display:none!important}
+#rack #step-pattern-browser{min-width:120px;max-width:200px;text-align:left;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#rack #rack-steps{min-width:44px}
+#rack #step-rate{height:22px;padding:0 4px!important;width:auto!important;background:#383838!important;border:1px solid #3e3e3e!important;border-radius:5px}
+#rack #channel-filter{width:auto!important;height:22px;margin-left:auto!important;background:#383838!important;border:1px solid #3e3e3e!important;border-radius:5px;padding:0 4px!important}
+#rack #rack-graph-toggle.lit,#rack #rack-graph-toggle[aria-pressed=true]{background:#4a4a4a!important;color:#fff!important}
+#rack #rack-graph-toggle:disabled{opacity:.5}
+#rack #rack-fill{font-size:14px!important}
+
+/* Pattern browser (left drawer) — tiles drag into a track like Logic's pattern browser. */
+#rack .logic-pattern-browser{position:absolute;left:0;top:70px;bottom:0;width:190px;z-index:5;overflow:auto;background:var(--lg-panel);border-right:1px solid var(--lg-line);padding:6px;display:flex;flex-direction:column;gap:4px}
+#rack .logic-pattern-browser[hidden]{display:none}
+#rack .logic-pattern-item{display:flex;flex-direction:column;gap:3px;padding:5px 7px;border-radius:5px;background:#333;border-left:3px solid var(--clip-color,#4fb05e);cursor:grab;color:var(--lg-text);font-size:12px}
+#rack .logic-pattern-item svg{height:16px;width:100%;opacity:.75}
+#rack .logic-pattern-item.selected{background:#4a4a4a;color:#fff}
+#rack .logic-pattern-new{min-height:26px!important;border:1px dashed #555!important;border-radius:5px!important;background:none!important;box-shadow:none!important;color:var(--lg-dim)!important;font:12px var(--lg-font)!important}
+
+/* Rows: icon/name, M S, then 16 rounded step cells lit in the row colour. */
+#rack #rack-channels{flex:1;min-height:0;overflow:auto;background:var(--lg-bg)!important;padding:6px 10px 6px 8px!important}
+/* Row = fixed header column (icon + name, then M S) and a step lane that fills the rest of the pane. */
+#rack .rack-channel{display:flex!important;align-items:center;width:100%!important;height:40px!important;margin:0 0 4px!important;gap:6px!important;padding:0 8px 0 0!important;border-radius:6px;background:#242424}
+#rack .rack-channel.selected{background:#2f2f2f;box-shadow:inset 0 0 0 1px #4a4a4a}
+/* One control set per row (M S); the FL LED/knobs/insert number/selection bar are not shown. */
+#rack .rack-channel>.small-knob,#rack .rack-channel>.channel-number,#rack .rack-channel>.channel-selected{display:none!important}
+#rack .rack-missing>:is(.channel-enable,.step-solo):disabled{opacity:.35!important;cursor:default}
+#rack.pattern-browser-open #rack-channels{margin-left:190px}
+#rack .rack-channel>.channel-name{order:-3;flex:0 0 170px!important;width:170px!important;max-width:170px!important;height:28px!important;min-height:28px!important;border:0!important;border-radius:4px!important;background:none!important;box-shadow:none!important;text-align:left!important;font:12px var(--lg-font)!important;color:var(--lg-text)!important;padding:0 6px 0 30px!important;position:relative}
+#rack .rack-channel>.channel-name::before{content:"";position:absolute;left:6px;top:4px;width:18px;height:16px;border-radius:3px;background:var(--row-color,#4fb05e);opacity:.9;box-shadow:inset 0 -4px 0 #0003}
+#rack .rack-channel>.channel-name[data-icon-glyph]::before{content:attr(data-icon-glyph);font-size:10px;line-height:16px;text-align:center;color:#111;margin:0}
+#rack .rack-channel>.channel-enable{order:-2;flex:0 0 22px!important;width:22px!important;min-width:22px!important;max-width:22px!important;height:20px!important;min-height:20px!important;border-radius:4px!important;border:1px solid #444!important;background:#3a3a3a!important;box-shadow:none!important;color:#ddd;font:600 10px var(--lg-font);display:flex!important;align-items:center;justify-content:center;margin:0!important}
+#rack .rack-channel>.channel-enable.off{background:#2f6fd6!important;border-color:#2f6fd6!important;color:#fff}
+#rack .rack-channel>.step-solo{order:-1;flex:0 0 22px;width:22px;height:20px;min-height:20px!important;margin-right:8px!important;padding:0!important;border-radius:4px!important;border:1px solid #444!important;background:#3a3a3a!important;box-shadow:none!important;color:#ddd!important;font:600 10px var(--lg-font)!important}
+#rack .rack-channel>.step-solo.on{background:#d9b532!important;border-color:#d9b532!important;color:#111!important}
+/* 16 large pads across the full lane width; every group of 4 (one beat) is set apart. */
+#rack .rack-channel .steps{order:0;display:grid!important;flex:1 1 auto!important;width:auto!important;min-width:0!important;max-width:none!important;height:32px!important;grid-template-columns:repeat(16,minmax(0,1fr))!important;column-gap:5px!important;gap:0 5px!important}
+#rack .rack-channel .step:nth-child(4n+1):not(:first-child){margin-left:9px}
+#rack .rack-channel .step{width:auto!important;min-width:0!important;height:32px!important;min-height:32px!important;border-radius:6px!important;border:1px solid #3a3a3a!important;background:#333!important;box-shadow:none!important}
+#rack .rack-channel .step:nth-child(4n+1){background:#3b3b3b!important}
+#rack .rack-channel .step:nth-child(8n+5),#rack .rack-channel .step:nth-child(8n+6),#rack .rack-channel .step:nth-child(8n+7),#rack .rack-channel .step:nth-child(8n+8){background:#2e2e2e!important}
+#rack .rack-channel .step.on{background:var(--row-color,#4fb05e)!important;border-color:color-mix(in srgb,var(--row-color,#4fb05e) 70%,#fff)!important;box-shadow:0 0 6px color-mix(in srgb,var(--row-color,#4fb05e) 45%,transparent)!important}
+#rack .rack-channel .step.current::after{background:#e8e8e8!important;box-shadow:none!important;bottom:-3px!important}
+#rack .rack-channel .note-preview{order:0;flex:1 1 auto!important;width:auto!important;min-width:0!important;max-width:none!important;height:32px!important;background:#2b3a2e!important;border:1px solid #3d5a42!important;border-radius:6px}
+#rack .rack-channel .note-preview svg{width:100%!important;height:26px!important}
+#rack .rack-missing .rack-use-score{flex:1 1 auto!important;height:28px!important;border-radius:6px!important;background:#2a2a2a!important;border:1px dashed #555!important;color:var(--lg-dim)!important;font:12px var(--lg-font)!important}
+#rack .rack-missing{opacity:.7}
+#rack .rack-bottom{background:var(--lg-bg2)!important;border-top:1px solid var(--lg-line)!important;height:28px!important}
+#rack .rack-bottom button{color:var(--lg-text)!important;font:12px var(--lg-font)!important}
+#rack .rack-bottom span{color:var(--lg-dim)!important;font:10px var(--lg-font)!important;letter-spacing:.5px}
+#rack #rack-graph{background:#202020}
+/* Pattern Browser: Rename… / Duplicate for the current pattern (Logic keeps these in the browser, not a top menu). */
+#rack .logic-pattern-rename,#rack .logic-pattern-duplicate{min-height:22px!important;border:1px solid #444!important;border-radius:5px!important;background:#2b2b2b!important;box-shadow:none!important;color:var(--lg-dim)!important;font:11px var(--lg-font)!important}

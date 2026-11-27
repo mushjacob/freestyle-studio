@@ -1,0 +1,20 @@
+/* FL window chrome: edge/corner resize cursors, no text selection in rulers/headers/toolbars, LCD position readout, default layout. */
+.floating-window,.playlist-window{resize:none!important}
+.wm-hover-n,.wm-hover-n *,.wm-hover-s,.wm-hover-s *{cursor:ns-resize!important}
+.wm-hover-e,.wm-hover-e *,.wm-hover-w,.wm-hover-w *{cursor:ew-resize!important}
+.wm-hover-ne,.wm-hover-ne *,.wm-hover-sw,.wm-hover-sw *{cursor:nesw-resize!important}
+.wm-hover-nw,.wm-hover-nw *,.wm-hover-se,.wm-hover-se *{cursor:nwse-resize!important}
+.window-resizing{transition:none!important;user-select:none!important;contain:layout style}
+.window-resizing>*{pointer-events:none}
+/* Rulers, window headers, toolbars and the transport LCD are never selectable (inputs keep their own selection). */
+.timeline-ruler,.timeline-ruler *,.piano-ruler,.piano-ruler *,.ruler-bar,.panel-heading,.panel-heading *:not(input):not(textarea),.toolbar,.toolbar *:not(input):not(textarea),.track-label,.pattern-picker,.time-display,.time-display *{-webkit-user-select:none;user-select:none}
+.timeline-ruler,.piano-ruler{touch-action:none;cursor:pointer}
+.piano-edit-cursor{position:absolute;left:var(--piano-key-width,70px);top:var(--piano-ruler-height,20px);bottom:0;width:1px;background:#c7ed8e;opacity:.85;z-index:2;pointer-events:none;will-change:transform}
+.piano-edit-cursor.is-hidden{display:none}
+/* Fixed-width LCD digits: tabular numerals in per-digit cells, separators never move. */
+#time-value{display:inline-flex;align-items:baseline;font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1;letter-spacing:0;white-space:pre}
+#time-value .tv-d{display:inline-block;width:.54em;text-align:center;overflow:visible}
+#time-value .tv-s{display:inline-block;width:.28em;text-align:center}
+/* FL default layout: Channel rack top-left over the Playlist, Mixer docked along the lower part of the desktop. */
+#desktop>.rack-window{height:min(440px,calc(46% - 8px));max-height:none;min-height:200px}
+#desktop>.mixer-window{left:8px;right:8px;top:calc(46% + 2px);bottom:10px;width:auto;height:auto}

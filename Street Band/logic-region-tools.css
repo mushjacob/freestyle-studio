@@ -1,0 +1,42 @@
+/* Street Band: Fade tool shapes, Region Inspector edit rows, track R / I, Count-in. */
+#playlist .clip.audio-clip>.logic-fade-host{position:absolute;inset:14px 0 0 0;pointer-events:none;z-index:2}
+#playlist .clip.audio-clip>.logic-fade-host svg{width:100%;height:100%;display:block}
+.logic-fade-overlay .logic-fade-in,.logic-fade-overlay .logic-fade-out{fill:rgba(0,0,0,.34)}
+.logic-fade-overlay .logic-fade-line{fill:none;stroke:#e9eef5;stroke-width:1.2;vector-effect:non-scaling-stroke}
+#playlist[data-playlist-tool="fade"] .clip.audio-clip{cursor:ew-resize}
+#playlist[data-playlist-tool="fade"] .clip:not(.audio-clip){cursor:not-allowed}
+#logic-inspector .logic-insp-edit{align-items:center}
+#logic-inspector .logic-insp-edit .logic-insp-value{display:inline-flex;align-items:center;gap:4px;justify-content:flex-end}
+#logic-inspector .logic-insp-edit input{width:64px;font:inherit;font-size:11px;color:#e6e6e6;background:#1b1b1b;border:1px solid #444;border-radius:4px;padding:1px 4px;text-align:right}
+#logic-inspector .logic-insp-edit input:focus{outline:1px solid #e1b33b;border-color:#e1b33b}
+#logic-inspector .logic-insp-edit input:disabled{opacity:.55}
+#logic-inspector .logic-insp-edit small{color:#9a9a9a;font-size:10px}
+#playlist .logic-track-buttons .logic-track-r.on{background:#e04848!important;color:#fff!important}
+#playlist .logic-track-buttons .logic-track-i.on{background:#e8a63a!important;color:#111!important}
+.logic-count-in{font-size:9px;letter-spacing:-.5px;min-width:30px}
+.logic-count-in:disabled{opacity:.45;cursor:not-allowed}
+.logic-count-in.on{background:#e1b33b;color:#111}
+#logic-inspector [data-region-edit="gain"]:not(:focus){cursor:ns-resize}
+/* Stem Splitter: job progress on the source region, dialog */
+#playlist .clip.audio-clip>.logic-stem-host{position:absolute;left:4px;right:4px;bottom:4px;pointer-events:none;z-index:3}
+.logic-stem-progress{position:relative;height:14px;border-radius:3px;background:rgba(0,0,0,.55);overflow:hidden}
+.logic-stem-progress .logic-stem-bar{position:absolute;inset:0 auto 0 0;background:rgba(225,179,59,.75);transition:width .4s linear}
+.logic-stem-progress small{position:relative;display:block;padding:0 5px;font-size:9px;line-height:14px;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.logic-stem-form fieldset{border:1px solid #444;border-radius:5px;margin:8px 0;padding:6px 10px}
+.logic-stem-form legend{font-size:11px;color:#bbb;padding:0 4px}
+.logic-stem-form label{display:flex;gap:8px;align-items:flex-start;justify-content:flex-start;text-align:left;padding:3px 0;font-size:12px}
+.logic-stem-form label>input[type=radio]{flex:0 0 auto;width:auto;min-width:0;margin:2px 0 0}
+.logic-stem-form label>span{flex:1 1 auto;text-align:left;align-items:flex-start}
+.logic-stem-mode span{display:flex;flex-direction:column}
+.logic-stem-mode small{color:#9a9a9a;font-size:10px}
+.logic-stem-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:10px}
+/* LCD key: Logic key popup */
+#lcd-key.logic-lcd-editable{cursor:pointer}
+#lcd-key.logic-lcd-editable:hover{color:#fff}
+.logic-key-popup{z-index:1000;background:#2a2a2a;border:1px solid #555;border-radius:6px;padding:8px;box-shadow:0 8px 24px rgba(0,0,0,.5);width:230px}
+.logic-key-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:4px}
+.logic-key-popup button{font:inherit;font-size:11px;color:#ddd;background:#3a3a3a;border:1px solid #4a4a4a;border-radius:4px;padding:3px 2px;cursor:pointer}
+.logic-key-popup button.on{background:#e1b33b;color:#111;border-color:#e1b33b}
+.logic-scale-row{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-top:6px}
+.logic-key-none{width:100%;margin-top:6px}
+.logic-key-analysis progress{width:100%}

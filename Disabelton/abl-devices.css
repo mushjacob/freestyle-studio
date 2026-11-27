@@ -1,0 +1,308 @@
+/* Disabelton devices lane — Device View, Drum Rack, Live knobs, Live mixer strips, Automation Mode, plug-in window.
+ * Live 12 default (light grey) theme; variables from abl-shell.css with fallbacks. */
+:root{--abl-dev-bg:var(--abl-panel,#b9b9b9);--abl-dev-box:#c9c9c9;--abl-dev-title:#d2d2d2;--abl-dev-line:#5c5c5c;--abl-dev-text:var(--abl-text,#111);--abl-dev-dim:var(--abl-dim,#4a4a4a);--abl-dev-orange:var(--abl-orange,#ffa31a);--abl-dev-blue:var(--abl-blue,#21b9dd);--abl-dev-font:var(--abl-font,-apple-system,"Helvetica Neue",Arial,sans-serif);--abl-auto-red:#ff3b30}
+
+/* ---------- Live knob / switch ---------- */
+.abl-knob{display:inline-flex;flex-direction:column;align-items:center;gap:0;outline:none;cursor:ns-resize;touch-action:none;user-select:none;min-width:34px}
+.abl-knob .abl-knob-dial{width:30px;height:30px;display:block}
+.abl-knob .abl-knob-track{fill:none;stroke:#7a7a7a;stroke-width:2.6;stroke-linecap:butt}
+.abl-knob .abl-knob-arc{fill:none;stroke:var(--abl-dev-blue);stroke-width:2.6}
+.abl-knob .abl-knob-needle{stroke:#1a1a1a;stroke-width:1.8;stroke-linecap:round}
+.abl-knob .abl-knob-value{font:10px/12px var(--abl-dev-font);color:var(--abl-dev-text);white-space:nowrap;max-width:64px;overflow:hidden;text-overflow:ellipsis}
+.abl-knob:focus-visible .abl-knob-dial{outline:1px solid var(--abl-dev-orange)}
+.abl-knob.dragging .abl-knob-arc{stroke:#1d9fe0}
+.abl-knob.disabled{opacity:.45;cursor:default}
+.abl-switch{all:unset;box-sizing:border-box;min-width:34px;height:15px;padding:0 4px;border:1px solid var(--abl-dev-line);background:#d6d6d6;color:var(--abl-dev-text);font:10px/13px var(--abl-dev-font);text-align:center;cursor:default;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:70px}
+.abl-switch.on{background:var(--abl-dev-orange)}
+.abl-switch:disabled{opacity:.45}
+
+/* ---------- Device View ---------- */
+#abl-detail-device.abl-device-view{background:var(--abl-dev-bg);overflow:auto hidden}
+#abl-detail-device.drop-target{box-shadow:inset 0 0 0 2px var(--abl-dev-orange)}
+.abl-device-chain{display:flex;align-items:stretch;gap:4px;height:100%;min-height:150px;padding:4px;box-sizing:border-box;font:11px var(--abl-dev-font);color:var(--abl-dev-text)}
+.abl-device-empty{align-items:center;justify-content:center;color:var(--abl-dev-dim)}
+.abl-device-status{position:absolute;right:8px;top:2px;font-size:10px;color:var(--abl-dev-dim)}.abl-device-status.error{color:#a01010}
+.abl-device{flex:0 0 auto;display:flex;flex-direction:column;min-width:150px;max-width:640px;background:var(--abl-dev-box);border:1px solid var(--abl-dev-line);box-sizing:border-box}
+.abl-device.folded{min-width:0;width:24px;max-width:24px}
+.abl-device.folded .abl-device-title{writing-mode:vertical-rl;height:100%;flex-direction:row}
+.abl-device.folded .abl-device-body{display:none}
+.abl-device.off .abl-device-body{opacity:.55}
+.abl-device-pending{opacity:.7;border-style:dashed}
+.abl-device.dragging{opacity:.5}.abl-device.drop-before{box-shadow:-3px 0 0 var(--abl-dev-orange)}
+.abl-device-title{display:flex;align-items:center;gap:4px;height:18px;padding:0 3px;background:var(--abl-dev-title);border-bottom:1px solid var(--abl-dev-line);cursor:grab;flex:0 0 auto}
+/* QA r4: Live 12 colours the device title strips with the track colour (chain sets --abl-track-color). */
+.abl-device-chain .abl-device-title{background:var(--abl-track-color,var(--abl-dev-title));color:#111}
+.abl-device-chain .abl-device.off .abl-device-title{background:color-mix(in srgb,var(--abl-track-color,var(--abl-dev-title)) 45%,#bdbdbd)}
+.abl-device-title button{all:unset;box-sizing:border-box;cursor:default;font:10px/14px var(--abl-dev-font)}
+.abl-device-activator{width:12px;height:12px;border-radius:50%;border:1px solid #3a3a3a;background:#8e8e8e;flex:0 0 12px}
+.abl-device-activator.on{background:var(--abl-dev-orange)}
+.abl-device-activator.unknown{background:repeating-linear-gradient(45deg,#8e8e8e 0 2px,#b0b0b0 2px 4px)}
+.abl-device-activator:disabled{opacity:.6}
+.abl-device-name{flex:1 1 auto;min-width:0;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.abl-device-icons{margin-left:auto;display:flex;align-items:center;gap:1px;flex:0 0 auto}
+.abl-device-hand,.abl-device-wrench,.abl-device-fold{width:14px;height:14px;display:inline-flex;align-items:center;justify-content:center;padding:0;border:0;background:none;text-align:center;color:#222}
+.abl-device-hand:disabled{opacity:.45;cursor:default}
+/* Live's preset area in the title bar: ◀ ▶ (instruments) and the ▾ chooser */
+.abl-device-presets{display:flex;align-items:center;gap:0;flex:0 0 auto}
+.abl-device-preset,.abl-device-step{height:14px;min-width:12px;display:inline-flex;align-items:center;justify-content:center;padding:0 1px;border:0;background:none;color:#222;font-size:8px;line-height:1}
+.abl-device-preset{font-size:10px}
+.abl-device-preset:hover,.abl-device-step:hover{color:#000;background:#bdbdbd}
+.abl-device-preset:disabled,.abl-device-step:disabled{opacity:.45;cursor:default}
+.abl-device[aria-busy="true"] .abl-device-preset{opacity:.5}
+.abl-device-wrench:hover,.abl-device-fold:hover{color:#000;background:#bdbdbd}
+.abl-device-body{flex:1 1 auto;min-height:0;padding:6px;overflow:hidden;position:relative}
+.abl-device-note{margin:4px 0;color:var(--abl-dev-dim);font-size:10px;max-width:180px}.abl-device-note.error{color:#a01010}
+.abl-device-retry,.abl-device-more{all:unset;box-sizing:border-box;padding:0 6px;height:15px;border:1px solid var(--abl-dev-line);background:#d6d6d6;font:10px/13px var(--abl-dev-font)}
+.abl-device-more{position:absolute;right:4px;bottom:4px}
+.abl-device-params{display:grid;grid-auto-flow:column;grid-template-rows:repeat(2,auto);gap:6px 8px;align-content:start}
+.abl-param{display:flex;flex-direction:column;align-items:center;gap:1px;width:64px}
+.abl-param-name{font:10px/12px var(--abl-dev-font);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:64px;text-align:center}
+.abl-device-drop{flex:1 0 220px;display:flex;align-items:center;justify-content:center;gap:8px;color:var(--abl-dev-dim);border:1px dashed transparent}
+.abl-device-drop:focus-visible{border-color:var(--abl-dev-orange);outline:none}
+.abl-device-add{all:unset;box-sizing:border-box;width:18px;height:18px;border:1px solid var(--abl-dev-line);background:#d6d6d6;text-align:center;line-height:16px;font-weight:600}
+.abl-device-add:hover{background:#e3e3e3}
+/* Native EQ: the lane EQ section (curve + bands), EQ Eight colours. */
+.abl-eq-device{min-width:300px}
+.abl-eq-device .mixer-eq{background:#1e1e1e;color:#ddd;padding:4px;display:grid;gap:4px}
+.abl-eq-device .mixer-eq-curve{width:100%;height:90px;background:#222}
+.abl-eq-device .mixer-eq-line{stroke:#f6a21a;fill:none;stroke-width:1.5}
+.abl-eq-device .mixer-eq-grid{stroke:#444;fill:none}
+/* EQ Eight (abl-dev-eq.js): light curve panel with numbered band dots, then the band row. */
+.abl-eq-device{min-width:340px}
+.abl-eq8{display:grid;gap:3px;padding:2px 0;font:10px/1.2 var(--abl-dev-font);color:#111}
+.abl-eq8-display{display:block;width:100%;height:96px;background:#e4e6e7;border:1px solid #6f6f6f;box-sizing:border-box;touch-action:none}
+.abl-eq8-grid{stroke:#c3c6c8;stroke-width:.6;fill:none;vector-effect:non-scaling-stroke}
+.abl-eq8-zero{stroke:#9a9da0;stroke-width:.8;fill:none;vector-effect:non-scaling-stroke}
+.abl-eq8-curve{stroke:#e8891b;stroke-width:1.6;fill:none;vector-effect:non-scaling-stroke}
+.abl-eq8-fill{fill:#f6a21a;fill-opacity:.16;stroke:none}
+.abl-eq8-dot{cursor:move}
+.abl-eq8-dot circle{fill:#f6a21a;stroke:#1a1a1a;stroke-width:.8;vector-effect:non-scaling-stroke}
+.abl-eq8-dot text{font:600 8px var(--abl-dev-font);fill:#111;pointer-events:none;user-select:none}
+.abl-eq8-dot.off circle{fill:#d2d4d6;stroke:#7a7a7a}
+.abl-eq8-dot.off text{fill:#6a6a6a}
+.abl-eq8-dot.selected circle{stroke:#000;stroke-width:1.6}
+.abl-eq8-row{display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+.abl-eq8-bands{display:flex;gap:1px}
+.abl-eq8-band,.abl-eq8-on{all:unset;box-sizing:border-box;min-width:15px;height:15px;padding:0 2px;text-align:center;font:600 9px/13px var(--abl-dev-font);border:1px solid #6f6f6f;background:#c9c9c9;color:#333;cursor:default}
+.abl-eq8-band.on,.abl-eq8-on.on{background:var(--abl-dev-orange,#ffa31a);color:#111}
+.abl-eq8-band.selected{outline:1px solid #111;outline-offset:-3px}
+.abl-eq8-on:disabled{opacity:.5}
+.abl-eq8-plot{position:relative;padding-bottom:11px}
+.abl-eq8-axis{position:absolute;left:0;right:0;bottom:0;height:11px;pointer-events:none}
+.abl-eq8-axis-label{position:absolute;top:0;transform:translateX(-50%);font:9px/11px var(--abl-dev-font);color:#3a3a3a;white-space:nowrap}
+.abl-eq8-type-box{position:relative;display:inline-flex}
+.abl-eq8-type{all:unset;box-sizing:border-box;display:inline-flex;align-items:center;gap:3px;height:16px;min-width:78px;max-width:96px;padding:0 3px;font:10px/14px var(--abl-dev-font);color:#111;background:#d6d6d6;border:1px solid #6f6f6f;cursor:default;white-space:nowrap}
+.abl-eq8-type:disabled{opacity:.5}
+.abl-eq8-type-name{flex:1;overflow:hidden;text-overflow:ellipsis}
+.abl-eq8-type-arrow{font-size:8px}
+.abl-eq8-glyph{width:16px;height:12px;flex:none}
+.abl-eq8-glyph path{fill:none;stroke:#111;stroke-width:1.3;stroke-linejoin:round}
+.abl-eq8-type-menu{position:absolute;left:0;bottom:100%;z-index:50;display:flex;flex-direction:column;min-width:110px;background:#d9d9d9;border:1px solid #4a4a4a;box-shadow:0 2px 6px rgba(0,0,0,.35);padding:1px 0}
+.abl-eq8-type-option{all:unset;box-sizing:border-box;display:flex;align-items:center;gap:5px;height:17px;padding:0 6px;font:10px/15px var(--abl-dev-font);color:#111;cursor:default}
+.abl-eq8-type-option:hover,.abl-eq8-type-option:focus,.abl-eq8-type-option[aria-selected="true"]{background:var(--abl-dev-orange,#ffa31a)}
+.abl-eq8-type-option:disabled{color:#777;background:none}
+.abl-eq8-type-option:disabled .abl-eq8-glyph path{stroke:#888}
+.abl-eq8-knob{display:inline-flex}
+.abl-eq8-knob .abl-knob-label,.abl-eq8-knob-label{display:block;font-size:9px;color:#333;text-align:center}
+.abl-eq8-status{margin:0;font-size:10px;color:#444;min-height:0}
+.abl-eq8-status:empty{display:none}
+.abl-eq8.loading .abl-eq8-dots{visibility:hidden}
+
+/* ---------- Drum Rack ---------- */
+.abl-drum-rack-device{min-width:420px}
+.abl-drum-rack{display:grid;grid-template-columns:18px 240px minmax(150px,1fr);gap:6px;height:100%}
+.abl-rack-banks{display:flex;flex-direction:column-reverse;gap:2px}
+.abl-rack-bank{all:unset;box-sizing:border-box;height:16px;border:1px solid var(--abl-dev-line);background:#bdbdbd;font:9px/14px var(--abl-dev-font);text-align:center}
+.abl-rack-bank.selected{background:var(--abl-dev-orange)}
+.abl-pad-grid{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(4,1fr);gap:2px;min-height:120px}
+.abl-pad-grid.drop-target{outline:2px solid var(--abl-dev-orange)}
+.abl-pad{position:relative;display:flex;flex-direction:column;justify-content:space-between;padding:2px 3px;border:1px solid #6a6a6a;background:#d2d2d2;min-height:28px;overflow:hidden;cursor:default;outline:none}
+.abl-pad[data-pad]{background:color-mix(in srgb,var(--abl-pad-color,#d2d2d2) 35%,#d8d8d8)}
+.abl-pad.selected{box-shadow:inset 0 0 0 2px var(--abl-dev-blue)}
+.abl-pad.muted .abl-pad-name{opacity:.45}
+.abl-pad-empty{background:#c2c2c2;border-style:dashed}
+.abl-pad-note{font-size:9px;color:#666}
+.abl-pad-name{font:10px/12px var(--abl-dev-font);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.abl-pad-buttons{display:flex;gap:2px}
+.abl-pad-buttons button{all:unset;box-sizing:border-box;flex:1 1 0;height:11px;border:1px solid #6a6a6a;background:#c6c6c6;font:8px/9px var(--abl-dev-font);text-align:center}
+.abl-pad-mute.on{background:#ffd95a}.abl-pad-solo.on{background:#59a7ff}.abl-pad-play.active{background:#7ed36a}
+.abl-rack-chain{border:1px solid #6a6a6a;background:#cfcfcf;display:flex;flex-direction:column;min-width:0}
+.abl-rack-chain-head{padding:2px 4px;border-bottom:1px solid #8a8a8a;background:#bdbdbd}
+.abl-rack-pattern{font:10px var(--abl-dev-font);max-width:100%}
+.abl-rack-chain-row{display:flex;align-items:center;gap:6px;padding:2px 4px;font-size:10px}
+.abl-rack-chain-row.selected{background:var(--abl-select,#9fd4ec)}
+.abl-rack-chain-name{flex:1 1 auto;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.abl-rack-chain-kind{color:var(--abl-dev-dim)}
+.abl-rack-chain-open{all:unset;box-sizing:border-box;width:14px;text-align:center}
+.abl-rack-chain-empty{margin:6px;color:var(--abl-dev-dim);font-size:10px}
+
+/* ---------- Live mixer strips (Arrangement + Session mixer hosts) ---------- */
+.abl-mixer-host.abl-mixer{display:flex;align-items:stretch;gap:0;background:var(--abl-panel2,#c3c3c3);font:10px var(--abl-dev-font);color:var(--abl-dev-text);overflow:auto hidden}
+.abl-mixer .abl-mixer-strip.abl-mixer-strip{display:grid!important;grid-template-columns:1fr 30px;grid-template-rows:16px auto 30px 18px 1fr;grid-template-areas:"name name" "sends sends" "pan pan" "db fader" "ctl fader";flex:0 0 84px;width:84px;min-width:84px;height:auto;min-height:220px;padding:0 3px 4px;gap:2px 3px;box-sizing:border-box;border-right:1px solid #8a8a8a;background:#c9c9c9;box-shadow:none;outline:none;margin:0}
+.abl-mixer .abl-mixer-strip.abl-return{background:#bdbdbd}
+.abl-mixer .abl-mixer-strip.abl-main{flex-basis:96px;width:96px;margin-left:auto;background:#b1b1b1}
+/* Live: the selected track's strip is the light one (Main and Returns included); its title bar is outlined. */
+.abl-mixer .abl-mixer-strip.abl-mixer-strip.selected{background:#e2e2e2}
+.abl-mixer .abl-mixer-strip.selected .strip-name.strip-name{box-shadow:inset 0 0 0 1px #f4f4f4}
+.abl-mixer .abl-mixer-strip .strip-number,.abl-mixer .abl-mixer-strip .strip-light,.abl-mixer .abl-mixer-strip .strip-route,.abl-mixer .abl-mixer-strip .logic-strip-sections,.abl-mixer .abl-mixer-strip .logic-strip-section{display:none!important}
+.abl-mixer .abl-mixer-strip .strip-name{grid-area:name;display:block;height:16px;margin:0 -3px;padding:0 4px;background:var(--abl-track-color,#a6a6a6);border-bottom:1px solid #555;font:600 10px/16px var(--abl-dev-font);color:#111;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;width:auto;max-width:none;text-align:left}
+.abl-mixer .abl-mixer-strip.abl-main .strip-name{background:#4a4a4a;color:#eee}
+.abl-mixer .abl-sends{grid-area:sends;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto auto;align-items:center;justify-items:center;padding:2px 0;position:relative}
+.abl-mixer .abl-sends-label{grid-column:1/3;justify-self:end;font-size:9px;color:#333}
+.abl-mixer .abl-send-knob{display:flex;flex-direction:column;align-items:center;opacity:.45;cursor:not-allowed}
+.abl-mixer .abl-send-dial{width:18px;height:18px;border-radius:50%;border:2px solid #7a7a7a;border-bottom-color:transparent;box-sizing:border-box}
+.abl-mixer .abl-send-letter{font-size:8px}
+/* Live send knob (2026-11-14 aux sends): -inf … 0 dB over a 300° arc, value arc in Live's knob blue. */
+.abl-mixer .abl-send-knob[aria-disabled="false"]{opacity:1;cursor:ns-resize;touch-action:none;outline:none}
+.abl-mixer .abl-send-knob[aria-disabled="false"] .abl-send-dial{border:0;background:conic-gradient(from 210deg,#4cc3ff 0 calc(var(--abl-send-position,0)*300deg),#7a7a7a 0 300deg,transparent 0);-webkit-mask:radial-gradient(circle,transparent 5px,#000 5.5px);mask:radial-gradient(circle,transparent 5px,#000 5.5px)}
+.abl-mixer .abl-send-knob.pending .abl-send-dial{opacity:.55}
+.abl-mixer .abl-send-knob:focus-visible .abl-send-letter{outline:1px solid #ffa31a}
+.abl-mixer .abl-mixer-strip .strip-db{grid-area:db;all:unset;grid-area:db;box-sizing:border-box;height:15px;border:1px solid #6a6a6a;background:#d8d8d8;font:9px/13px var(--abl-dev-font);text-align:center;color:#111;cursor:text;overflow:hidden}
+.abl-mixer .abl-mixer-strip .mixer-pan{grid-area:pan;justify-self:center;align-self:center;width:24px!important;height:24px!important;min-width:0;border-radius:50%;border:2px solid #7a7a7a;background:#c9c9c9;box-sizing:border-box;margin:0;padding:0}
+.abl-mixer .abl-mixer-strip .mixer-pan::after{border-color:#111}
+.abl-mixer .abl-mixer-strip .strip-controls{grid-area:ctl;display:flex;flex-direction:column;align-items:center;gap:3px;padding-top:2px;margin:0;width:auto}
+.abl-mixer .abl-mixer-strip .strip-controls button{all:unset;box-sizing:border-box;width:26px;height:16px;border:1px solid #555;background:#bdbdbd;font:600 10px/14px var(--abl-dev-font);text-align:center;color:#111;cursor:default}
+.abl-mixer .abl-mixer-strip .strip-controls button[hidden]{display:none}
+/* Activator = mute: lit orange while the track plays (not muted). */
+.abl-mixer .abl-mixer-strip .strip-controls button.abl-activator{width:26px;height:20px;line-height:18px;background:var(--abl-dev-orange)}
+.abl-mixer .abl-mixer-strip .strip-controls button.abl-activator.on{background:#a5a5a5;color:#444}
+.abl-mixer .abl-mixer-strip .strip-controls button.abl-solo.on{background:#59a7ff}
+.abl-mixer .abl-mixer-strip .strip-controls button.abl-arm{width:20px;height:16px;border-radius:2px;color:#555;font-size:9px}
+.abl-mixer .abl-mixer-strip .strip-controls button.abl-arm.on{background:#ff4b3b;color:#fff}
+.abl-mixer .abl-mixer-strip .strip-controls button:disabled{opacity:.45}
+.abl-mixer .abl-mixer-strip .strip-controls button.unavailable{opacity:.6}
+.abl-mixer .abl-mixer-strip .meter-and-fader{grid-area:fader;display:flex;flex-direction:row-reverse;gap:2px;align-items:stretch;justify-content:flex-start;min-height:110px;height:auto;margin:2px 0 0;width:auto;position:relative}
+.abl-mixer .abl-mixer-strip .meter{width:6px;flex:0 0 6px;height:auto;background:#1e1e1e;position:relative;border:0;margin:0;order:0}
+.abl-mixer .abl-mixer-strip .meter-fill{position:absolute;left:0;right:0;bottom:0;background:linear-gradient(to top,#2fd25a 0 70%,#f2d22e 70% 90%,#f2462e 90%)}
+.abl-mixer .abl-mixer-strip .fader-track{position:relative;flex:1 1 auto;width:auto;min-width:22px;height:auto;margin:0;background:none;border:0;order:1}
+.abl-mixer .abl-mixer-strip .fader-track::before{content:"";position:absolute;right:4px;top:0;bottom:0;width:2px;background:#555}
+.abl-mixer .abl-mixer-strip .fader-track input{left:auto!important;right:0!important;width:14px!important;height:100%!important}
+.abl-mixer .abl-mixer-strip .fader-track input::-webkit-slider-thumb{width:12px!important;height:12px!important;border:0!important;border-radius:0!important;box-shadow:none!important;background:#222!important;clip-path:polygon(0 50%,100% 0,100% 100%)}
+.abl-mixer .abl-mixer-strip .fader-scale{position:absolute;left:0;top:0;bottom:0;width:10px;pointer-events:none}
+.abl-mixer .abl-mixer-strip .fader-tick{position:absolute;left:0;width:4px;height:1px;background:#555}
+.abl-mixer .abl-mixer-strip .fader-tick-label{display:none}
+.abl-mixer .abl-mixer-strip.abl-main .fader-tick-label{display:block;position:absolute;left:5px;top:-5px;font-size:8px;color:#333}
+/* Main: Live shows the dB scale beside the meter */
+.abl-mixer .abl-mixer-strip.abl-main .fader-track{min-width:40px}
+.abl-mixer .abl-mixer-strip.abl-main .fader-scale{width:24px}
+.abl-mixer .abl-mixer-strip.abl-main .fader-tick-label{font:8px/10px var(--abl-dev-font);font-variant-numeric:tabular-nums}
+.abl-mixer .abl-mixer-strip.solo-silenced .strip-name{opacity:.6}
+/* The strip view also tags every strip .logic-channel-strip, whose dark Logic skin is all !important
+ * (logic-mixer.css). Live wins here: light strips, full host height, readable fader/meter/buttons. */
+#abl-session-mixer.abl-mixer:not([hidden]):not(:empty),#abl-arr-mixer.abl-mixer:not([hidden]){display:flex!important;align-items:stretch!important;box-sizing:border-box;background:var(--abl-panel2,#c3c3c3)!important}
+.abl-mixer .abl-mixer-strip.abl-mixer-strip.abl-mixer-strip{display:grid!important;grid-template-columns:1fr 30px!important;grid-template-rows:16px auto 30px 18px minmax(64px,1fr)!important;grid-template-areas:"name name" "sends sends" "pan pan" "db fader" "ctl fader"!important;
+ flex:0 0 84px!important;width:84px!important;min-width:84px!important;align-self:stretch!important;height:auto!important;min-height:100%!important;padding:0 3px 4px!important;gap:2px 3px!important;margin:0!important;
+ background:#c9c9c9!important;border:0!important;border-right:1px solid #8a8a8a!important;box-shadow:none!important;color:#111!important;font:10px var(--abl-dev-font)!important;overflow:hidden}
+.abl-mixer .abl-mixer-strip.abl-mixer-strip.abl-mixer-strip.abl-return{background:#bdbdbd!important}
+/* QA r2: Session strips sit under the clip columns: same width as the shell's Session track column (abl-shell.css
+ * .abl-session-track is 108 px; --abl-session-col-w follows it if the shell defines it). Main matches the 96 px scenes column. */
+#abl-session-mixer .abl-mixer-strip.abl-mixer-strip.abl-mixer-strip:not(.abl-main){flex:0 0 var(--abl-session-col-w,108px)!important;width:var(--abl-session-col-w,108px)!important;min-width:var(--abl-session-col-w,108px)!important}
+.abl-mixer .abl-mixer-strip.abl-mixer-strip.abl-mixer-strip.abl-main{flex:0 0 96px!important;width:96px!important;min-width:96px!important;margin-left:auto!important;background:#b1b1b1!important}
+.abl-mixer .abl-mixer-strip.abl-mixer-strip.abl-mixer-strip.selected{background:#e2e2e2!important}
+.abl-mixer .abl-mixer-strip.abl-mixer-strip .strip-name{order:0!important;grid-area:name!important;height:16px!important;margin:0 -3px!important;padding:0 4px!important;width:auto!important;color:#111!important;background:var(--abl-track-color,#a6a6a6)!important;font:600 10px/16px var(--abl-dev-font)!important;text-align:left!important}
+.abl-mixer .abl-mixer-strip.abl-mixer-strip.abl-main .strip-name{background:#4a4a4a!important;color:#eee!important}
+.abl-mixer .abl-mixer-strip.abl-mixer-strip .mixer-pan{grid-area:pan!important;justify-self:center!important;align-self:center!important;width:24px!important;height:24px!important;min-height:24px!important;margin:0!important;border:2px solid #7a7a7a!important;background:#c9c9c9!important}
+.abl-mixer .abl-mixer-strip.abl-mixer-strip .mixer-pan::after{background:#111!important}
+.abl-mixer .abl-mixer-strip.abl-mixer-strip .strip-db{grid-area:db!important;align-self:start!important;width:auto!important;height:15px!important;min-height:15px!important;margin:0!important;padding:0!important;border:1px solid #6a6a6a!important;background:#d8d8d8!important;color:#111!important;font:9px/13px var(--abl-dev-font)!important;text-align:center!important}
+.abl-mixer .abl-mixer-strip.abl-mixer-strip .meter-and-fader{grid-area:fader!important;display:flex!important;flex-direction:row-reverse!important;align-items:stretch!important;justify-content:flex-start!important;gap:2px!important;height:auto!important;min-height:0!important;margin:2px 0 0!important}
+/* QA r2 (arrmix-s.png): a fixed ≥110 px fader overflowed the Arrangement mixer host and clipped arm buttons and the scale
+ * below −48 dB. The fader row now takes exactly the space left (the controls column keeps its 64 px), so every strip fits. */
+.abl-mixer .abl-mixer-strip.abl-mixer-strip .fader-track{flex:1 1 auto!important;width:auto!important;min-width:22px!important;height:auto!important;align-self:stretch!important;margin:0!important;background:none!important;border:0!important}
+.abl-mixer .abl-mixer-strip.abl-mixer-strip .fader-track input{left:auto!important;right:0!important;width:14px!important;height:100%!important}
+.abl-mixer .abl-mixer-strip.abl-mixer-strip .fader-track input::-webkit-slider-thumb{width:12px!important;height:12px!important;border:0!important;border-radius:0!important;box-shadow:none!important;background:#222!important;clip-path:polygon(0 50%,100% 0,100% 100%)}
+.abl-mixer .abl-mixer-strip.abl-mixer-strip .fader-scale{left:0!important;right:auto!important;top:0!important;bottom:0!important;width:10px!important}
+.abl-mixer .abl-mixer-strip.abl-mixer-strip .fader-tick{background:#555!important}
+.abl-mixer .abl-mixer-strip.abl-mixer-strip .fader-tick-label{color:#333!important}
+.abl-mixer .abl-mixer-strip.abl-mixer-strip .meter{flex:0 0 6px!important;width:6px!important;height:auto!important;align-self:stretch!important;margin:0!important;border:1px solid #6a6a6a!important;background:#8f8f8f!important}
+.abl-mixer .abl-mixer-strip.abl-mixer-strip .strip-controls{grid-area:ctl!important;display:flex!important;flex-direction:column!important;align-items:center!important;gap:3px!important;margin:0!important;padding-top:2px!important}
+.abl-mixer .abl-mixer-strip.abl-mixer-strip .strip-controls button{width:26px!important;height:16px!important;min-height:0!important;margin:0!important;padding:0!important;border:1px solid #555!important;border-radius:0!important;background:#bdbdbd!important;color:#111!important;font:600 10px/14px var(--abl-dev-font)!important;box-shadow:none!important}
+.abl-mixer .abl-mixer-strip.abl-mixer-strip .strip-controls button.abl-activator{height:20px!important;line-height:18px!important;background:var(--abl-dev-orange)!important}
+.abl-mixer .abl-mixer-strip.abl-mixer-strip .strip-controls button.abl-activator.on{background:#a5a5a5!important;color:#444!important}
+.abl-mixer .abl-mixer-strip.abl-mixer-strip .strip-controls button.abl-solo.on,.abl-mixer .abl-mixer-strip.abl-mixer-strip .strip-controls button.solo.on{background:#59a7ff!important;color:#111!important}
+.abl-mixer .abl-mixer-strip.abl-mixer-strip .strip-controls button.abl-arm{width:20px!important;border-radius:2px!important;color:#555!important;font-size:9px!important}
+.abl-mixer .abl-mixer-strip.abl-mixer-strip .strip-controls button.abl-arm.on{background:#ff4b3b!important;color:#fff!important}
+/* Returns keep Live's letter badge (A, B…) as the activator label. */
+.abl-mixer .abl-mixer-strip.abl-mixer-strip.abl-return .strip-controls button.abl-activator{font-weight:700!important}
+
+/* ---------- Automation Mode (A) ---------- */
+/* Live: Device ▾ and Control ▾ side by side on one line under the track name, spanning the header */
+.abl-auto-choosers{display:flex;flex-direction:row;gap:2px;margin-top:2px;min-width:0;width:100%;flex:1 0 100%;order:10}
+.abl-auto-choosers button{flex:1 1 0;min-width:0}
+/* QA r2 (auto-s.png): the full-width choosers on the header's single flex line squeezed the track name to nothing.
+ * In Automation Mode the header wraps: name row first (name keeps its width), choosers on the line below. */
+#playlist .track-lane.abl-auto-track .track-label.abl-track-header{flex-wrap:wrap!important;align-content:flex-start!important;align-items:flex-start!important;row-gap:2px}
+#playlist .track-lane.abl-auto-track .abl-track-name{min-width:48px;flex:1 1 48px}
+/* Automation Mode: taller tracks so the envelope is usable */
+.abl-auto-track{min-height:64px!important;height:auto}
+.abl-auto-track .abl-track-lane,.abl-auto-track .lane-grid{min-height:64px}
+.abl-auto-choosers button{all:unset;box-sizing:border-box;height:15px;padding:0 14px 0 4px;border:1px solid #6a6a6a;background:#d6d6d6;font:10px/13px var(--abl-dev-font);color:#111;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:150px;position:relative;cursor:default}
+.abl-auto-choosers button::after{content:"▾";position:absolute;right:3px;top:0;font-size:9px}
+.abl-auto-choosers button:hover{background:#e3e3e3}
+.abl-auto-overlay{position:absolute;inset:0;z-index:6;cursor:crosshair;touch-action:none;background:#ffffff14}
+.abl-auto-overlay .logic-auto-segment{position:absolute;top:0;bottom:0;min-width:2px}
+.abl-auto-overlay .logic-auto-segment svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.abl-auto-overlay .logic-auto-line{fill:none;stroke:var(--abl-auto-red);stroke-width:1.5}
+.abl-auto-overlay .logic-auto-segment.saving .logic-auto-line{stroke-dasharray:4 3}
+.abl-auto-overlay .logic-auto-segment.save-error .logic-auto-line{stroke:#7a0000}
+.abl-auto-overlay .logic-auto-point{position:absolute;width:7px;height:7px;margin:-4px 0 0 -4px;border-radius:50%;background:#fff;border:1.5px solid var(--abl-auto-red);box-sizing:border-box;cursor:grab;z-index:1}
+.abl-auto-overlay .logic-auto-point.selected{background:var(--abl-auto-red)}
+.abl-auto-extend{position:absolute;height:0;border-top:1.5px solid var(--abl-auto-red);opacity:.8;pointer-events:none}
+/* The hint lives in the status bar (abl-auto.js), never over the clips */
+.abl-auto-empty{display:none}
+
+/* ---------- Plug-in window (Live floating window) ---------- */
+dialog.abl-plugin-window{background:#c3c3c3;color:#111;border:1px solid #444;border-radius:0;padding:0;font:11px var(--abl-dev-font)}
+dialog.abl-plugin-window>header{background:#9c9c9c;color:#111;height:20px;padding:0 6px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #555}
+.abl-plugin-title{font:600 11px var(--abl-dev-font);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.abl-plugin-header{display:flex;align-items:center;gap:6px;height:20px;padding:0 6px;background:#b4b4b4;border-bottom:1px solid #6a6a6a}
+.abl-plugin-header button{all:unset;box-sizing:border-box;height:15px;padding:0 6px;border:1px solid #555;background:#d6d6d6;font:10px/13px var(--abl-dev-font);cursor:default}
+.abl-plugin-header button.on{background:var(--abl-dev-orange)}
+.abl-plugin-header .abl-plugin-activator{width:13px;height:13px;padding:0;border-radius:50%;background:#8e8e8e}
+.abl-plugin-header .abl-plugin-activator.on{background:var(--abl-dev-orange)}
+.abl-plugin-header button:disabled{opacity:.5}
+.abl-plugin-name{flex:1 1 auto;font-weight:600}
+/* Expand scales the panel width; the GUI mirror maps input from its on-screen rectangle. */
+dialog.abl-plugin-window .plugin-gui-panel,dialog.abl-plugin-window .plugin-eq-panel{width:calc(560px * var(--abl-plugin-scale,1));max-width:calc(100vw - 40px)}
+dialog.abl-plugin-window .plugin-window-tabs[hidden]{display:none}
+/* QA round 1: the Arrangement / Session mixer hosts are filled by full-height Live strips (the fader row takes the rest). */
+#abl-arr-mixer.abl-mixer,#abl-session-mixer.abl-mixer{display:flex;align-items:stretch;gap:0;height:100%;box-sizing:border-box;overflow-x:auto;overflow-y:hidden}
+#abl-arr-mixer .abl-mixer-strip.abl-mixer-strip,#abl-session-mixer .abl-mixer-strip.abl-mixer-strip{height:auto;align-self:stretch}
+#abl-arr-mixer .abl-mixer-strip .meter-and-fader,#abl-session-mixer .abl-mixer-strip .meter-and-fader{min-height:0;height:100%}
+.abl-device-host{flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font:9px/12px var(--abl-dev-font);color:#333;background:#e2e2e2;border:1px solid #8a8a8a;border-radius:2px;padding:0 3px}
+.abl-rack-chain-device{display:flex;gap:10px;padding:4px 2px;border-top:1px solid #8a8a8a;margin-top:4px}
+.abl-rack-chain-knob{display:flex;flex-direction:column;align-items:center;font:9px/11px var(--abl-dev-font);color:#222}
+/* Device View "+" menu: searchable, grouped like Live's Browser (Instruments / Audio Effects / Plug-ins), pages load on demand. */
+.abl-device-menu{position:fixed;z-index:1000;width:260px;max-height:min(420px,70vh);display:flex;flex-direction:column;background:#d4d4d4;border:1px solid #555;box-shadow:0 3px 10px #0005;font:11px var(--abl-dev-font);color:#111}
+.abl-device-menu-title{padding:3px 6px;background:#a8a8a8;border-bottom:1px solid #777;font-weight:600}
+.abl-device-menu-search{margin:4px;height:18px;border:1px solid #777;background:#ececec;color:#111;font:11px var(--abl-dev-font);padding:0 4px}
+.abl-device-menu-list{flex:1 1 auto;overflow:auto;min-height:40px}
+.abl-device-menu-heading{position:sticky;top:0;padding:2px 6px;background:#bcbcbc;border-bottom:1px solid #8a8a8a;font-weight:600;color:#222}
+.abl-device-menu-item{all:unset;box-sizing:border-box;display:flex;gap:6px;align-items:center;justify-content:space-between;width:100%;padding:2px 10px;cursor:default;white-space:nowrap}
+.abl-device-menu-item small{color:#555;overflow:hidden;text-overflow:ellipsis}
+.abl-device-menu-item:hover:not([disabled]),.abl-device-menu-item:focus{background:var(--abl-dev-orange);outline:none}
+.abl-device-menu-item[disabled]{color:#7a7a7a}
+.abl-device-menu-status{padding:2px 6px;color:#444;font-size:10px;min-height:14px;border-top:1px solid #9a9a9a}
+/* Control bar Scale chooser (abl-scale.js): root + scale name, lit when the project has a key */
+.abl-control-bar .abl-scale{min-width:58px;white-space:nowrap}
+.abl-control-bar .abl-scale.on{color:#000;background:var(--abl-dev-orange,#ffa31a)}
+.abl-control-bar .abl-scale[data-busy]{opacity:.6}
+
+/* Automation breakpoint Edit Value… (abl-auto.js valueBox): Live's small inline value field. */
+.abl-auto-value-box{font:11px/16px var(--abl-font,system-ui,sans-serif);height:18px;padding:0 4px;border:1px solid #ffb532;border-radius:2px;background:#1e1e1e;color:#e6e6e6;outline:none;text-align:center;box-sizing:border-box}
+.abl-send-knob[data-value]::after{content:attr(data-value);position:absolute;left:50%;top:-14px;transform:translateX(-50%);font:10px/12px var(--abl-font,system-ui,sans-serif);color:#e6e6e6;background:#1e1e1e;padding:0 3px;border-radius:2px;white-space:nowrap;pointer-events:none}
+.abl-mixer .abl-send-knob[data-value]{position:relative}
+
+/* Device View: the selected device (click its title bar; Delete removes it). */
+#abl-detail-device .abl-device.selected>.abl-device-title{box-shadow:inset 0 0 0 1px #111;filter:brightness(1.12)}
+#abl-detail-device:focus{outline:none}
+
+/* Mixer: Live's In/Out section (I·O toggle on the Main strip) and the Solo/Cue switch. */
+.abl-io{display:none;flex-direction:column;gap:2px;padding:2px 3px;border-bottom:1px solid #8a8a8a;font:10px var(--abl-dev-font);color:var(--abl-dev-text)}
+body.abl-mixer-io .abl-io{display:flex}
+.abl-io .abl-io-label{color:var(--abl-dev-dim);font-size:9px}
+.abl-io .abl-io-chooser{all:unset;box-sizing:border-box;height:14px;padding:0 3px;border:1px solid #6b6b6b;background:#a9a9a9;font:10px var(--abl-dev-font);color:#111;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer}
+.abl-io .abl-io-chooser:disabled{color:#555;cursor:default;background:#b4b4b4}
+.abl-mixer-sections{display:flex;gap:2px;padding:2px 3px;justify-content:flex-end}
+.abl-mixer-sections button{all:unset;box-sizing:border-box;height:14px;padding:0 4px;border:1px solid #6b6b6b;background:#c3c3c3;font:10px var(--abl-dev-font);color:#111;cursor:pointer}
+.abl-mixer-sections button.lit,.abl-mixer-sections button[aria-pressed="true"]{background:var(--abl-dev-orange)}
+.abl-mixer-sections button:disabled{color:#666;cursor:default;background:#b4b4b4}

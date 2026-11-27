@@ -1,0 +1,164 @@
+/* Measured against the open FL Studio 2026 Channel Rack. */
+#rack > .panel-heading > #rack-menu {
+ order:0;
+ position:absolute;
+ left:5px;
+ top:3px;
+ width:23px;
+ min-width:23px;
+ height:22px;
+ min-height:22px;
+ padding:0;
+ color:#b5c3cb;
+}
+#rack > .panel-heading > .rack-title {
+ text-indent:0;
+ flex-basis:119px;
+ width:119px;
+ margin-left:-18px;
+ padding-left:20px;
+ font-family:"Vegetable FL UI",Arial,sans-serif;
+ font-size:13px;
+ font-weight:400;
+ color:#bac6cd;
+}
+#rack > .panel-heading > .rack-title::before {
+ content:"";
+ position:absolute;
+ width:14px;
+ height:15px;
+ margin-left:-19px;
+ margin-top:2px;
+ background:currentColor;
+ clip-path:polygon(0 31%,24% 31%,65% 0,65% 100%,24% 69%,0 69%,0 31%,12% 39%,12% 61%,29% 61%,53% 80%,53% 20%,29% 39%);
+ opacity:.8;
+}
+#rack .rack-channel > .channel-name {
+ font-family:"Vegetable FL Narrow","Arial Narrow",Arial,sans-serif;
+ font-size:14px;
+ line-height:21px;
+ letter-spacing:.1px;
+ font-weight:400;
+ /* QA round 23, sampled from the FL 2026 screenshot: neutral grey button, near-white label. */
+ color:#ebedef;
+ background:linear-gradient(#6c757a 0%,#5b6469 6%,#525b60 70%,#4d565b 100%);
+ border-color:#373f44;
+}
+/* FL mixer-track box: a dark inset well with a light number. */
+#rack .rack-channel > .channel-number {
+ font-family:"Vegetable FL Narrow","Arial Narrow",Arial,sans-serif;
+ font-size:14px;
+ font-weight:400;
+ color:#c8d5d9;
+ background:linear-gradient(#525b60 0%,#5a6368 45%,#535c61 100%);
+ border:1px solid #333c41;
+ box-shadow:none;
+ text-align:right;
+ padding-right:9px;
+ position:relative;
+}
+/* The box's small up/down arrows (FL), drawn only: routing is changed in the Mixer. */
+#rack .rack-channel > .channel-number::after {content:"";position:absolute;right:3px;top:50%;width:4px;height:9px;margin-top:-4.5px;background:#8d9aa0;clip-path:polygon(0 38%,50% 0,100% 38%,100% 44%,50% 8%,0 44%,0 56%,50% 92%,100% 56%,100% 62%,50% 100%,0 62%);opacity:.8;}
+#rack #rack-channels {background:#5f686d;}
+/* FL 2026 steps: a light cap, a dark notch line, then the body; grey and brown 4-step groups. */
+/* Round 24: FL's 20px step height, darker bodies and a stronger grey/brown-red group contrast;
+   a thin edge (no heavy top border), the same edge on lit steps. */
+/* Round 25: matched per CSS pixel to fl-rack.png (Retina, sampled every 2 device px):
+   1px top edge, 3px cap (light→darker), 1px dark notch, a 1px lift, a lit body top fading
+   down, a 2px dark foot, a dark side frame with an inner left shadow and right highlight,
+   and a faint light line under the button (FL's 3D bevel). */
+#rack .step {
+ height:20px;min-height:20px;border-radius:2px;
+ background:linear-gradient(#6e7478 0%,#63696d 6.25%,#585e62 12.5%,#262c30 18.75%,#262c30 25%,#44494d 25%,#666c70 31.25%,#5d6367 37.5%,#4b5155 87.5%,#363c40 93.75%,#363c40 100%);
+ border:1px solid #2f363a;border-top-color:#4e5559;border-bottom-color:#272e33;
+ box-shadow:inset 1px 0 #454b4f,inset -1px 0 #5a6064,0 1px #4d565b;
+}
+#rack .step:nth-child(8n+5),#rack .step:nth-child(8n+6),
+#rack .step:nth-child(8n+7),#rack .step:nth-child(8n+8) {
+ background:linear-gradient(#7e6d6e 0%,#746364 6.25%,#685758 12.5%,#2e2223 18.75%,#2e2223 25%,#544344 25%,#7a696a 31.25%,#766566 37.5%,#5a494a 87.5%,#3e3132 93.75%,#3e3132 100%);
+ border-color:#382c2d;border-top-color:#5e5051;border-bottom-color:#2a2122;
+ box-shadow:inset 1px 0 #554546,inset -1px 0 #7a696a,0 1px #4d565b;
+}
+#rack .step.on {background:linear-gradient(#dbebf1 0%,#c5d5df 6.25%,#afbec8 12.5%,#65747e 18.75%,#65747e 25%,#a9b9c3 25%,#d1e1eb 31.25%,#c9d9e3 37.5%,#92a2ac 87.5%,#6d7d87 93.75%,#6d7d87 100%);border-color:#384147;border-top-color:#737f85;border-bottom-color:#323a3f;box-shadow:inset 1px 0 #8a9aa4,inset -1px 0 #d0e0ea,0 1px #4d565b;}
+#rack .step:nth-child(8n+5).on,#rack .step:nth-child(8n+6).on,
+#rack .step:nth-child(8n+7).on,#rack .step:nth-child(8n+8).on {
+ background:linear-gradient(#f7d6d8 0%,#e7c0c2 6.25%,#d7aaac 12.5%,#8e6163 18.75%,#8e6163 25%,#d4a7a9 25%,#f7cacc 31.25%,#f2c5c7 37.5%,#bb8e90 87.5%,#9a6d6f 93.75%,#9a6d6f 100%);border-color:#4a3c3d;border-top-color:#82777b;border-bottom-color:#323a3f;box-shadow:inset 1px 0 #b48789,inset -1px 0 #f5c8ca,0 1px #4d565b;
+}
+/* Empty sample scores use the same real step bank as populated sample rows.
+   Template selection remains on the channel name; no extra green score button. */
+#rack .rack-use-score.rack-use-settings {display:none;}
+/* Round 25: FL lists every channel normally; a channel this pattern does not use simply has
+   no steps. Its controls stay inert ("Use in this pattern" is in its menu) but are not dimmed. */
+#rack .rack-missing .step:disabled {opacity:1;cursor:default;}
+#rack .rack-missing .steps {opacity:1;}
+#rack .rack-missing > :is(.channel-name,.channel-enable,.small-knob,.channel-number,.channel-selected):disabled,
+#rack .rack-missing > :is(.channel-name,.channel-selected) {opacity:1;}
+#rack .rack-missing .rack-use-score.note-preview {border-style:solid;}
+/* 338 per-channel color / icon / cut group (pattern-channel-ops.js): FL shows the
+   channel color as a stripe on the channel button and the icon before its name. */
+#rack .rack-channel .channel-name[data-channel-color] {box-shadow:inset 4px 0 0 var(--channel-color);}
+#rack .rack-channel .channel-name[data-icon-glyph]::before {content:attr(data-icon-glyph);margin-right:4px;opacity:.85;}
+#rack .rack-channel .channel-name[data-cut-group]::after {content:"✂" attr(data-cut-group);margin-left:4px;font-size:10px;opacity:.7;}
+/* Show waveform preview: the sample's stored peaks behind its step row. */
+#rack .rack-channel .steps {position:relative;}
+#rack .rack-waveform {position:absolute;inset:2px 0;pointer-events:none;opacity:.5;color:#d9f0c8;z-index:1;}
+#rack .rack-waveform svg {width:100%;height:100%;display:block;}
+#rack .rack-waveform path, .channel-settings-waveform path {fill:currentColor;}
+.channel-settings-waveform {height:48px;margin:6px 0;color:#9fd27a;background:#26323a;border:1px solid #3c505b;}
+.channel-settings-waveform svg {width:100%;height:100%;display:block;}
+.channel-settings-waveform.unavailable {height:auto;padding:4px 6px;color:#c2ccd0;font-size:12px;}
+/* QA round 23 header, as FL 2026: ▸ · All ▸ · ◁) Channel rack … swing knob · steps box · tools · ×. */
+#rack > .panel-heading {background:#3f484d;}
+#rack > .panel-heading > select {order:1;margin-left:30px;background:#262b2f;border-color:#1f2427;color:#c9d1d5;}
+#rack > .panel-heading > .rack-title {order:2;margin-left:12px;color:#d3d9dd;font-size:14px;}
+#rack > .panel-heading > .rack-swing {order:3;margin-left:auto;}
+#rack > .panel-heading > .rack-steps {order:4;}
+/* FL: the tools and × follow the step box at the right edge (only the swing knob takes the free space). */
+#rack > .panel-heading > .panel-actions {margin-left:0;margin-right:-2px;flex:0 0 auto;}
+/* Round 31: text weight, measured against fl-rack.png. FL's labels render with greyscale
+   antialiasing (macOS subpixel smoothing made ours ~50% thicker: 3.6 vs 2.2 device-px strokes);
+   FL's channel names are ~12px in our Cuprum-based narrow face ("808 Kick" is 39px wide). */
+#rack {-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
+#rack .rack-channel > .channel-name {font-size:12px;letter-spacing:.2px;font-weight:400;}
+#rack .rack-channel > .channel-number {font-weight:400;}
+/* Round 29: FL's mini piano roll in place of the steps for a channel with piano-roll notes:
+   a dark inset strip with light note bars; read-only, a click opens the Piano roll. */
+#rack .rack-channel > .note-preview {height:20px;border:1px solid #2f363a;border-radius:2px;background:linear-gradient(#3a4247,#444d52);color:#c9d9e3;box-shadow:inset 0 1px #2a3135,0 1px #4d565b;cursor:pointer;overflow:hidden;}
+#rack .rack-channel > .note-preview:hover {background:linear-gradient(#40494e,#4a5459);}
+#rack .rack-channel > .note-preview svg {display:block;width:100%;height:100%;}
+/* Round 26: the header's fixed widths (filter 99px left margin + 80 + 18, title 101,
+   knob, step box, tools) overflowed the 490px rack, so × was cut off at the right.
+   Budget for the 450px minimum width: filter starts after ▸ like FL's, the title may
+   shrink, the tools (with ×) never do. */
+#rack > .panel-heading {overflow:hidden;}
+#rack > .panel-heading > #channel-filter {margin-left:52px;margin-right:4px;flex:0 0 80px;}
+/* Round 27: the title sizes to its full text ("Channel rack", as FL shows it) at the default
+   width; only a genuinely narrower rack shrinks it, with an ellipsis instead of a clip. */
+#rack > .panel-heading > span.rack-title {flex:0 1 auto;width:auto;min-width:0;margin-left:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+#rack > .panel-heading > .rack-swing {flex-shrink:0;}
+#rack > .panel-heading > .panel-actions {order:5;}
+/* FL Channel Rack header swing knob (pattern swing 0–100%): a dark round knob. */
+#rack > .panel-heading > .rack-swing {position:relative;flex:0 0 20px;width:20px!important;min-width:20px;height:20px!important;min-height:20px!important;margin-right:6px;padding:0!important;border:1px solid #2a3135!important;border-radius:50%!important;background:radial-gradient(circle at 40% 30%,#5f676d,#4d545a 55%,#3a4045 90%)!important;box-shadow:0 0 0 2px #353c41,inset 0 1px 1px #8a94994d;}
+#rack > .panel-heading > .rack-swing:after {top:2px;left:9px;height:6px;transform-origin:50% 8px;background:#c9d1d5;}
+/* FL's step-count box (read-only here: the length is changed from the pattern's bars). */
+/* Fixed like FL's (a generic heading span rule made it grow and pushed the tools and × out of the header). */
+#rack > .panel-heading > span.rack-steps {order:4;flex:0 0 36px!important;width:36px;max-width:36px;text-indent:0;overflow:hidden;min-width:34px;height:20px;line-height:18px;padding:0 6px;margin-right:6px;text-align:right;font-family:"Vegetable FL Narrow","Arial Narrow",Arial,sans-serif;font-size:14px;color:#8f9aa0;background:#3a4246;border:1px solid #2c3337;border-radius:3px;box-sizing:border-box;}
+/* FL's footer carries only the + (the length moved to the header box). */
+#rack .rack-bottom > #rack-info {display:none;}
+#rack .rack-bottom {background:#3f484d;border-top-color:#353d42;}
+#rack > .panel-heading > .rack-swing[data-preview="true"] {box-shadow:0 0 0 1px #f6a14b,inset 0 1px 1px #b3bfc34d;}
+#rack .rack-channel > .channel-enable.solo {border-color: #b87a1f; background: radial-gradient(circle at 35% 28%, #ffe9b0 0 8%, #f6c25b 30%, #e29a2b 68%, #a8691a 100%); box-shadow: 0 0 0 1px #33464b, 0 0 4px #f6a14b;}
+/* WP-29: zipped rows (name strip only) and the keyboard editor pitch strip. */
+#rack .rack-channel.rack-zipped {height:14px;min-height:14px;}
+#rack .rack-channel.rack-zipped > :not(.channel-name) {display:none;}
+#rack .rack-channel.rack-zipped > .channel-name {height:14px;min-height:14px;font-size:10px;line-height:12px;padding-top:0;padding-bottom:0;}
+#rack .rack-channel.rack-kbd-on {position:relative;height:50px;min-height:50px;align-items:flex-start;padding-top:3px;}
+#rack .rack-kbd {position:absolute;top:28px;width:248px;height:20px;display:grid;grid-template-columns:repeat(16,12px);gap:3.7px;align-items:end;}
+#rack .rack-kbd-col {position:relative;height:100%;display:flex;align-items:flex-end;background:#3a4247;box-shadow:inset 0 0 0 1px #2a3135;cursor:ns-resize;touch-action:none;}
+#rack .rack-kbd-col:not([data-pitch]) {cursor:default;opacity:.5;}
+#rack .rack-kbd-col > i {display:block;width:100%;background:#f6a14b;min-height:2px;}
+#rack .rack-kbd.readonly .rack-kbd-col {cursor:default;}
+#rack .rack-kbd.readonly .rack-kbd-col > i {background:#8b979e;}
+
+/* FL Channel rack: Alt+M / "Show mixer track selectors" hides the mixer track boxes. */
+#rack.hide-mixer-selectors .rack-channel > .channel-number {display:none;}

@@ -1,0 +1,472 @@
+/* FL Studio 2026's running default theme, observed on the reference Mac.
+   Playlist and piano dimensions share their respective geometry modules. */
+
+#playlist {
+  background: #2c3c45;
+  border-color: #24343e;
+}
+#playlist > .panel-heading {
+  height: 25px;
+  min-height: 25px;
+  padding: 0 7px;
+  gap: 7px;
+  background: #3b4951;
+  border-bottom: 1px solid #263840;
+  color: #b3bec6;
+}
+#playlist > .panel-heading > span {
+  font-size: 13px;
+  font-weight: 400;
+}
+#playlist .playlist-tools { gap: 0; }
+#playlist .playlist-tools button {
+  width: 21px;
+  min-width: 21px;
+  height: 23px;
+  min-height: 23px;
+  padding: 0 2px;
+  border-radius: 0;
+  color: #adb9c3;
+  background: transparent;
+}
+#playlist .playlist-tools button.selected {
+  color: #89acbd;
+  background: transparent;
+}
+#playlist .playlist-tools button:hover { color: #e0e6e8; background: #4b5d65; }
+#playlist > .panel-heading .panel-actions #new-track {
+  height:22px;min-height:22px;padding:0 5px;
+  font-size:11px;line-height:20px;white-space:nowrap;
+}
+
+#playlist .pattern-picker {
+  width: 150px;
+  padding: 0 4px 0 3px;
+  background: #2c3b44;
+  border-right: 4px solid #263640;
+}
+#playlist .picker-label {
+  display: flex;
+  align-items: flex-end;
+  height: 38px;
+  padding: 0 4px 6px;
+  color: #82929a;
+  font-size: 9px;
+  letter-spacing: .15px;
+}
+#playlist .pattern-tile {
+  min-height: 26px;
+  margin: 0 0 2px;
+  padding: 4px 6px;
+  border: 1px solid #293a43;
+  border-left: 2px solid #44535b;
+  border-radius: 0;
+  background: #34444d;
+  box-shadow: inset 0 1px #6a79822b;
+  color: #b6c0c6;
+  font-size: 12px;
+  line-height: 16px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#playlist .pattern-tile:hover { background: #45565f; }
+#playlist .pattern-tile.selected {
+  border-left-color: #df5a8f;
+  background: linear-gradient(#52616b, #3b4b55);
+  color: #d8e0e2;
+  box-shadow: inset 0 1px #8290994d;
+}
+#playlist .pattern-tile svg {
+  height: 10px;
+  margin-top: 2px;
+  opacity: .8;
+}
+#playlist .pattern-tile svg:not(:has([data-preview-kind])) { display: none; }
+#playlist .pattern-picker > button {
+  height: 20px;
+  min-height: 20px;
+  margin: 0;
+  border-top: 1px solid #25353f;
+  border-radius: 0;
+  color: #bac5cb;
+  background: #3b4951;
+}
+
+#playlist .playlist-navigator {
+  background: #394b54;
+  border-bottom-color: #263c47;
+}
+#playlist .playlist-navigator-track { background: #30444f; }
+#playlist .playlist-navigator-handle {
+  background: #4b616c;
+  border-color: #72838c;
+  border-bottom-color: #2b424e;
+  box-shadow: inset 0 1px #a3afb44a;
+}
+#playlist .playlist-navigator .playlist-navigator-arrow {
+  background: #435760;
+  border-color: #293f4a;
+  color: #98aab4;
+}
+#playlist .arrangement-scroll { background: #263f4d; }
+#playlist .timeline-ruler {
+  height: 20px;
+  background: #152c37;
+  border-bottom-color: #102630;
+  color: #8c9da6;
+}
+#playlist .timeline-ruler > .ruler-bar {
+  padding: 4px 0 0 3px;
+  border-left-color: #152a34;
+  font-size: 10px;
+  line-height: 14px;
+}
+#playlist .track-lane { border-bottom-color: #132b36; }
+#playlist .track-label {
+  padding: 3px 3px;
+  background: #434e55;
+  box-shadow: inset 0 1px #65717929;
+  border-right: 1px solid #1c313d;
+  color: #8c9aa4;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 17px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#playlist .track-label .track-enable {
+  width: 9px;
+  height: 9px;
+  right: 8px;
+  bottom: 7px;
+  border: 1px solid #496f3c;
+  background: radial-gradient(circle at 40% 35%, #bdfb79, #91d748 65%, #6b9e39);
+  box-shadow: 0 0 0 1px #233640, 0 1px 1px #152933, inset 0 1px #e2ffc1aa;
+}
+#playlist .track-label .track-enable.off {
+  border-color: #3d4b53;
+  background: #657179;
+  box-shadow: 0 0 0 1px #253741;
+}
+#playlist .lane-grid {
+  background-color: #263f4d;
+  background-image:
+    linear-gradient(90deg, #152a34 1px, transparent 1px),
+    linear-gradient(90deg, #203641 1px, transparent 1px),
+    linear-gradient(90deg, #8a969c07 50%, transparent 50%);
+  /* Line spacing follows the zoom (ruler-scale.js sets --grid-*); the fallbacks are the 1-bar / 1-beat grid. */
+  background-size: var(--grid-major, var(--bar)) 100%, var(--grid-mid, calc(var(--bar) / 4)) 100%, calc(var(--grid-major, var(--bar)) * 2) 100%;
+}
+#playlist .track-lane:nth-child(even) .lane-grid { background-color: #27404d; }
+#playlist .clip {
+  border-radius: 0;
+  box-shadow: inset 0 1px #d7e0dd36, 1px 1px #142b3680;
+}
+#playlist .clip-title {
+  height: 17px;
+  padding: 1px 4px;
+  border-bottom-color: #2e45444f;
+  color: #2d4346;
+  font-size: 10px;
+  line-height: 13px;
+}
+#playlist .clip svg { padding: 3px 2px; opacity: .86; }
+#playlist .clip .clip-resize { border-radius: 0; }
+
+/* Native piano proportions share the renderer and gesture geometry contract. */
+#piano { border-color: #2b3d47; background: #3c4c55; }
+#piano > .panel-heading {
+  height: 27px;
+  min-height: 27px;
+  background: #3b4951;
+  border-bottom-color: #273a44;
+  color: #b9c4cc;
+}
+#piano .panel-heading > span { color: #b7c3cc; font-size: 13px; }
+#piano .piano-tools { gap: 0; }
+#piano .piano-tools button {
+  width: 21px;
+  min-width: 21px;
+  height: 23px;
+  min-height: 23px;
+  padding: 0 2px;
+  background: transparent;
+  border-radius: 0;
+  color: #adb9c3;
+}
+#piano .piano-tools button.selected { color: #dfb771; background: transparent; }
+#piano .piano-tools button:disabled { color: #8b9da6; opacity: .45; }
+#piano .piano-scroll { background: #34444e; }
+#piano .piano-grid-wrap { padding-top: 0; }
+#piano .piano-playhead { left: var(--piano-key-width, 70px); top: var(--piano-ruler-height, 20px); }
+#piano .piano-ruler {
+  position: sticky;
+  top: 0;
+  left: auto;
+  right: auto;
+  z-index: 8;
+  margin-left: var(--piano-key-width, 70px);
+  height: var(--piano-ruler-height, 20px);
+  background: #1f2a32;
+  border-bottom: 1px solid #1b282e;
+  color: #8d9fa8;
+}
+#piano .piano-ruler .ruler-bar {
+  padding-top: 4px;
+  border-left-color: #152a34;
+  color: #8d9fa8;
+  font-size: 10px;
+  line-height: 14px;
+}
+/* Round 31: FL's Piano roll labels are lighter: greyscale antialiasing (as FL renders text)
+   and a softer key-label grey, measured on fl-piano.png's "C6"/"C5" key labels. */
+#piano {-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
+#piano #piano-keys .piano-key, #piano #piano-keys .piano-key.black {color:#5b6168;}
+/* Round 25: FL's realistic keyboard. The 128 pitch rows (hit testing, audition, labels)
+   are unchanged and stay aligned with the grid; the keyboard is drawn behind them as
+   real keys: 7 equal white keys per 12-row octave (edges NOT on row lines), a grey band
+   on each C key, and the black keys overlaid on their own rows. The octave tile is
+   anchored on C9's lower edge (8 rows below the top pitch 127). */
+#piano #piano-keys {
+  --piano-octave: calc(var(--piano-row-height, 17px) * 12);
+  width: var(--piano-key-width, 73px);
+  box-shadow: 1px 0 #1d262b, 2px 0 #26323a;
+  background-image:
+    repeating-linear-gradient(to top, #b4b8bf 0, #b4b8bf 1px, transparent 1px, transparent calc(var(--piano-octave) / 7)),
+    linear-gradient(to top, #c3c7ce 0, #cbcfd6 calc(var(--piano-octave) / 7), transparent calc(var(--piano-octave) / 7)),
+    linear-gradient(90deg, #d3d7de, #e2e6ed 30%, #e6eaf0 94%, #c9cdd4);
+  background-size: 100% var(--piano-octave), 100% var(--piano-octave), 100% 100%;
+  background-repeat: repeat-y, repeat-y, no-repeat;
+  background-position: 0 calc(var(--piano-row-height, 17px) * 8), 0 calc(var(--piano-row-height, 17px) * 8), 0 0;
+}
+#piano .piano-key {
+  height: var(--piano-row-height, 17px);
+  padding: 2px 3px 0;
+  background: transparent;
+  box-shadow: none;
+  border-bottom: 0;
+  border-radius: 0;
+  color: #4a4f55;
+  font-size: 10px;
+  font-weight: 400;
+}
+/* Black keys: 64% of the width, dark with a lit tip and a soft drop shadow onto the white key. */
+#piano .piano-key.black {
+  background: linear-gradient(90deg, #2b2c2e 0%, #38393b 30%, #48494b 60%, #5a5b5d 62%, #1f2022 64%, #00000033 65%, transparent 67%);
+  box-shadow: none;
+  border-bottom: 0;
+  color: #4a4f55;
+}
+#piano .piano-key.active {
+  background: linear-gradient(90deg, #80ba8d, #96d6a1);
+  color: #274c36;
+}
+#piano #piano-grid {
+  left: var(--piano-key-width, 70px);
+  top: var(--piano-ruler-height, 20px);
+  /* FL 2026: white-key rows #34444e, black-key rows #2e3e48, faint row and step lines, darker beats and bars. */
+  background-color: #34444e;
+  background-image:
+    repeating-linear-gradient(0deg, transparent 0, transparent calc(var(--piano-row-height, 17px) - 1px), #2c3c46 calc(var(--piano-row-height, 17px) - 1px), #2c3c46 var(--piano-row-height, 17px)),
+    linear-gradient(90deg, #22323c 1px, transparent 1px),
+    linear-gradient(90deg, #2a3a44 1px, transparent 1px),
+    linear-gradient(90deg, #31414b 1px, transparent 1px);
+  background-size: 100% var(--piano-row-height, 17px), var(--grid-major, var(--bar)) 100%, var(--grid-mid, calc(var(--bar) / 4)) 100%, var(--grid-minor, calc(var(--bar) / 16)) 100%;
+}
+#piano .piano-grid-row { height: var(--piano-row-height, 17px); background: #0000001c; }
+/* FL's default note: a mint body with a lighter top and darker bottom edge, slightly rounded. */
+#piano .piano-note {
+  height: var(--piano-note-height, 15px);
+  padding: 1px 3px;
+  border-radius: 2px;
+  border-color: #577365;
+  border-bottom-color: #3d5054;
+  background: linear-gradient(#b5e5bb 0%, #a7d7b0 18%, #a3d2ac 70%, #9ecda6 92%, #8ab790 100%);
+  color: #23412b;
+  box-shadow: none;
+}
+#piano .piano-note .note-resize { background: #6f9f7826; }
+/* FL shows no name on short notes (e.g. 1/16 step hits); longer notes keep their label. */
+#piano .piano-note.short { color: transparent; padding: 0; font-size: 0; }
+#piano .piano-note.short.selected { color: transparent; }
+/* FL ghost notes (other channels of this pattern): a dim green shade, no label emphasis. */
+#piano .piano-ghost-note { height: var(--piano-note-height, 15px); background: #7fb48a47; border-color: #9fd2a85c; border-bottom-color: #3f6a4a66; color: #a9d7b199; border-radius: 2px; opacity: 1; }
+#piano .piano-ghost-note.muted { opacity: .6; }
+#piano .velocity-panel {
+  height: var(--piano-velocity-panel-height, 128px);
+  background: #3f484d;
+  border-top: 5px solid #3f484d;
+  box-shadow: 0 -1px #1d262b;
+}
+#piano .velocity-panel label {
+  width: var(--piano-key-width, 70px);
+  padding: 6px 7px;
+  color: #b8c4cb;
+  font-size: 13px;
+  line-height: 18px;
+}
+#piano .velocity-panel label b { color: #7e919c; font-size: 11px; font-weight: 400; }
+#piano #velocity-grid {
+  border-left-color: #1d262b;
+  background-color: #34444e;
+  background-image:
+    linear-gradient(90deg, #22323c 1px, transparent 1px),
+    linear-gradient(90deg, #2e3e48 1px, transparent 1px),
+    linear-gradient(0deg, #2c3c4666 1px, transparent 1px);
+  background-size: var(--grid-major, var(--bar)) 100%, var(--grid-minor, calc(var(--bar) / 16)) 100%, 100% var(--piano-row-height, 17px);
+}
+/* FL velocity: a 3px mint stem with a round head (dark green fill, mint ring). */
+#piano .velocity-bar { width: 3px; background: #ceffd5; border-top: 0; overflow: visible; }
+#piano .velocity-bar::before { content: ""; position: absolute; top: -4px; left: -3px; width: 9px; height: 9px; box-sizing: border-box; border-radius: 50%; background: #598a60; border: 1px solid #ceffd5; }
+#piano .velocity-bar.selected::before { background: #9e8053; border-color: #f2ddae; }
+/* Keep selected notes and velocities distinct from the default green score. */
+#piano .piano-note.selected {
+  background: #d4ba84;
+  border-color: #e6cf9e;
+  border-bottom-color: #9e8053;
+  box-shadow: 0 0 0 1px #dfbf83;
+}
+#piano .velocity-bar.selected { background: #dec18a; border-top-color: #f2ddae; }
+
+/* Native Z cursor: the rectangle changes the view, never the score. */
+#piano[data-piano-tool="zoom"] #piano-grid,
+#piano[data-piano-tool="zoom"] .piano-note {cursor:zoom-in;}
+#piano .piano-zoom-rect {position:absolute;z-index:10;pointer-events:none;border:1px solid #a6c4d4;background:#8bb2c52b;box-shadow:0 0 0 1px #223b4680;}
+
+#piano[data-piano-tool="playback"] :is(#piano-grid,.piano-note,.note-resize) {cursor:ew-resize;}
+#piano .piano-scrub-cursor {position:absolute;top:0;bottom:0;width:1px;z-index:11;pointer-events:none;background:#c2dce5;box-shadow:0 0 3px #c2dce566;}
+#piano .piano-scrub-cursor.pending {background:repeating-linear-gradient(to bottom,#a4b7bf 0 3px,transparent 3px 6px);box-shadow:none;}
+#piano .piano-note.piano-scrub-active {filter:brightness(1.25);border-color:#e7f6d9;}
+
+/* Native Piano title strip: independent local snap, tools and history precede
+   the cursor tools; selected cursors have FL's fine amber outline. */
+#piano > .panel-heading {padding:0 5px;gap:7px;}
+#piano .piano-tools button {border:1px solid transparent;}
+#piano .piano-tools button.selected {
+ border-color:#efb24f;border-radius:5px;color:#f3ba50;
+ box-shadow:inset 0 0 0 1px #efb24f38;
+}
+#piano .piano-tools button:hover {color:#e4ebed;background:#58687066;}
+#piano .piano-tools button:focus-visible {outline:1px solid #9fc4d5;outline-offset:-2px;}
+#piano #piano-more {width:16px;min-width:16px;}
+#piano #piano-snap[data-local-snap="true"] {color:#91c7b5;}
+#piano #piano-snap[aria-expanded="true"] {border-color:#86bda9;border-radius:4px;}
+#piano #piano-clear {display:none;}
+#piano #note-length {margin-left:auto;width:50px;flex:0 0 50px;}
+#piano .panel-actions {margin-left:0;}
+#piano .velocity-panel {position:relative;}
+#piano .velocity-panel label {white-space:nowrap;}
+#piano .velocity-panel label b {
+ position:absolute;left:calc(var(--piano-key-width,70px) + 6px);top:5px;
+ z-index:2;pointer-events:none;color:#7e919c77;
+}
+.piano-key.piano-key-pending {box-shadow:inset 0 0 0 1px #d3b16b;}
+.piano-draw-preview {pointer-events:none;opacity:.8;}
+.playlist-draw-preview {pointer-events:none;opacity:.8;z-index:8;}
+
+/* Native piano keyboard corner crosses the overview and ruler without resizing either. */
+#piano #piano-overview {position:relative;overflow:visible;z-index:9;}
+#piano #piano-overview::before {
+ position:relative;
+ z-index:1;
+ align-self:flex-start;
+ height:38px;
+ min-height:38px;
+ clip-path:polygon(31% 0,100% 0,100% 100%,0 100%);
+ background:linear-gradient(105deg,#8acb9e,#7abc90);
+ border-right-color:#42634c;
+ box-shadow:inset 0 1px #b4cbaa66,inset 0 -1px #506e55;
+ pointer-events:none;
+}
+/* Reuse the real unavailable Slide control; its toolbar space stays reserved. */
+#piano #piano-slide {
+ position:absolute;
+ top:28px;
+ left:calc(var(--piano-key-width,70px) - 20px);
+ z-index:10;
+ width:20px;
+ min-width:20px;
+ height:20px;
+ min-height:20px;
+ padding:0;
+ background:transparent;
+ color:#314e3b;
+ opacity:.65;
+}
+#piano #piano-slide .studio-icon {width:13px;height:13px;}
+#piano .piano-tools::after {content:"";flex:0 0 21px;width:21px;pointer-events:none;}
+
+/* Selected picker items retain their exact box and miniature score geometry. */
+#playlist .pattern-tile.selected {
+ position:relative;
+ border-color:transparent;
+ outline:1px solid #b3d67b;
+ outline-offset:-1px;
+ box-shadow:inset 0 1px #adbd8a40;
+}
+#playlist .pattern-tile.selected::before {
+ content:"";
+ position:absolute;
+ left:1px;
+ top:50%;
+ transform:translateY(-50%);
+ border-top:4px solid transparent;
+ border-bottom:4px solid transparent;
+ border-left:4px solid #df6495;
+ pointer-events:none;
+}
+/* FL note flags (Freestyle PatternNote muted / slide). Muted notes are greyed out
+   like FL; slide notes carry FL's slide marker (a right-pointing glide wedge). */
+#piano .piano-note.muted {background: #6f7a7f; border-color: #8a9499; color: #c2c9cc; opacity: .62; filter: saturate(0);}
+#piano .piano-note.muted.selected {opacity: .85;}
+#piano .piano-note.slide {position: absolute; padding-right: 10px;}
+#piano .piano-note .note-slide {position: absolute; right: 7px; top: 50%; width: 0; height: 0; margin-top: -4px; border-top: 4px solid transparent; border-bottom: 4px solid transparent; border-left: 7px solid #f2f7ee; opacity: .9; pointer-events: none;}
+#piano .velocity-bar.muted {opacity: .35; filter: saturate(0);}
+#piano[data-piano-tool="mute"] .piano-note, #piano[data-piano-tool="slide"] .piano-note {cursor: pointer;}
+/* Piano roll scale highlighting (WP-09). */
+#piano .piano-grid-row.in-scale {background:#f6a14b14;}
+#piano .piano-grid-row.scale-root {background:#f6a14b2e;}
+#piano #piano-keys .piano-key.in-scale {box-shadow:inset 3px 0 0 #f6a14b66;}
+#piano #piano-keys .piano-key.scale-root {box-shadow:inset 3px 0 0 #f6a14b;}
+#piano #piano-channel {margin-left:4px;}
+#piano .piano-scale {display:inline-flex;align-items:center;gap:3px;margin-left:8px;font-size:10px;color:var(--dim);}
+#piano .piano-scale select {width:auto;max-width:96px;}
+
+/* WP-11: Audio clips and Automation clips groups under the Playlist pattern picker. */
+#playlist .pattern-picker .picker-group-label {
+  height: 20px;
+  padding: 6px 0 2px 2px;
+  font-family: "Vegetable FL Condensed", Arial, sans-serif;
+  font-size: 10px;
+  letter-spacing: .3px;
+  color: #9cabb2;
+}
+#playlist .pattern-picker .picker-item {
+  height: 20px;
+  line-height: 20px;
+  margin: 1px 0;
+  padding: 0 4px;
+  border-top: 1px solid #25353f;
+  border-bottom: 1px solid #1f2d35;
+  background: #34444e;
+  color: #d6dfe3;
+  font: 11px/20px Arial, sans-serif;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+#playlist .pattern-picker .picker-item:hover {background: #3d5059;}
+/* FL Playlist clip focus tabs (audio / automation / pattern): the focused clip type is drawn on top of a stack. */
+#playlist .clip-focus-tabs {display: flex; gap: 2px; padding: 4px 2px 0;}
+#playlist .clip-focus-tabs button {flex: 1; min-height: 20px; height: 20px; padding: 0; font-size: 12px; line-height: 18px; color: #8fa0aa; background: #2b3942; border: 1px solid #22303a; border-radius: 2px; box-shadow: none;}
+#playlist .clip-focus-tabs button.selected {color: #f6a14b; background: #3d4d56; border-color: #5b6b73;}
+#playlist[data-clip-focus="audio"] .clip.audio-clip,
+#playlist[data-clip-focus="pattern"] .clip:not(.audio-clip),
+#playlist[data-clip-focus="automation"] .automation-clip {z-index: 4;}
+#playlist[data-clip-focus="audio"] .clip:not(.audio-clip),
+#playlist[data-clip-focus="pattern"] .clip.audio-clip {z-index: 1;}
+/* FL: drag the divider under a track header to change the track height (all tracks share one height here). */
+#playlist .track-label::after {content: ""; position: absolute; left: 0; right: 0; bottom: -2px; height: 5px; cursor: ns-resize;}

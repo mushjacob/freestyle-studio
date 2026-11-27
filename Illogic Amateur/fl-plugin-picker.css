@@ -1,0 +1,139 @@
+/* Full-window effect selection, following the running FL Studio picker.
+   Cards represent the real catalog; no fabricated plugin faces are used. */
+.mixer-tools .mix-categories {display:flex;flex-wrap:wrap;gap:4px;margin-top:10px;}
+dialog.studio-dialog.mixer-tools.mix-picker[open][data-picker-active="true"] {
+  position:fixed;inset:0;display:flex;flex-direction:column;
+  width:100vw;max-width:100vw;height:100dvh;max-height:100dvh;
+  margin:0;padding:0;border:0;border-radius:0;box-shadow:none;
+  background:linear-gradient(#20313a 0%,#26353e 36%,#2d2c38 100%);
+  color:#bac6ce;
+}
+dialog.studio-dialog.mixer-tools.mix-picker[data-picker-active="true"] > header {
+  flex:0 0 64px;height:64px;position:relative;
+  border:0;background:linear-gradient(#111b21c9,transparent);box-shadow:none;
+  padding:0 24px;gap:12px;
+}
+dialog.studio-dialog.mixer-tools.mix-picker[data-picker-active="true"] .mix-picker-heading {
+  flex:0 1 auto;min-width:0;margin-left:auto;margin-right:38px;
+  overflow:hidden;white-space:nowrap;text-overflow:ellipsis;
+  font-family:"Vegetable FL Narrow","Arial Narrow",Arial,sans-serif;
+  font-size:26px;font-weight:400;color:#acb9c0;
+}
+dialog.studio-dialog.mixer-tools.mix-picker[data-picker-active="true"] .mix-indicator {display:none;}
+dialog.studio-dialog.mixer-tools.mix-picker[data-picker-active="true"] .mix-inspect-operation {order:-1;margin:0;flex:0 0 auto;max-width:45vw;white-space:normal;}
+dialog.studio-dialog.mixer-tools.mix-picker[data-picker-active="true"] .mix-close {
+  position:absolute;right:18px;top:17px;width:30px;min-width:30px;height:30px;min-height:30px;
+  color:#a8bac3;background:none;border:0;box-shadow:none;font-size:24px;
+}
+dialog.studio-dialog.mixer-tools.mix-picker[data-picker-active="true"] .mix-main {
+  display:flex;flex:1 1 auto;width:100%;min-height:0;height:auto;max-height:none;
+  background:transparent;overflow:hidden;
+}
+dialog.studio-dialog.mixer-tools.mix-picker[data-picker-active="true"] .mix-details {
+  display:flex;flex:1 1 auto;min-height:0;background:transparent;
+}
+dialog.studio-dialog.mixer-tools.mix-picker[data-picker-active="true"] .mix-content {
+  display:flex;flex-direction:column;flex:1 1 auto;min-height:0;padding:0 26px;
+  background:transparent;overflow:hidden;
+}
+dialog.studio-dialog.mixer-tools.mix-picker[data-picker-active="true"] .mix-catalog-controls {
+  display:grid;grid-template-columns:1fr minmax(220px,360px) 1fr;
+  flex:0 0 auto;align-items:center;gap:14px;min-height:44px;
+}
+dialog.studio-dialog.mixer-tools.mix-picker[data-picker-active="true"] .mix-catalog-controls h3 {
+  margin:0;font-size:12px;font-weight:400;color:#93a8b3;
+}
+dialog.studio-dialog.mixer-tools.mix-picker[data-picker-active="true"] .mix-search {
+  width:100%;height:30px;min-height:30px;margin:0;padding:4px 10px;
+  border:1px solid #52646c;border-radius:2px;background:#182a34;color:#d2dde1;
+  font-family:"Vegetable FL UI",Arial,sans-serif;font-size:13px;
+}
+dialog.studio-dialog.mixer-tools.mix-picker[data-picker-active="true"] .mix-search::placeholder {color:#8e9fa9;}
+dialog.studio-dialog.mixer-tools.mix-picker[data-picker-active="true"] .mix-catalog-count {
+  justify-self:end;font-size:11px;color:#8ca1ad;font-variant-numeric:tabular-nums;
+}
+dialog.studio-dialog.mixer-tools.mix-picker[data-picker-active="true"] .mix-catalog {
+  display:flex;flex-direction:row;flex-wrap:wrap;justify-content:center;
+  flex:1 1 auto;min-height:0;align-content:start;align-content:safe center;align-items:stretch;
+  gap:18px 12px;overflow:auto;overscroll-behavior:contain;padding:24px 8px;
+}
+dialog.studio-dialog.mixer-tools.mix-picker[data-picker-active="true"] .mix-catalog-item {
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  flex:0 0 142px;width:142px;min-width:0;min-height:80px;margin:0;padding:8px 6px;gap:7px;text-align:center;
+  border:1px solid #71828b26;border-radius:1px;background:#18252d24;
+  box-shadow:0 2px 5px #10192038;color:#c4ced4;
+}
+dialog.studio-dialog.mixer-tools.mix-picker[data-picker-active="true"] .mix-catalog-item:hover:not(:disabled) {
+  border-color:#a6b4bc99;background:#71838b25;color:#fff;
+  box-shadow:0 0 8px #adbec432;
+}
+dialog.studio-dialog.mixer-tools.mix-picker[data-picker-active="true"] .mix-catalog-item:focus-visible {
+  outline:1px solid #8ab6c3;outline-offset:2px;
+  border-radius:5px;background:linear-gradient(#4b7a8780,#395d7145);
+  box-shadow:0 0 8px #9cc3ce40,inset 0 1px #b7d9df33;
+}
+dialog.studio-dialog.mixer-tools.mix-picker[data-picker-active="true"] .mix-catalog-name {
+  min-width:0;font-family:"Vegetable FL Narrow","Arial Narrow",Arial,sans-serif;
+  font-size:15px;line-height:18px;overflow-wrap:anywhere;
+}
+dialog.studio-dialog.mixer-tools.mix-picker[data-picker-active="true"] .mix-catalog-item small {
+  margin-top:3px;font-family:"Vegetable FL UI",Arial,sans-serif;font-size:9px;line-height:12px;color:#8fa6b2;
+}
+dialog.studio-dialog.mixer-tools.mix-picker[data-picker-active="true"] .mix-catalog-item b {
+  font-size:8px;line-height:10px;font-weight:400;letter-spacing:.4px;color:#a9bf91;
+}
+dialog.studio-dialog.mixer-tools.mix-picker[data-picker-active="true"] .mix-catalog-item:disabled {opacity:.55;}
+dialog.studio-dialog.mixer-tools.mix-picker[data-picker-active="true"] .mix-categories {
+  display:flex;flex-wrap:nowrap;flex:0 0 auto;align-items:center;justify-content:space-between;gap:18px;
+  min-height:58px;margin:0;padding:6px 8px;overflow-x:auto;overflow-y:hidden;
+  scrollbar-width:thin;white-space:nowrap;
+}
+dialog.studio-dialog.mixer-tools.mix-picker[data-picker-active="true"] .mix-categories button {
+  flex:0 0 auto;min-height:32px;margin:0;padding:2px 4px;border:0;border-radius:0;
+  background:none;box-shadow:none;color:#8e9aa3;
+  font-family:"Vegetable FL Narrow","Arial Narrow",Arial,sans-serif;
+  font-size:19px;font-weight:400;text-shadow:0 1px 2px #0008;
+}
+dialog.studio-dialog.mixer-tools.mix-picker[data-picker-active="true"] .mix-categories button.selected {
+  color:#f0f2eb;text-shadow:0 1px 3px #000c;box-shadow:inset 0 -1px #d5dcd7;
+}
+dialog.studio-dialog.mixer-tools.mix-picker[data-picker-active="true"] .mix-categories button:hover {color:#e4edf0;}
+dialog.studio-dialog.mixer-tools.mix-picker[data-picker-active="true"] .mix-status {
+  flex:0 0 auto;min-height:24px;margin:0;padding:4px 26px;
+  border-color:#69808a26;background:#17242d35;color:#8fa5b2;font-size:10px;line-height:16px;
+}
+dialog.studio-dialog.mixer-tools.mix-picker[data-picker-active="true"] .mix-status.error {color:#efb19a;border-color:#a16f56;}
+@media (max-width:740px) {
+  dialog.studio-dialog.mixer-tools.mix-picker[data-picker-active="true"] .mix-content {padding:0 12px;}
+  dialog.studio-dialog.mixer-tools.mix-picker[data-picker-active="true"] .mix-picker-heading {font-size:21px;}
+  dialog.studio-dialog.mixer-tools.mix-picker[data-picker-active="true"] .mix-catalog-controls {grid-template-columns:1fr auto;gap:8px;}
+  dialog.studio-dialog.mixer-tools.mix-picker[data-picker-active="true"] .mix-catalog-controls h3 {grid-column:1;}
+  dialog.studio-dialog.mixer-tools.mix-picker[data-picker-active="true"] .mix-search {grid-column:1 / -1;grid-row:2;margin-bottom:8px;}
+  dialog.studio-dialog.mixer-tools.mix-picker[data-picker-active="true"] .mix-catalog-count {grid-column:2;grid-row:1;}
+  dialog.studio-dialog.mixer-tools.mix-picker[data-picker-active="true"] .mix-catalog {gap:12px 8px;align-content:start;}
+  dialog.studio-dialog.mixer-tools.mix-picker[data-picker-active="true"] .mix-catalog-item {flex-basis:120px;width:120px;}
+  dialog.studio-dialog.mixer-tools.mix-picker[data-picker-active="true"] .mix-categories {justify-content:flex-start;gap:14px;}
+}
+@media (forced-colors:active) {
+  dialog.studio-dialog.mixer-tools.mix-picker[open][data-picker-active="true"] {background:Canvas;color:CanvasText;}
+  dialog.studio-dialog.mixer-tools.mix-picker[data-picker-active="true"] .mix-catalog-item {border-color:ButtonText;}
+  dialog.studio-dialog.mixer-tools.mix-picker[data-picker-active="true"] .mix-categories button.selected {color:Highlight;}
+}
+
+/* Recovery Inspect is a real header action. The generic `.studio-dialog header
+   button` rule strips header buttons to bare close glyphs, so restore a button
+   face here (it is only shown while an uncertain plugin outcome blocks edits). */
+dialog.studio-dialog.mixer-tools > header > .mix-inspect-operation {
+  height:auto;min-height:26px;margin:0;padding:4px 12px;
+  font:11px "Vegetable FL UI",Arial,sans-serif;line-height:16px;color:#f3e2b4;
+  background:linear-gradient(#6d5b38,#54452b);border:1px solid #2b2316;border-radius:2px;
+  box-shadow:inset 0 1px #ffffff26,0 1px 2px #0006;cursor:pointer;
+}
+dialog.studio-dialog.mixer-tools > header > .mix-inspect-operation:hover:not(:disabled) {background:linear-gradient(#7d6941,#5f4e31);color:#fff3d2;}
+dialog.studio-dialog.mixer-tools > header > .mix-inspect-operation:focus-visible {outline:1px solid #f6c86b;outline-offset:1px;}
+dialog.studio-dialog.mixer-tools > header > .mix-inspect-operation[hidden],
+dialog.studio-dialog.mixer-tools > header > .mix-inspect-operation.hidden {display:none;}
+dialog.studio-dialog.mixer-tools.mix-picker[data-picker-active="true"] .mix-catalog-notice {
+  flex:0 0 auto;margin:8px auto 0;max-width:720px;padding:8px 12px;text-align:center;
+  color:#e6d3a3;background:#3a352acc;border:1px solid #6b5a36;border-radius:2px;
+}

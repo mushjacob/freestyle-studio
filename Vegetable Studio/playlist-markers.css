@@ -1,0 +1,10 @@
+.ruler-markers{position:absolute;left:0;top:0;height:100%;width:0;pointer-events:none;z-index:3}
+.ruler-markers .marker-flag{position:absolute;top:0;height:100%;transform:translateX(-1px);border-left:1px solid var(--marker-color,#e0d36a);pointer-events:auto;cursor:ew-resize;white-space:nowrap}
+.ruler-markers .marker-flag>span{display:inline-block;max-width:110px;overflow:hidden;text-overflow:ellipsis;padding:0 4px;font-size:9px;line-height:11px;background:var(--marker-color,#e0d36a);color:#1b2328;border-radius:0 2px 2px 0}
+.ruler-markers .marker-flag.dragging{opacity:.8}
+.ruler-markers .marker-flag.loop-start,.ruler-markers .marker-flag.loop-end{border-left-color:#d4a45e}
+.ruler-markers .marker-flag.loop-start>span,.ruler-markers .marker-flag.loop-end>span{background:#d4a45e}
+.ruler-markers .marker-flag.loop-end{transform:translateX(-100%);border-left:0;border-right:1px solid #d4a45e;text-align:right}
+.ruler-markers .marker-flag.loop-end>span{border-radius:2px 0 0 2px}
+.ruler-markers .marker-loop-band{position:absolute;bottom:0;height:3px;background:#d4a45e80;pointer-events:none}
+.ruler-markers.read-only .marker-flag{pointer-events:none;cursor:default}

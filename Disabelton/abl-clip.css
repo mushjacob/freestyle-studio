@@ -1,0 +1,314 @@
+/* Disabelton — Detail View ▸ Clip View (Live 12 default light-grey theme).
+ * Loaded by abl-clip-view.js. The note editor is the fork's #piano / #rack re-hosted in
+ * .abl-clip-editor-host; the rules below override their Logic skin only while hosted. */
+.abl-clip-view{
+ --abl-bg:#a5a5a5;--abl-panel:#c3c3c3;--abl-panel2:#b9b9b9;--abl-line:#7d7d7d;--abl-text:#111;--abl-dim:#4a4a4a;
+ --abl-box:#dcdcdc;--abl-box-line:#6f6f6f;--abl-accent:#ffa31a;--abl-grid-bg:#d3d6d8;--abl-grid-dark:#c3c6c8;
+ --abl-note:#e9574e;--abl-note-line:#5e1a16;--abl-note-sel:#ffb4a6;--abl-scale-in:#ffffff52;--abl-scale-root:#ffa31a40;
+ --abl-font:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+ display:flex;height:100%;min-height:0;background:var(--abl-bg);color:var(--abl-text);font:11px/1.2 var(--abl-font);overflow:hidden;border-top:1px solid var(--abl-line);box-sizing:border-box
+}
+.abl-clip-view[hidden]{display:none!important}
+.abl-clip-view *{box-sizing:border-box}
+#abl-detail-clip>.abl-clip-view{height:100%}
+/* Temporary dock until the shell's #abl-detail-clip exists (same place as the Logic editors pane). */
+.abl-clip-temp-host{position:absolute;left:0;right:0;bottom:0;height:var(--logic-editor-height,300px);z-index:12}
+.abl-clip-temp-host:has(>.abl-clip-view[hidden]){display:none}
+
+/* Kind-dependent parts: midi | drum | audio */
+.abl-clip-view[data-kind=audio] :is(.abl-midi-only,.abl-not-audio,.abl-clip-editor-host){display:none!important}
+.abl-clip-view:not([data-kind=audio]) .abl-audio-only{display:none!important}
+.abl-clip-view:not([data-kind=drum]) .abl-drum-only{display:none!important}
+.abl-clip-view[data-kind=drum] .abl-f-scale,.abl-clip-view[data-kind=drum] [data-action=scale]{display:none!important}
+.abl-clip-empty{display:none;margin:auto;color:var(--abl-dim)}
+.abl-clip-view[data-kind=none] .abl-clip-empty{display:block}
+
+/* ---- Left panels ---- */
+.abl-clip-panels{display:flex;flex:0 0 auto;gap:1px;background:var(--abl-line);border-right:1px solid var(--abl-line)}
+.abl-clip-panel{width:178px;background:var(--abl-panel);padding:0 6px 6px;overflow:auto}
+/* Live's panel strip: small vertical tabs at the Clip View's left edge; an unlit tab hides its panel. */
+.abl-clip-tabs{display:flex;flex-direction:column;gap:1px;width:16px;background:var(--abl-panel);padding-top:2px}
+.abl-clip-tabs button{writing-mode:vertical-rl;transform:rotate(180deg);font:9px var(--abl-font);color:var(--abl-dim);background:transparent;border:0;border-left:1px solid var(--abl-line);padding:4px 0;cursor:default}
+.abl-clip-tabs button.lit{color:#111;background:#d6d6d6}
+.abl-clip-panel.abl-panel-off{display:none!important}
+.abl-clip-notes,.abl-clip-sample{width:176px;padding-top:6px}
+.abl-clip-title{display:flex;align-items:center;gap:4px;height:19px;margin:0 -6px 5px;padding:0 4px;background:var(--abl-clip-colour,#b9cf6e);border-bottom:1px solid var(--abl-line)}
+.abl-clip-swatch{width:11px;height:11px;min-height:0!important;padding:0!important;border:1px solid #0006!important;border-radius:0!important;background:var(--abl-clip-colour,#b9cf6e)!important;box-shadow:none!important}
+.abl-clip-name{flex:1;min-width:0;height:16px;border:0;background:transparent;color:#111;font:11px var(--abl-font);padding:0 2px;outline:none}
+.abl-clip-name:focus{background:#fff;outline:1px solid var(--abl-accent)}
+.abl-clip-fields{display:grid;grid-template-columns:1fr 1fr;gap:4px 6px}
+.abl-f{display:flex;flex-direction:column;gap:2px;min-width:0;color:var(--abl-text)}
+.abl-f>span:first-child{display:flex;justify-content:space-between;align-items:center;font-size:10px}
+.abl-loop,.abl-f-scale{grid-column:1/3}
+.abl-set{min-height:0!important;height:12px;padding:0 4px!important;border:1px solid #8a8a8a!important;border-radius:6px!important;background:#cfcfcf!important;box-shadow:none!important;color:#555!important;font:9px var(--abl-font)!important}
+.abl-box{height:16px;width:100%;min-width:0;border:1px solid var(--abl-box-line);border-radius:0;background:var(--abl-box);color:#111;font:10px/14px var(--abl-font);font-variant-numeric:tabular-nums;text-align:center;padding:0 2px;box-shadow:none;appearance:none}
+select.abl-box{text-align:left;padding:0 3px}
+.abl-box:focus{outline:1px solid var(--abl-accent);background:#fff}
+.abl-box:disabled{color:#6a6a6a;background:#cdcdcd;border-color:#8f8f8f}
+.abl-sig,.abl-scale,.abl-pair{display:flex;gap:3px;align-items:center}
+.abl-scale .abl-box:first-child{flex:0 0 46px}
+.abl-clip-view button:not(.abl-clip-swatch):not(.abl-set){min-height:0!important;height:16px;padding:0 6px!important;border:1px solid var(--abl-box-line)!important;border-radius:8px!important;background:#cfcfcf!important;box-shadow:none!important;color:#111!important;font:10px var(--abl-font)!important;white-space:nowrap;cursor:default}
+.abl-clip-view button:not(:disabled):hover{background:#dadada!important}
+.abl-clip-view button:disabled{color:#777!important;background:#c6c6c6!important;border-color:#909090!important}
+/* QA r6: the generic Clip View pill (height 16px, radius 8px, 0 6px padding) squeezed the vertical tabs into overlapping circles.
+ * Live's left strip: a 16px column, each tab as tall as its rotated label, square, separated by 1px lines. */
+.abl-clip-view nav.abl-clip-tabs{flex:0 0 16px;width:16px;min-width:16px;gap:0;padding-top:0;overflow:hidden;border-right:1px solid var(--abl-line)}
+.abl-clip-view nav.abl-clip-tabs>button[data-panel]{writing-mode:vertical-rl;transform:rotate(180deg);flex:0 0 auto;width:16px!important;height:auto!important;min-height:0!important;margin:0;padding:7px 0!important;border:0!important;border-top:1px solid var(--abl-line)!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;color:var(--abl-dim)!important;font:9px/15px var(--abl-font)!important;text-align:center;white-space:nowrap;overflow:visible}
+.abl-clip-view nav.abl-clip-tabs>button[data-panel].lit{color:#111!important;background:#d6d6d6!important}
+.abl-clip-view nav.abl-clip-tabs>button[data-panel]:hover{background:#dcdcdc!important}
+.abl-clip-view .abl-toggle.lit,.abl-clip-view .abl-toggle[aria-pressed=true]{background:var(--abl-accent)!important;border-color:#a8660a!important;color:#111!important}
+.abl-clip-view .abl-toggle[aria-pressed=true]:disabled{background:#e2b56c!important}
+.abl-loop{width:100%}
+.abl-notes-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px 5px;align-items:center}
+.abl-notes-grid>.abl-pair,.abl-notes-grid>.abl-wide{grid-column:1/3}
+.abl-notes-grid>.abl-pair>*{flex:1;min-width:0}
+.abl-notes-pitch{grid-row:span 2;display:flex;align-items:center;justify-content:center;height:36px;background:#2f2f2f;color:#e6e6e6;font:12px var(--abl-font)}
+.abl-num{display:flex;align-items:center;gap:2px}.abl-num>span{color:var(--abl-dim);font-size:10px}
+.abl-num .abl-box{flex:1}
+.abl-sample-grid{display:grid;grid-template-columns:1fr;gap:5px}
+.abl-sample-info{color:var(--abl-dim);font-size:10px}
+
+/* ---- Editor header ---- */
+.abl-clip-editor{flex:1;min-width:0;display:flex;flex-direction:column;background:var(--abl-panel2)}
+.abl-clip-editor-bar{display:flex;align-items:center;gap:4px;height:21px;flex:0 0 21px;padding:0 5px;background:var(--abl-panel2);border-bottom:1px solid var(--abl-line)}
+.abl-spacer{flex:1}
+.abl-tabs{display:flex;gap:0;margin-left:10px}
+.abl-clip-view .abl-tabs button{border-radius:0!important;border-color:transparent!important;background:transparent!important}
+.abl-clip-view .abl-tabs button.selected{background:#d6d6d6!important;border-color:var(--abl-box-line)!important}
+.abl-grid{height:16px;border:1px solid var(--abl-box-line);background:var(--abl-box);font:10px var(--abl-font);color:#111;padding:0 3px}
+.abl-pager{display:flex;align-items:center;gap:3px}.abl-page{min-width:62px;text-align:center;font-size:10px}
+.abl-clip-editor-host{flex:1;min-height:0;position:relative}
+.abl-sample-view{flex:1;min-height:0;position:relative;background:var(--abl-grid-bg)}
+.abl-sample-wave{position:absolute;inset:6px;display:flex;align-items:center;justify-content:center;color:var(--abl-dim)}
+.abl-sample-wave svg{width:100%;height:100%;color:#2d5f9e}
+.abl-sample-wave svg *{vector-effect:non-scaling-stroke}
+
+/* ---- Hosted Piano Roll / Step Sequencer: Live skin ---- */
+.abl-clip-view .abl-clip-editor-host>.abl-clip-hosted{position:absolute!important;inset:0!important;width:auto!important;height:auto!important;min-height:0!important;margin:0!important;transform:none!important;border:0!important;box-shadow:none!important;z-index:auto!important;background:var(--abl-grid-bg)!important;color:var(--abl-text)!important;font:11px var(--abl-font)!important;display:flex;flex-direction:column}
+.abl-clip-view .abl-clip-hosted.hidden{display:none!important}
+.abl-clip-view .abl-clip-hosted:is(#piano,#rack)>:is(.logic-editor-tabs,.logic-editor-resize,.panel-heading),
+.abl-clip-view #piano.abl-clip-hosted .logic-piano-inspector,
+.abl-clip-view #rack.abl-clip-hosted :is(.logic-pattern-browser,.logic-step-add-row,.rack-bottom){display:none!important}
+/* Note editor */
+.abl-clip-view #piano .piano-scroll,.abl-clip-view #piano .piano-grid-wrap,.abl-clip-view #piano .logic-piano-main{background:var(--abl-grid-bg)!important}
+.abl-clip-view #piano .piano-ruler{background:#c4c4c4!important;color:#111!important;border-bottom:1px solid var(--abl-line)}
+.abl-clip-view #piano .piano-ruler .ruler-bar{border-left:1px solid #555!important;color:#111!important;font:10px var(--abl-font)!important;line-height:18px}
+.abl-clip-view #piano .piano-key{background:#f2f2f2!important;border-bottom:1px solid #9a9a9a!important;color:#222!important;font:9px var(--abl-font)!important}
+.abl-clip-view #piano .piano-key.black{background:linear-gradient(90deg,#1e1e1e 0 62%,#f2f2f2 62%)!important;color:#ddd!important}
+.abl-clip-view #piano .piano-key.active,.abl-clip-view #piano .piano-key.midi-active,.abl-clip-view #piano .piano-key.abl-midi-held{background:var(--abl-accent)!important;color:#111!important}
+.abl-clip-view #piano #piano-grid{background-color:var(--abl-grid-bg)!important;background-image:linear-gradient(90deg,#6a6a6a 1px,transparent 1px),linear-gradient(90deg,#999c9e 1px,transparent 1px),linear-gradient(90deg,#b8bbbd 1px,transparent 1px)!important;background-size:var(--grid-major,var(--bar)) 100%,var(--grid-mid,calc(var(--bar) / 4)) 100%,calc(var(--bar) * var(--abl-grid-beats,.25) / 4) 100%!important}
+.abl-clip-view #piano .piano-grid-row{background:var(--abl-grid-dark)!important;border-top:1px solid #bfc2c4}
+.abl-clip-view #piano .piano-note{background:var(--abl-note)!important;border:1px solid var(--abl-note-line)!important;border-radius:0!important;color:#2a0806!important;font:9px var(--abl-font)!important;box-shadow:none!important}
+.abl-clip-view #piano .piano-note.selected{background:var(--abl-note-sel)!important;border-color:#000!important;box-shadow:none!important}
+.abl-clip-view #piano .piano-note.muted{background:#b4b4b4!important;border-color:#777!important;opacity:1}
+.abl-clip-view #piano :is(.piano-draw-preview,.piano-clone-preview){opacity:.75}
+.abl-clip-view #piano .piano-selection-box{border:1px solid #333;background:#ffffff40}
+.abl-clip-view #piano .piano-playhead{background:#2a2a2a!important}
+.abl-clip-view.abl-draw-mode #piano #piano-grid{cursor:crosshair!important}
+.abl-clip-view #piano .abl-scale-overlay{position:absolute;right:0;pointer-events:none;z-index:1;mix-blend-mode:normal}
+/* Velocity lane: stems with round heads, as in Live */
+.abl-clip-view #piano .velocity-panel{display:flex!important;height:64px;background:#c9cccd!important;border-top:1px solid var(--abl-line)!important}
+.abl-clip-view #piano .velocity-panel label{color:var(--abl-dim)!important;font:10px var(--abl-font)!important}
+.abl-clip-view #piano #velocity-grid{background:#c9cccd!important}
+.abl-clip-view #piano .velocity-bar{width:2px!important;background:var(--abl-note-line)!important;border:0!important;overflow:visible}
+.abl-clip-view #piano .velocity-bar::before{content:"";position:absolute;left:-3px;top:-4px;width:8px;height:8px;border-radius:50%;background:var(--abl-note);border:1px solid var(--abl-note-line)}
+.abl-clip-view #piano .velocity-bar.selected::before{background:var(--abl-note-sel);border-color:#000}
+/* Drum Rack clip, folded: one row per pad, 1/16 cells */
+.abl-clip-view #rack #rack-channels{padding:0!important;margin:0!important;background:var(--abl-grid-bg)!important;overflow:auto}
+.abl-clip-view #rack .rack-channel{height:18px!important;margin:0!important;gap:0!important;padding:0!important;border-radius:0!important;background:var(--abl-grid-bg)!important;border-bottom:1px solid #b9bcbe;box-shadow:none!important}
+.abl-clip-view #rack .rack-channel:nth-child(even){background:var(--abl-grid-dark)!important}
+.abl-clip-view #rack .rack-channel>:is(.channel-enable,.step-solo,.small-knob,.channel-number,.channel-selected),.abl-clip-view #rack .rack-waveform{display:none!important}
+.abl-clip-view #rack .rack-channel>.channel-name{flex:0 0 118px!important;width:118px!important;max-width:118px!important;height:18px!important;min-height:0!important;border:0!important;border-right:1px solid var(--abl-line)!important;border-radius:0!important;background:#ececec!important;color:#111!important;font:10px var(--abl-font)!important;padding:0 4px 0 14px!important;text-align:left!important;cursor:default}
+.abl-clip-view #rack .rack-channel>.channel-name::before{left:3px!important;top:5px!important;width:7px!important;height:7px!important;border-radius:0!important;box-shadow:none!important}
+.abl-clip-view #rack .rack-channel.selected>.channel-name{background:var(--abl-accent)!important}
+.abl-clip-view #rack .rack-channel .steps{height:18px!important;gap:0!important;column-gap:0!important}
+.abl-clip-view #rack .rack-channel .step,.abl-clip-view #rack .rack-channel .step:nth-child(n){height:18px!important;min-height:0!important;margin:0!important;border:0!important;border-right:1px solid #b5b8ba!important;border-radius:0!important;background:transparent!important;box-shadow:none!important}
+.abl-clip-view #rack .rack-channel .step:nth-child(4n){border-right-color:#8e9193!important}
+.abl-clip-view #rack .rack-channel .step.on{background:var(--abl-note)!important;box-shadow:inset 0 0 0 1px var(--abl-note-line)!important}
+.abl-clip-view #rack .rack-channel .step.current::after{background:#2a2a2a!important}
+.abl-clip-view #rack .rack-channel .note-preview{height:16px!important;border-radius:0!important;background:#cdd8cf!important;border:1px solid #9aa79c!important}
+.abl-clip-view #rack .rack-missing .rack-use-score{height:16px!important;border-radius:0!important;background:transparent!important;color:var(--abl-dim)!important;font:10px var(--abl-font)!important}
+.abl-clip-view #rack #rack-graph{background:#c9cccd!important;border-top:1px solid var(--abl-line)}
+/* Live has no tool palette: the inherited Logic/FL tool buttons are retired in the Clip View. Draw = B / ✎,
+ * Split = ⌘E or the note menu, Deactivate = 0, Zoom = + / −, scrub = a ruler click/drag. */
+.abl-clip-view #piano :is(#piano-tools,#piano-paint,#piano-erase,#piano-slice,#piano-zoom,#piano-playback,#piano-mute,#piano-slide){display:none!important}
+.abl-clip-view .abl-gain{display:flex;gap:2px;align-items:center}
+.abl-clip-view .abl-gain-drag{cursor:ns-resize;user-select:none;padding:0 3px;color:var(--abl-dim);touch-action:none}
+/* ---- Live 12 reference pass (MIDI Clip View) ---- */
+/* Header row: Fold · Scale · ☐ Highlight Scale ……… Notes | Envelopes | MPE · ✎ · Snap · grid */
+.abl-clip-view .abl-clip-editor-bar button[data-action=fold],.abl-clip-view .abl-clip-editor-bar button[data-action=scale-mode]{border-radius:2px!important}
+.abl-clip-view .abl-clip-editor-bar .abl-check{border:0!important;background:transparent!important;border-radius:0!important;display:inline-flex;align-items:center;gap:4px;padding:0 2px!important}
+.abl-clip-view .abl-check .abl-checkbox{width:11px;height:11px;border:1px solid var(--abl-box-line);background:var(--abl-box);display:inline-block}
+.abl-clip-view .abl-check[aria-pressed=true] .abl-checkbox{background:var(--abl-accent);box-shadow:inset 0 0 0 2px var(--abl-box)}
+.abl-clip-view[data-kind=drum] [data-action=scale-mode]{display:none!important}
+.abl-clip-view .abl-tabs{margin:0 8px 0 0;border-left:1px solid var(--abl-line);border-right:1px solid var(--abl-line)}
+.abl-clip-view .abl-tabs button{padding:0 12px!important;height:20px!important;color:#333!important}
+.abl-clip-view .abl-tabs button.selected{background:#cfcfcf!important;border-color:transparent!important}
+/* The navigator strip is not part of Live's note editor. */
+.abl-clip-view #piano.abl-clip-hosted #piano-overview{display:none!important}
+/* Notes: Live red, shaded by velocity (pale = soft, saturated = loud). --abl-vel is set per note by abl-clip-view.js. */
+.abl-clip-view #piano .piano-note{background:color-mix(in srgb,var(--abl-note) calc(30% + 70% * var(--abl-vel,1)),#f6d9d4)!important;color:transparent!important}
+.abl-clip-view #piano .piano-note.short{color:transparent!important}
+.abl-clip-view #piano .piano-note.selected{background:color-mix(in srgb,#ff3b2f calc(30% + 70% * var(--abl-vel,1)),#ffe1dc)!important;border-color:#000!important}
+.abl-clip-view #piano .piano-note.muted{background:#b9b9b9!important;border-color:#7a7a7a!important}
+/* Keys: Live's narrow light keyboard with labels only on C. */
+.abl-clip-view #piano .piano-key{font-size:0!important;border-right:1px solid #8a8a8a!important}
+.abl-clip-view #piano .piano-key.abl-c{font-size:9px!important}
+.abl-clip-view #piano .piano-key.black{background:linear-gradient(90deg,#242424 0 55%,#efefef 55%)!important}
+/* Velocity lane: Live's bottom strip with stems + round heads, shaded like the notes. */
+.abl-clip-view #piano .velocity-panel{height:50px!important;flex:0 0 50px!important;min-height:0!important}
+.abl-clip-view #piano .piano-scroll{flex:1 1 auto;min-height:0}
+.abl-clip-view #piano .velocity-bar::before{background:color-mix(in srgb,var(--abl-note) calc(30% + 70% * var(--abl-vel,1)),#f6d9d4)}
+/* Live note-edge resize hot zone: max(3 px, min(6 px, 30 %)) of the note's outer width, ≤ 40 % on notes under 10 px.
+   The handle sits inside the 1 px border, so percentages of the padding box get +0.6 / +0.8 px and the width −1 px to
+   end exactly at the zone. noteEdgeZones() in abl-clip-view.js is authoritative: it routes presses on the border and
+   body inside the zone to the handle, and presses on the handle outside it to the note body. */
+.abl-clip-view #piano .piano-note .note-resize{width:calc(min(clamp(3px,30% + .6px,6px),40% + .8px) - 1px)!important}
+/* Velocity lane: stems are rendered at velocity × 128 px by the inherited editor; --abl-vel-k (lane height / 128,
+   set by abl-clip-view.js from the lane's measured height and every resize) scales them so full velocity = the lane
+   height. The round heads are counter-scaled so they stay circles. */
+/* Each stem is scaled (not the lane: #velocity-grid clips overflow before its own transform). */
+.abl-clip-view #piano #velocity-grid .velocity-bar{transform:scaleY(var(--abl-vel-k,1));transform-origin:50% 100%}
+.abl-clip-view #piano .velocity-bar::before{transform:scaleY(calc(1 / var(--abl-vel-k,1)));transform-origin:50% 50%}
+/* Sample start / end markers (Live: small flags at the top of a vertical line). */
+.abl-sample-markers{position:absolute;inset:6px;pointer-events:none}
+.abl-sample-marker{position:absolute;top:0;bottom:0;width:9px;margin-left:-4px;cursor:ew-resize;pointer-events:auto;touch-action:none}
+.abl-sample-marker::before{content:"";position:absolute;left:4px;top:0;bottom:0;width:1px;background:#1d1d1d}
+.abl-sample-marker::after{content:"";position:absolute;top:0;width:0;height:0;border-top:5px solid transparent;border-bottom:5px solid transparent}
+.abl-sample-marker[data-marker=start]::after{left:5px;border-left:7px solid #1d1d1d}
+.abl-sample-marker[data-marker=end]::after{right:5px;border-right:7px solid #1d1d1d}
+.abl-sample-marker.active::before{background:#ff7a00}
+/* A stem is a 2 px line: give it a 10 px-wide transparent hit strip (abl-clip-view.js also routes a press that
+   misses every strip to the nearest stem within 6 px). */
+.abl-clip-view #piano .velocity-bar::after{content:"";position:absolute;left:-4px;right:-4px;top:0;bottom:0}
+/* ---- Drum Rack Fold, Live 12 reference pass ---- */
+/* Rows stack at Live's Fold row height (~21 px); the inherited rack container must not stretch them over the
+   Detail View height (that left a gap between rows). */
+.abl-clip-view #rack #rack-channels{display:block!important;align-content:start!important}
+.abl-clip-view #rack .rack-channel{--abl-fold-row:21px;flex:0 0 auto!important;height:var(--abl-fold-row)!important;min-height:0!important;max-height:var(--abl-fold-row)!important;box-sizing:border-box!important;border-bottom:1px solid #b9bcbe!important}
+/* Pad name on Live's grey strip, then the pad's small key cell (white / black key of its pad note) before the grid. */
+.abl-clip-view #rack .rack-channel>.channel-name{flex:0 0 140px!important;width:140px!important;max-width:140px!important;height:100%!important;line-height:20px!important;display:flex!important;align-items:center;gap:4px;overflow:hidden;white-space:nowrap;background:#c9c9c9!important;border-bottom:0!important;padding-right:0!important;position:relative}
+.abl-clip-view #rack .rack-channel>.channel-name::after{content:"";margin-left:auto;flex:0 0 22px;align-self:stretch;background:#f4f4f4;border-left:1px solid #8a8a8a;border-bottom:1px solid #8a8a8a}
+.abl-clip-view #rack .rack-channel>.channel-name[data-abl-pad-black]::after{background:#3a3a3a}
+.abl-clip-view #rack .rack-channel.selected>.channel-name::after{background:var(--abl-accent)}
+.abl-clip-view #rack .rack-channel :is(.steps,.step,.step:nth-child(n)){height:100%!important}
+/* 1/16 grid: sixteenths light, beats medium, bars dark (the piano grid's three line tones). */
+.abl-clip-view #rack .rack-channel .steps{border-left:1px solid #6a6a6a!important;box-sizing:border-box}
+.abl-clip-view #rack .rack-channel .step:nth-child(n){border-right-color:#b8bbbd!important}
+.abl-clip-view #rack .rack-channel .step:nth-child(4n){border-right-color:#999c9e!important}
+.abl-clip-view #rack .rack-channel .step:nth-child(16n){border-right-color:#6a6a6a!important}
+/* Steps are Live notes in the clip colour, shaded by velocity (--abl-vel set per step by abl-clip-view.js), with the
+   darker outline; a 1/2 px inset keeps the grid visible between them, as in Live. */
+/* Live draws each hit as a NOTE of its length: a bar from the step's start, --abl-step-len steps long (1 = 1/16; Freestyle
+   step hits are one-shots with no stored duration, so they draw one step long), 1 px off the row edges, like #piano .piano-note. The cell
+   itself stays grid. */
+.abl-clip-view #rack .rack-channel .step{position:relative!important;overflow:visible!important}
+/* Fold rows are the Drum Rack's pads only (abl-clip-view.js marks instrument rows). */
+.abl-clip-view[data-kind=drum] #rack .rack-channel.abl-fold-hidden{display:none!important}
+.abl-clip-view #rack .rack-channel .step.on{background:transparent!important;padding:0!important;box-shadow:none!important;outline:0!important}
+.abl-clip-view #rack .rack-channel .step.on::before{content:"";position:absolute;left:0;top:2px;bottom:2px;width:calc(var(--abl-step-len,1) * 100% - 1px);box-sizing:border-box;background:var(--abl-note-fill);border:1px solid var(--abl-note-line);z-index:1;pointer-events:none}
+.abl-clip-view #rack .rack-channel .step.on:is(.selected,[aria-selected=true])::before{background:var(--abl-note-sel-fill);border-color:#000}
+.abl-clip-view #rack .rack-missing .rack-use-score,.abl-clip-view #rack .rack-channel .note-preview{height:calc(100% - 2px)!important;line-height:13px}
+/* ---- Live 12 note colour: notes take the CLIP colour (= its track colour, the shell's Arrangement palette set on
+   the view as --abl-clip-colour by abl-clip-view.js), shaded by velocity: pale = soft, full clip colour = loud.
+   Outline: the clip colour darkened. Selected notes invert to a dark fill with a black outline, as in Live. ---- */
+.abl-clip-view{
+ --abl-note:var(--abl-clip-colour,#b9cf6e);
+ --abl-note-line:color-mix(in srgb,var(--abl-note) 38%,#000);
+ --abl-note-sel:color-mix(in srgb,var(--abl-note) 40%,#000);
+}
+/* The velocity-shaded fills are declared on each note element, where its own --abl-vel resolves. */
+.abl-clip-view :is(#piano .piano-note,#piano .velocity-bar,#rack .step){
+ --abl-note-fill:color-mix(in srgb,var(--abl-note) calc(25% + 75% * var(--abl-vel,1)),#ededed);
+ --abl-note-sel-fill:color-mix(in srgb,var(--abl-note) calc(20% + 30% * var(--abl-vel,1)),#000);
+}
+.abl-clip-view #piano .piano-note{background:var(--abl-note-fill)!important;border:1px solid var(--abl-note-line)!important}
+.abl-clip-view #piano .piano-note.selected{background:var(--abl-note-sel-fill)!important;border-color:#000!important}
+.abl-clip-view #piano .piano-note.muted{background:#b9b9b9!important;border-color:#7a7a7a!important}
+/* Velocity lane (Live): a thin stem in the outline colour topped by a small circle in the note's shaded colour. */
+.abl-clip-view #piano .velocity-bar{background:var(--abl-note-line)!important;width:1px!important}
+.abl-clip-view #piano .velocity-bar::before{left:-3.5px!important;top:-4px!important;width:8px!important;height:8px!important;border-radius:50%!important;box-sizing:border-box;background:var(--abl-note-fill)!important;border:1px solid var(--abl-note-line)!important;content:""!important;position:absolute}
+.abl-clip-view #piano .velocity-bar.selected{background:#000!important}
+.abl-clip-view #piano .velocity-bar.selected::before{background:var(--abl-note-sel-fill)!important;border-color:#000!important}
+
+/* ---- Fold velocity lane (Drum Rack clips): Live's velocity lane under the Fold grid, stems + circles per lit step,
+   the same look as the MIDI lane (#piano .velocity-bar). Stems are placed by abl-clip-view.js at each step's column. ---- */
+.abl-fold-velocity{flex:0 0 50px;height:50px;display:flex;background:#c9cccd;border-top:1px solid var(--abl-line);position:relative;user-select:none}
+.abl-clip-view:not([data-kind=drum]) .abl-fold-velocity{display:none!important}
+.abl-fold-vel-scale{flex:0 0 140px;display:flex;flex-direction:column;justify-content:space-between;align-items:flex-end;padding:2px 26px 2px 0;box-sizing:border-box;border-right:1px solid var(--abl-line);color:var(--abl-dim);font:9px var(--abl-font)}
+.abl-fold-vel-plot{flex:1;position:relative;overflow:hidden;cursor:ns-resize;margin-top:6px}
+.abl-fold-vel{position:absolute;bottom:0;width:1px;margin-left:-.5px;background:var(--abl-note-line);pointer-events:none}
+.abl-fold-vel::before{content:"";position:absolute;left:-3.5px;top:-4px;width:8px;height:8px;border-radius:50%;box-sizing:border-box;background:color-mix(in srgb,var(--abl-clip-colour,var(--abl-note)) calc(30% + 70% * var(--abl-vel,1)),#f6d9d4);border:1px solid var(--abl-note-line)}
+.abl-fold-vel.selected{background:#000}
+.abl-fold-vel.selected::before,.abl-fold-vel.active::before{border-color:#000}
+.abl-fold-velocity[data-value]::after{content:attr(data-value);position:absolute;left:6px;top:4px;font:10px var(--abl-font);color:#111}
+
+/* Clip panel: Extend ×2 / MIDI Record arm; record input chooser (abl-record-input.js) */
+.abl-clip-view .abl-extend{margin-left:2px}
+.abl-clip-view .abl-midi-rec.lit{background:#ff5a4f;color:#111}
+.abl-record-input-popover{background:#c3c3c3;border:1px solid #111;padding:6px;font:11px -apple-system,"Helvetica Neue",Arial,sans-serif;color:#111;display:grid;gap:4px;min-width:200px}
+.abl-record-input .abl-ri-f{display:grid;gap:2px}
+.abl-record-input select{font:inherit;background:#d6d6d6;border:1px solid #555}
+.abl-record-input .abl-ri-monitor{display:flex;gap:2px}
+.abl-record-input .abl-ri-monitor button{flex:1;font:inherit;background:#b9b9b9;border:1px solid #555}
+.abl-record-input .abl-ri-monitor button.lit{background:#ffa31a}
+
+/* ---- Fold off on a Drum Rack clip (abl-drum-notes.js): Live's note editor with each pad's name on its pad note's key
+   row and every pad's hits as one-step notes. #rack (the Fold grid) stays rendered but hidden; the keys strip is
+   140 px like the Fold names so the velocity lane's stems line up. ---- */
+.abl-unfold{display:none}
+.abl-clip-view[data-kind=drum][data-unfold] .abl-clip-editor-host>#rack{display:none!important}
+.abl-clip-view[data-kind=drum][data-unfold] .abl-pager{display:none!important}
+.abl-clip-view[data-kind=drum][data-unfold] .abl-unfold{display:flex;position:absolute;inset:0;overflow:hidden;background:var(--abl-grid-bg)}
+.abl-unfold-keys{flex:0 0 140px;width:140px;position:relative;z-index:2;background:var(--abl-panel);border-right:1px solid var(--abl-line);align-self:flex-start}
+.abl-unfold-key{display:flex;align-items:center;gap:4px;box-sizing:border-box;padding:0 0 0 6px;border-bottom:1px solid #8a8a8a;white-space:nowrap;overflow:hidden;cursor:default}
+.abl-unfold-key[data-channel]{cursor:pointer}
+.abl-unfold-pad{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis}
+.abl-unfold-note-name{flex:0 0 34px;align-self:stretch;display:flex;align-items:center;justify-content:flex-end;padding-right:3px;background:#f4f4f4;border-left:1px solid #8a8a8a;color:var(--abl-dim);font-size:9px}
+.abl-unfold-key.black .abl-unfold-note-name{background:#3a3a3a;color:#ddd}
+.abl-unfold-key.selected .abl-unfold-note-name{background:var(--abl-accent);color:#111}
+.abl-unfold-key.selected .abl-unfold-pad{font-weight:600}
+.abl-unfold-scroll{flex:1;min-width:0;overflow:auto;position:relative}
+.abl-unfold-grid{position:relative;min-height:100%;background:
+ repeating-linear-gradient(90deg,transparent 0 calc(var(--abl-unfold-bar,320px) - 1px),#6a6a6a calc(var(--abl-unfold-bar,320px) - 1px) var(--abl-unfold-bar,320px)),
+ repeating-linear-gradient(90deg,transparent 0 79px,#999c9e 79px 80px),
+ repeating-linear-gradient(90deg,transparent 0 19px,#b8bbbd 19px 20px)}
+.abl-unfold-row{position:absolute;left:0;right:0;box-sizing:border-box;border-bottom:1px solid #b9bcbe}
+.abl-unfold-row.black{background:#0000000d}
+.abl-unfold-row.abl-unfold-nopad{background:#00000020}
+.abl-unfold-notes{position:absolute;inset:0}
+.abl-unfold-note{position:absolute;box-sizing:border-box;margin-top:1px;
+ --abl-note-fill:color-mix(in srgb,var(--abl-note) calc(25% + 75% * var(--abl-vel,1)),#ededed);
+ --abl-note-sel-fill:color-mix(in srgb,var(--abl-note) calc(20% + 30% * var(--abl-vel,1)),#000);
+ background:var(--abl-note-fill);border:1px solid var(--abl-note-line);cursor:move}
+.abl-unfold-note.selected{background:var(--abl-note-sel-fill);border-color:#000}
+.abl-unfold-note.moving{opacity:.8;z-index:3}
+.abl-clip-view.abl-draw-mode .abl-unfold-grid{cursor:crosshair}
+.abl-unfold-empty{margin:auto;color:var(--abl-dim)}
+
+.abl-sample-wave canvas.abl-wave-canvas{position:absolute;left:0;top:0;display:block}
+.abl-sample-view{overflow:hidden}
+
+/* A MIDI take in progress: notes appear as they are played; the Arrangement clip grows with the playhead. */
+.abl-clip-view #piano .abl-live-take{position:absolute;inset:0;pointer-events:none;z-index:4}
+.abl-clip-view #piano .abl-live-take .abl-live-note{position:absolute;box-sizing:border-box;background:#e5604f!important;border:1px solid #7d1f14!important;opacity:.92}
+#playlist .clip.abl-midi-recording{background:#e5604f!important;border-color:#7d1f14!important}
+#playlist .clip.abl-midi-recording .clip-title{background:#b83a2b!important;color:#fff!important}
+
+#playlist .clip.abl-midi-recording>.abl-live-mini{position:absolute;left:0;right:0;top:13px;bottom:1px;pointer-events:none;z-index:2}
+#playlist .clip.abl-midi-recording>.abl-live-mini>i{position:absolute;display:block;background:#2a0806;min-height:1px}
+#playlist .clip.abl-midi-recording>svg{visibility:hidden}
+
+/* Note editor ruler: clip start / end markers, loop brace and note stretch markers (Live). */
+.abl-clip-view #piano .abl-ruler-markers{position:absolute;left:0;top:0;bottom:0;width:0;z-index:5;pointer-events:none}
+.abl-clip-view #piano .abl-ruler-markers>*{position:absolute;pointer-events:auto}
+.abl-clip-view #piano .abl-loop-brace{top:1px;height:5px;background:#3a3a3a;border-left:2px solid #111;border-right:2px solid #111;box-sizing:border-box;cursor:grab;min-width:6px}
+.abl-clip-view #piano .abl-loop-brace.off{background:#8f8f8f;border-color:#777}
+.abl-clip-view #piano .abl-loop-brace>i{position:absolute;top:-1px;bottom:-4px;width:7px;cursor:ew-resize}
+.abl-clip-view #piano .abl-loop-brace>i[data-marker="loop-start"]{left:-3px}
+.abl-clip-view #piano .abl-loop-brace>i[data-marker="loop-end"]{right:-3px}
+.abl-clip-view #piano .abl-clip-marker{top:6px;width:0;height:0;border-style:solid;cursor:ew-resize}
+.abl-clip-view #piano .abl-clip-marker.start{border-width:5px 0 5px 8px;border-color:transparent transparent transparent #111;margin-left:0}
+.abl-clip-view #piano .abl-clip-marker.end{border-width:5px 8px 5px 0;border-color:transparent #111 transparent transparent;margin-left:-8px}
+.abl-clip-view #piano .abl-stretch-marker{bottom:0;width:0;height:0;border-style:solid;border-width:6px 5px 0 5px;border-color:#b04a00 transparent transparent transparent;margin-left:-5px;cursor:ew-resize}
+.abl-clip-view #piano .abl-ruler-markers.dragging>*{opacity:.85}

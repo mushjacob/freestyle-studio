@@ -1,0 +1,432 @@
+/* Disabelton — Ableton Live 12–style shell (light grey default theme): menu strip,
+ * control bar, Browser, Arrangement View (track headers on the right), Session View,
+ * Detail View / mixer hosts, status bar. Loaded last; overrides the Logic skin. */
+:root{
+ --abl-font:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+ --abl-win:#9c9c9c;--abl-panel:#b9b9b9;--abl-panel2:#c3c3c3;--abl-panel3:#cdcdcd;--abl-grid:#cfd2d4;--abl-grid2:#c7cacc;
+ --abl-line:#555;--abl-line2:#8a8a8a;--abl-text:#111;--abl-dim:#4a4a4a;--abl-faint:#6f6f6f;
+ --abl-orange:#ffa31a;--abl-orange-dim:#c98a32;--abl-blue:#4cc3ff;--abl-select:#9fd4ec;--abl-field:#a9a9a9;--abl-field-dark:#2b2b2b;
+ --abl-menubar:22px;--abl-bar:32px;--abl-status:22px;--abl-browser-w:330px;--abl-header-w:var(--playlist-gutter,300px);
+ --logic-titlebar:var(--abl-menubar);--logic-bar:var(--abl-bar);
+ --lg-font:var(--abl-font);--lg-bg:var(--abl-win);--lg-bg2:var(--abl-panel);--lg-panel:var(--abl-panel);--lg-text:var(--abl-text);--lg-dim:var(--abl-dim);--lg-line:var(--abl-line);
+}
+html,body{background:var(--abl-win)!important;color:var(--abl-text)!important;font:11px var(--abl-font)!important}
+body button,body input,body select,body textarea{font-family:var(--abl-font)}
+.abl-legacy{display:none!important}
+
+/* ---- Menu strip (File Edit Create View Options Help) ---- */
+header.abl-control-bar{height:calc(var(--abl-menubar) + var(--abl-bar))!important;background:var(--abl-win)!important;border-bottom:1px solid #6d6d6d!important;box-shadow:none!important;color:var(--abl-text)!important}
+header.abl-control-bar .logic-titlebar{height:var(--abl-menubar);background:#b4b4b4;border-bottom:1px solid #8c8c8c;gap:6px;padding:0 6px}
+header.abl-control-bar .logic-app-name{color:#111;font:600 11px var(--abl-font)}
+header.abl-control-bar .brand svg rect{fill:#111;stroke:var(--abl-orange)}
+header.abl-control-bar nav#main-menu button{color:#111!important;font:11.5px var(--abl-font)!important;padding:1px 8px!important;min-height:18px!important;border-radius:0!important}
+header.abl-control-bar nav#main-menu button:hover,header.abl-control-bar nav#main-menu button[aria-expanded="true"]{background:#5f5f5f!important;color:#fff!important}
+header.abl-control-bar .logic-titlebar .hint-display strong{color:#333!important;font:600 11px/var(--abl-menubar) var(--abl-font)!important}
+header.abl-control-bar .logic-titlebar .hint-display strong::after{content:""!important}
+header.abl-control-bar .logic-titlebar .hint-display span{display:none!important}
+header.abl-control-bar .logic-titlebar .session-status{color:#333!important;font:10px var(--abl-font)!important}
+header.abl-control-bar .logic-titlebar .cloud-button{height:17px!important;min-height:17px!important;border-radius:0!important;background:var(--abl-panel2)!important;border:1px solid #777!important;color:#111!important;font:10.5px var(--abl-font)!important}
+
+/* ---- Control bar ---- */
+.abl-bar{height:var(--abl-bar)!important;display:flex;align-items:center;gap:10px;padding:0 6px!important;background:var(--abl-win);min-width:0}
+.abl-bar-left,.abl-bar-right,.abl-bar-center{display:flex;align-items:center;gap:3px;min-width:0}
+.abl-bar-left{flex:1 1 0}.abl-bar-right{flex:1 1 0;justify-content:flex-end}.abl-bar-center{flex:0 0 auto;gap:4px}
+header.abl-control-bar .abl-bar button{width:auto;min-width:22px;height:20px!important;min-height:20px!important;padding:0 5px!important;border-radius:0!important;border:1px solid #6b6b6b!important;background:var(--abl-panel2)!important;box-shadow:none!important;color:#111!important;font:11px var(--abl-font)!important;display:inline-flex;align-items:center;justify-content:center;gap:3px}
+header.abl-control-bar .abl-bar button:hover:not(:disabled){background:#d5d5d5!important}
+header.abl-control-bar .abl-bar button:disabled{color:#777!important;opacity:1;background:#b0b0b0!important}
+/* QA r9: the hover rule above (0,4,2) outranked .lit / [aria-pressed] (0,3,2), so a just-clicked toggle under the pointer stayed grey. */
+header.abl-control-bar .abl-bar button.lit,header.abl-control-bar .abl-bar button[aria-pressed="true"],header.abl-control-bar .abl-bar button.lit:hover:not(:disabled),header.abl-control-bar .abl-bar button[aria-pressed="true"]:hover:not(:disabled){background:var(--abl-orange)!important;color:#111!important;border-color:#8a5a12!important}
+header.abl-control-bar .abl-bar svg{width:14px;height:14px;display:block}
+.abl-field{display:inline-flex;align-items:center;height:20px;background:var(--abl-field)!important;border:1px solid #6b6b6b!important;color:#111!important;font:11px var(--abl-font)!important;padding:0 4px;font-variant-numeric:tabular-nums;border-radius:0!important}
+.abl-field input{all:unset;box-sizing:border-box;width:100%;height:18px;font:11px var(--abl-font);color:#111;text-align:center;cursor:ns-resize;font-variant-numeric:tabular-nums}
+.abl-field input:focus{background:#fff;cursor:text}
+.abl-bpm{width:56px;padding:0}
+.abl-bpm input#tempo{width:100%!important;height:18px!important;background:transparent!important;border:0!important;box-shadow:none!important;font:11px var(--abl-font)!important;color:#111!important;text-align:center;-moz-appearance:textfield;appearance:textfield}
+.abl-bpm input#tempo::-webkit-inner-spin-button,.abl-bpm input#tempo::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+header.abl-control-bar .abl-bar .abl-field.abl-sig,header.abl-control-bar .abl-bar .abl-menu-field{background:var(--abl-field)!important;min-width:40px}
+header.abl-control-bar .abl-bar .abl-menu-field::after{content:"▾";font-size:9px;margin-left:3px}
+.abl-lcd{min-width:76px;justify-content:center;background:var(--abl-field-dark)!important;color:#f3f3f3!important;border-color:#222!important}
+.abl-lcd #abl-position{font:11px var(--abl-font);letter-spacing:.5px;white-space:pre}
+.abl-lcd .logic-lcd-raw{display:none!important}
+header.abl-control-bar .abl-transport{display:flex;gap:2px;background:none!important;border:0!important;padding:0!important;box-shadow:none!important}
+header.abl-control-bar .abl-transport .transport-btn{width:24px!important;min-width:24px!important;height:20px!important;font-size:12px!important;color:#111!important;padding:0!important}
+header.abl-control-bar #play.playing{background:#7ee36d!important;color:#111!important}
+header.abl-control-bar #record{color:#c1271b!important;font-size:14px!important}
+header.abl-control-bar #record.recording{background:#ff4a3a!important;color:#111!important}
+header.abl-control-bar #record:disabled{color:#888!important}
+header.abl-control-bar #metronome.lit,header.abl-control-bar #metronome.active{background:var(--abl-orange)!important}
+.abl-loop-box{width:62px;padding:0}
+.abl-cpu{font:11px var(--abl-font);color:#222;padding:0 6px;background:var(--abl-field);border:1px solid #6b6b6b;height:20px;display:inline-flex;align-items:center}
+.abl-bar .abl-monitor{height:20px!important;border-radius:0!important;background:#2b2b2b!important;box-shadow:none!important;border:1px solid #555!important;padding:0 3px!important}
+.abl-bar .abl-monitor canvas{width:56px!important;height:14px!important}
+.abl-bar .abl-monitor span{display:none!important}
+.abl-view-selector{display:flex;gap:1px;margin-left:4px}
+@media(max-width:1300px){.abl-bar .abl-monitor,#abl-link,#abl-key-map,#abl-midi-map{display:none!important}}
+@media(max-width:1250px){#abl-automation-arm,#abl-reenable-automation,#abl-capture-midi,#abl-session-record,#abl-punch-in,#abl-punch-out{display:none!important}}
+@media(max-width:1050px){.abl-loop-box,#abl-follow,#abl-overdub,.abl-cpu{display:none!important}}
+
+/* ---- Layout ---- */
+.main-layout{height:calc(100% - var(--abl-menubar) - var(--abl-bar) - var(--abl-status) - 1px)!important;background:var(--abl-win)!important;gap:0}
+.main-layout>#logic-inspector{display:none!important}
+.main-layout>#desktop{order:2;background:var(--abl-win)!important;margin:0 4px 0 0}
+body .main-layout>aside.browser{order:-1!important;flex:0 0 var(--abl-browser-w)!important;width:var(--abl-browser-w)!important;min-width:var(--abl-browser-w)!important;border:0!important;border-right:4px solid var(--abl-win)!important;background:var(--abl-panel)!important;display:flex!important;flex-direction:column}
+body:not(.abl-browser-open) .main-layout>aside.browser{display:none!important}
+.desktop-mark{display:none!important}
+
+/* Main view areas inside #desktop (absolute children) */
+body #desktop>#playlist.playlist-window{top:0!important;left:0!important;right:0!important;bottom:calc(var(--abl-detail-h,0px) + var(--abl-arr-mixer-h,0px) + 4px)!important;background:var(--abl-panel)!important}
+#desktop>#abl-session{position:absolute;left:0;right:0;top:0;bottom:calc(var(--abl-detail-h,0px) + 4px);z-index:4;background:var(--abl-panel);display:flex;flex-direction:column;overflow:hidden}
+#desktop>#abl-session[hidden]{display:none}
+/* Session View replaces the Arrangement. The window manager raises #playlist with an inline z-index (≥21)
+ * on every click, which stacked it over the Session host, so the Arrangement is taken out of view here. */
+body.abl-view-session #desktop>#playlist.playlist-window{visibility:hidden!important;pointer-events:none!important}
+body.abl-view-session #desktop>#abl-session:not([hidden]){display:flex!important;visibility:visible!important;z-index:30}
+/* QA r5: the Arrangement playhead, edit cursor and held-stop line (inline-styled, visible children) never draw over the Session grid. */
+body.abl-view-session #playlist #song-playhead,body.abl-view-session #playlist #edit-playhead,body.abl-view-session #playlist .abl-held-playhead{display:none!important}
+#desktop>#abl-arr-mixer{position:absolute;left:0;right:0;bottom:calc(var(--abl-detail-h,0px) + 4px);height:var(--abl-arr-mixer-h,0px);z-index:4;background:var(--abl-panel2);border-top:1px solid var(--abl-line2);overflow:auto}
+#desktop>#abl-arr-mixer[hidden]{display:none}
+#desktop>#abl-detail{position:absolute;left:0;right:0;bottom:0;height:var(--abl-detail-h,0px);z-index:11;background:var(--abl-panel);display:flex;flex-direction:column;border-top:4px solid var(--abl-win)}
+#desktop>#abl-detail[hidden]{display:none}
+#abl-detail .abl-detail-splitter{position:absolute;left:0;right:0;top:-6px;height:7px;cursor:ns-resize;z-index:2}
+body.abl-resizing-detail,body.abl-resizing-detail *{cursor:ns-resize!important;user-select:none}
+#abl-detail>.abl-detail-host{flex:1 1 auto;min-height:0;overflow:auto;position:relative}
+#abl-detail>.abl-detail-host[hidden]{display:none}
+#abl-detail>.abl-detail-host:empty::before{content:attr(data-abl-empty);display:flex;height:100%;align-items:center;justify-content:center;color:var(--abl-dim);font:11px var(--abl-font)}
+#abl-detail-device:empty{background:var(--abl-panel)}
+/* Legacy editor / mixer panes dock exactly over the Detail View (height = --logic-editor-height). */
+body #desktop>.logic-editor-pane{z-index:12}
+body.abl-legacy-docked #desktop>#playlist.playlist-window{bottom:calc(var(--abl-detail-h,0px) + var(--abl-arr-mixer-h,0px) + 4px)!important}
+
+/* ---- Status bar ---- */
+footer.status-bar.abl-status-bar{display:flex!important;align-items:center;gap:10px;height:var(--abl-status);padding:0 8px;background:var(--abl-win);border-top:1px solid #7d7d7d;color:#111;font:11px var(--abl-font);overflow:hidden;white-space:nowrap}
+.abl-status-bar>span{overflow:hidden;text-overflow:ellipsis}
+.abl-status-bar #abl-status-hint,.abl-status-bar #hint{flex:0 1 auto;min-width:0;color:#111;background:#cfcfcf;border:1px solid #8a8a8a;padding:0 6px;height:16px;line-height:14px;max-width:46%}
+.abl-status-bar #hint:empty{display:none}
+.abl-status-bar #status-message{color:#222}
+.abl-status-bar #project-summary{color:#444}
+.abl-status-spacer{flex:1}
+.abl-status-track{background:var(--abl-orange);color:#111;padding:0 6px;height:16px;line-height:16px}
+.abl-status-track:empty{display:none}
+.abl-status-bar button{min-height:16px!important;height:16px;padding:0 6px!important;border-radius:0!important;background:var(--abl-panel2)!important;border:1px solid #777!important;color:#111!important;font:10.5px var(--abl-font)!important;box-shadow:none!important}
+
+/* ---- Arrangement View ---- */
+#playlist>.panel-heading.logic-local-bar{display:none!important}
+#playlist .playlist-content,#playlist .playlist-timeline{background:var(--abl-panel)}
+#playlist .playlist-timeline{position:relative}
+/* Track headers on the RIGHT: the grid starts at the viewport's left edge (the arrangement is
+ * shifted left by the header width) and the header column sticks to the viewport's right edge.
+ * Every beat ↔ pixel formula keeps its PLAYLIST_GUTTER offset, so gestures are unchanged. */
+body.abl-headers-right #playlist #arrangement{margin-left:calc(-1 * var(--playlist-gutter))}
+body.abl-headers-right #playlist .arrangement-scroll{scrollbar-gutter:auto;background:var(--abl-panel)}
+body.abl-headers-right #playlist .track-label{left:calc(var(--abl-arr-viewport-w,100%) - var(--playlist-gutter))!important;z-index:7;border-left:1px solid var(--abl-line2)!important;border-right:0!important}
+#abl-arr-corner{position:absolute;top:0;right:0;width:var(--playlist-gutter);height:24px;z-index:9;background:var(--abl-panel2);border-left:1px solid var(--abl-line2);border-bottom:1px solid var(--abl-line2);display:flex;align-items:center;gap:4px;padding:0 6px;font:11px var(--abl-font);color:#222;box-sizing:border-box}
+#abl-arr-corner button{min-height:16px!important;height:16px;padding:0 6px!important;border-radius:0!important;background:var(--abl-panel3)!important;border:1px solid #777!important;color:#111!important;font:10.5px var(--abl-font)!important;box-shadow:none!important}
+#playlist .timeline-ruler{background:var(--abl-panel2)!important;border-bottom:1px solid var(--abl-line2)!important;color:#111!important;height:24px!important}
+#playlist .timeline-ruler>.ruler-bar{border-left:1px solid #7d7d7d!important;color:#111!important;font:10.5px var(--abl-font)!important;padding:2px 0 0 3px!important;background:none!important;box-shadow:none!important}
+#playlist .timeline-ruler>.ruler-bar.in-loop{background:none!important;color:#111!important;border-left-color:#7d7d7d!important;box-shadow:inset 0 -6px 0 var(--abl-orange)!important}
+#playlist .playlist-loop-region{background:var(--abl-orange)!important;border:1px solid #9c6410!important;height:7px!important;top:auto!important;bottom:0!important;border-radius:0!important;opacity:1}
+#playlist .playlist-loop-region.pending{opacity:.6}
+/* Browser Preview (headphone) switch */
+.abl-preview-switch{color:#555}.abl-preview-switch.on{color:#111;background:var(--abl-orange)}
+/* Loop switch off: the brace stays where it was, greyed (Freestyle #17 keeps the region). */
+#playlist .playlist-loop-region.off{background:#8a8a8a!important;border-color:#6a6a6a!important}
+/* Session scene launch (Freestyle #14): launchable scenes, playing scenes and a track Stop button with a clip playing. */
+#abl-session-grid .abl-scene.launchable .abl-scene-launch{cursor:pointer}
+#abl-session-grid .abl-scene.playing .abl-scene-launch{color:#1a7f2e}
+#abl-session-grid .abl-scene .abl-scene-launch[disabled]{opacity:.35;cursor:default}
+#abl-session-grid .abl-track-stop.active{background:#cf8b2f}
+#playlist .track-lane{border-bottom:1px solid #9a9da0!important;background:var(--abl-grid)!important}
+#playlist .lane-grid{background-color:var(--abl-grid)!important;background-image:linear-gradient(90deg,#8f9294 1px,transparent 1px),linear-gradient(90deg,#b8bbbd 1px,transparent 1px)!important;background-size:var(--grid-major,var(--bar)) 100%,var(--abl-grid-px,var(--grid-mid,calc(var(--bar)/4))) 100%!important}
+#playlist .track-lane:nth-child(even) .lane-grid{background-color:var(--abl-grid2)!important}
+#playlist .track-lane.logic-track-selected .lane-grid{background-color:#d9dfe3!important}
+/* Live clip colours follow the track (14-colour cycle, same order as ablTrackColor()). */
+#playlist .track-lane:nth-child(14n+1){--abl-track:#c8e39c}#playlist .track-lane:nth-child(14n+2){--abl-track:#ebbd62}#playlist .track-lane:nth-child(14n+3){--abl-track:#9fd38d}
+#playlist .track-lane:nth-child(14n+4){--abl-track:#b4c7ec}#playlist .track-lane:nth-child(14n+5){--abl-track:#e8a99c}#playlist .track-lane:nth-child(14n+6){--abl-track:#cfa1e3}
+#playlist .track-lane:nth-child(14n+7){--abl-track:#f3ec8a}#playlist .track-lane:nth-child(14n+8){--abl-track:#cfeff1}#playlist .track-lane:nth-child(14n+9){--abl-track:#c3b6ea}
+#playlist .track-lane:nth-child(14n+10){--abl-track:#e0eb8e}#playlist .track-lane:nth-child(14n+11){--abl-track:#9ed6d0}#playlist .track-lane:nth-child(14n+12){--abl-track:#f6d38f}
+#playlist .track-lane:nth-child(14n+13){--abl-track:#e6b3c8}#playlist .track-lane:nth-child(14n+14){--abl-track:#b6dd8c}
+#playlist .clip,#playlist .clip.audio-clip{border-radius:0!important;border:1px solid #3f3f3f!important;background:var(--abl-track,#c8e39c)!important;color:#111!important;box-shadow:none!important;filter:none}
+#playlist .clip .clip-title,#playlist .clip.audio-clip .clip-title{height:14px!important;background:color-mix(in srgb,var(--abl-track,#c8e39c) 72%,#000)!important;border:0!important;color:#111!important;font:10.5px/12px var(--abl-font)!important;padding:1px 4px!important}
+#playlist .clip:not(.audio-clip) svg :is(rect,line,path){fill:#1c1c1c;stroke:#1c1c1c}
+#playlist .clip.audio-clip svg :is(path,rect,polyline,line){fill:#1c1c1c;stroke:#1c1c1c}
+/* Live audio clip: a darker waveform of the track colour below the title strip, at 24 px and 64 px. The
+ * inherited `.clip svg{height:calc(100% - 19px);padding:5px 3px}` left 0 px for it in a 24 px track. */
+#playlist .clip.audio-clip svg[data-cloud-waveform]{position:absolute;left:0;top:12px;width:100%;height:calc(100% - 12px);padding:0!important;margin:0;opacity:1!important;pointer-events:none;z-index:1;display:block}
+#playlist .clip.audio-clip svg[data-cloud-waveform] path[data-waveform-channel]{fill:none!important;stroke:color-mix(in srgb,var(--abl-track,#c8e39c) 38%,#000)!important}
+#playlist .clip.audio-clip svg[data-cloud-waveform] path[data-waveform-rms]{fill:none!important;stroke:color-mix(in srgb,var(--abl-track,#c8e39c) 22%,#000)!important;stroke-opacity:.55}
+#playlist .clip.playlist-pending-clip.abl-pending-clip{opacity:.75!important;filter:none!important;outline:0!important;border:1px dashed #3f3f3f!important;background:var(--abl-track,#c8e39c)!important}
+#playlist .clip.playlist-pending-clip.abl-pending-clip .clip-title{font-style:italic}
+#playlist .clip.playlist-pending-clip.abl-pending-clip .abl-pending-status{margin-left:6px;opacity:.7;font-weight:400}
+#playlist .clip.playlist-pending-clip.abl-pending-clip .abl-pending-status::before{content:"· "}
+/* QA r3: Main row closing the track list; headers sit on the right like every track header. */
+#playlist #track-lanes>.abl-main-row{position:relative;height:24px;border-top:2px solid #6d6d6d;background:var(--abl-panel2)}
+#playlist #track-lanes>.abl-main-row>.abl-main-row-label{position:sticky;left:calc(var(--abl-arr-viewport-w,100%) - var(--playlist-gutter));width:var(--playlist-gutter);height:100%;box-sizing:border-box;display:flex;align-items:center;padding:0 8px;background:#2b2b2b;color:#ddd;font:11px var(--abl-font);border-left:1px solid var(--abl-line2)}
+/* QA r3: bottom time ruler (m:ss) aligned with the grid; the header column on the right stays free. */
+#playlist .abl-time-ruler{position:relative;flex:0 0 18px;height:18px;overflow:hidden;margin-right:var(--playlist-gutter);background:var(--abl-panel2);border-top:1px solid var(--abl-line2);font:10px var(--abl-font);color:#222}
+#playlist .abl-time-ruler>span{position:absolute;top:2px;padding-left:3px;border-left:1px solid #7d7d7d;white-space:nowrap;line-height:14px}
+/* QA r3: OS-file import placeholder in the target track colour, dashed like Live's pending clip. */
+#playlist .clip.audio-clip.logic-import-ghost.abl-import-ghost{opacity:.75!important;border:1px dashed #3f3f3f!important}
+/* QA r3: optimistic ⌘T / ⇧⌘T row until the real lane arrives. */
+#playlist .track-lane.abl-pending-track .track-label{background:var(--abl-track,#c8e39c)!important;opacity:.7;display:flex;align-items:center;padding-left:6px}
+#playlist .track-lane.abl-pending-track .abl-pending-track-name{font:italic 11px var(--abl-font);color:#111}
+#playlist .track-lane.abl-pending-track .abl-pending-track-name::after{content:" · saving…";opacity:.7}
+#playlist .track-lane:not(.abl-unfolded) .clip.audio-clip svg[data-cloud-waveform]{top:11px;height:calc(100% - 11px)}
+#playlist .clip.audio-clip .audio-clip-label{color:#333!important}
+#playlist .clip.selected{outline:0!important;filter:none!important;box-shadow:inset 0 0 0 1px #000!important}
+#playlist .clip.selected .clip-title{background:#2b2b2b!important;color:var(--abl-track,#fff)!important}
+#playlist .clip.muted-item,#playlist .clip.muted-preview{background:#b5b5b5!important;border-color:#777!important;opacity:1!important}
+#playlist .clip.muted-item .clip-title{background:#9a9a9a!important}
+#playlist .clip.muted-item .clip-title::before{content:""!important}
+#playlist .track-lane:has(.track-enable.off) .clip{opacity:.5}
+/* Insert marker / playhead: Live draws a thin black line with a triangle in the ruler. */
+#playlist .playhead::before{background:#111!important;width:1px}
+#playlist .playhead>span{background:#111!important}
+#playlist #edit-playhead::before,#playlist #edit-playhead>span{background:#111!important}
+#playlist #edit-playhead.is-ghost::before,#playlist #edit-playhead.is-ghost>span{opacity:.3}
+/* Right-side Live track headers */
+#playlist .track-label.abl-track-header{display:flex!important;align-items:flex-start;gap:4px;padding:2px 4px!important;background:var(--abl-panel2)!important;color:#111!important;font:11px var(--abl-font)!important;overflow:hidden}
+#playlist .track-lane.logic-track-selected .track-label,#playlist .track-label.abl-track-header.logic-track-selected{background:#e4e4e4!important}
+#playlist .abl-track-title{flex:1 1 auto;min-width:0;display:flex;align-items:center;gap:3px;height:17px;padding:0 4px;background:var(--abl-track,#c8e39c);border:1px solid #6d6d6d}
+#playlist .logic-track-selected .abl-track-title{box-shadow:inset 0 0 0 1px #000}
+#playlist .abl-fold{all:unset;width:10px;color:#222;font-size:8px;text-align:center;cursor:default}
+#playlist .abl-track-name{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font:11px var(--abl-font);color:#111}
+#playlist .abl-track-controls{display:flex;align-items:center;gap:2px;flex:0 0 auto}
+#playlist .abl-track-controls button{position:static!important;width:auto!important;min-width:19px;height:17px!important;min-height:17px!important;padding:0 3px!important;border-radius:0!important;border:1px solid #6d6d6d!important;background:var(--abl-panel3)!important;box-shadow:none!important;color:#111!important;font:10.5px var(--abl-font)!important;display:inline-flex;align-items:center;justify-content:center}
+#playlist .abl-track-controls .abl-activator{min-width:30px;background:var(--abl-orange)!important}
+#playlist .abl-track-controls .abl-activator.off{background:#a7a7a7!important;color:#333!important}
+#playlist .abl-track-controls .logic-track-s.on{background:#49a3ff!important;color:#111!important}
+#playlist .abl-track-controls button:disabled{color:#888!important;background:#c4c4c4!important}
+#playlist .abl-track-controls .abl-arm{font-size:9px!important}
+#playlist .track-label .track-enable{position:static!important;box-shadow:none!important}
+/* "Drop Files and Devices Here": the empty rows below the last track */
+#playlist .track-lane.logic-empty-row{background:var(--abl-panel)!important;border-bottom-color:transparent!important}
+#playlist .track-lane.logic-empty-row .lane-grid{background-color:#c5c8ca!important;background-image:linear-gradient(90deg,#aeb1b3 1px,transparent 1px)!important;background-size:var(--grid-major,var(--bar)) 100%!important}
+#playlist .track-lane.logic-empty-row .track-label{background:var(--abl-panel)!important;border-left-color:transparent!important}
+#playlist .track-lane.abl-drop-zone .lane-grid::after{content:"Drop Files and Devices Here";position:sticky;left:calc(var(--abl-arr-viewport-w,600px)/2 - var(--playlist-gutter)/2 - 90px);top:0;display:inline-block;margin-top:calc(var(--lane)/2 - 7px);color:#333;font:11px var(--abl-font);pointer-events:none;white-space:nowrap}
+#playlist .arrangement-scroll.library-drop-target .track-lane.logic-empty-row .lane-grid{background-color:#d8e8f1!important}
+
+/* ---- Session View ---- */
+.abl-session-scroll{flex:1 1 auto;overflow:auto;min-height:0}
+.abl-session-grid{display:flex;align-items:stretch;min-height:100%;font:11px var(--abl-font);color:#111}
+:root{--abl-session-col-w:108px}/* Session track column width: the Session mixer strips align to it (Layout contract) */
+.abl-session-track,.abl-session-scenes{flex:0 0 var(--abl-session-col-w);display:flex;flex-direction:column;border-right:1px solid #8f8f8f;background:var(--abl-panel)}
+.abl-session-scenes{flex:0 0 96px;margin-left:auto;position:sticky;right:0;background:var(--abl-panel2);border-left:1px solid #6d6d6d;border-right:0}
+.abl-session-spacer{flex:1 1 0;min-width:12px}
+/* Live: uniform column width (names truncate), Main/scene column straight after the grid, and the
+ * empty slot grid continuing down to the Session mixer (no dead band). */
+.abl-session-track{min-width:0;max-width:var(--abl-session-col-w);width:var(--abl-session-col-w);overflow:hidden;background:#c9c9c9 repeating-linear-gradient(180deg,transparent 0 22px,#a3a3a3 22px 23px)}
+.abl-session-scenes{margin-left:0;background:var(--abl-panel2) repeating-linear-gradient(180deg,transparent 0 22px,#7f7f7f 22px 23px)}
+.abl-session-spacer{flex:1 1 0;min-width:0;background:var(--abl-panel)}
+.abl-session-grid>.abl-session-spacer{order:99}
+.abl-session-head,.abl-session-track .abl-slot-name{min-width:0;max-width:100%}
+.abl-session-head{height:20px;display:flex;align-items:center;padding:0 5px;background:var(--abl-track,#c8e39c);border-bottom:1px solid #6d6d6d;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:default;position:sticky;top:0;z-index:2}
+.abl-session-track.selected .abl-session-head{box-shadow:inset 0 0 0 1px #000}
+.abl-session-scenes .abl-session-head{background:#2b2b2b;color:#ddd}
+.abl-slot{height:22px;display:flex;align-items:center;gap:3px;padding:0 3px;border-bottom:1px solid #a3a3a3;background:#c9c9c9;position:relative;cursor:default;white-space:nowrap;overflow:hidden}
+.abl-slot.empty::before{content:"";width:9px;height:9px;border:1px solid #8c8c8c;background:#b9b9b9;flex:0 0 auto}
+.abl-slot.empty.creatable:hover{background:#d5d5d5}
+.abl-slot.filled{background:var(--abl-track,#c8e39c);border-bottom-color:#7a7a7a}
+.abl-slot.abl-slot-pending{opacity:.7}
+/* A MIDI clip dragged over a track column: the slot it will land in. */
+#abl-session-grid .abl-slot.empty.abl-slot-drop{background:color-mix(in srgb,var(--abl-track,#c8e39c) 55%,#d5d5d5)!important;box-shadow:inset 0 0 0 1px #111}
+.abl-slot.filled.selected{box-shadow:inset 0 0 0 1px #000;background:color-mix(in srgb,var(--abl-track,#c8e39c) 80%,#fff)}
+.abl-slot .abl-launch{all:unset;width:12px;height:14px;display:inline-flex;align-items:center;justify-content:center;font-size:9px;color:#111;cursor:pointer;flex:0 0 auto}
+.abl-slot .abl-launch:hover{color:#2d7a17}
+.abl-slot .abl-slot-name{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis}
+.abl-slot.playing .abl-launch{color:#2d9a17}
+.abl-scene{height:22px;display:flex;align-items:center;gap:4px;padding:0 5px;border-bottom:1px solid #7f7f7f;background:var(--abl-panel2);color:#111;white-space:nowrap}
+.abl-scene .abl-launch{all:unset;font-size:9px;cursor:default;color:#555}
+/* QA r3: the whole-slot row count leaves up to 22 px; the stop row sits on the mixer and the remainder shows as slot lines above it. */
+.abl-session-track>.abl-session-stop-row,.abl-session-scenes>.abl-session-stop-row{margin-top:auto}
+.abl-session-stop-row{height:22px;display:flex;align-items:center;justify-content:center;border-top:1px solid #7a7a7a;background:var(--abl-panel2)}
+.abl-session-stop-row button{all:unset;width:12px;height:12px;background:#555;cursor:pointer}
+.abl-session-empty{padding:24px;color:var(--abl-dim)}
+#abl-session-mixer{flex:0 0 auto;max-height:45%;overflow:auto;background:var(--abl-panel2);border-top:1px solid var(--abl-line2)}
+#abl-session-mixer:empty{display:none}
+
+/* ---- Browser ---- */
+aside.browser>.panel-heading,aside.browser>.browser-tabs{display:none!important}
+aside.browser .abl-browser{display:flex;flex:1 1 auto;min-height:0;font:11px var(--abl-font);color:#111}
+aside.browser .abl-browser-side{flex:0 0 112px;overflow:auto;background:var(--abl-panel);border-right:1px solid #8f8f8f;padding:4px 0}
+aside.browser .abl-browser-side h4{margin:8px 6px 2px;font:11px var(--abl-font);color:#444}
+aside.browser .abl-browser-side button{all:unset;box-sizing:border-box;display:flex;align-items:center;gap:5px;width:100%;padding:2px 8px;font:11px var(--abl-font);color:#111;cursor:default;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+aside.browser .abl-browser-side button.selected{background:#7a7a7a;color:#fff}
+aside.browser .abl-browser-side button:disabled{color:#777}
+aside.browser .abl-browser-side button:hover:not(.selected):not(:disabled){background:#cacaca}
+aside.browser .abl-browser-content{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;background:var(--abl-panel2)}
+aside.browser .abl-browser-content>.browser-search{margin:4px!important;height:20px;display:flex;align-items:center;gap:4px;background:#d7d7d7!important;border:1px solid #777!important;border-radius:0!important;padding:0 4px}
+aside.browser .abl-browser-content>.browser-search input{color:#111!important;font:11px var(--abl-font)!important;background:transparent!important;border:0!important}
+aside.browser .abl-browser-title{padding:2px 6px;font:11px var(--abl-font);color:#333;border-bottom:1px solid #9a9a9a}
+aside.browser .abl-browser-content #browser-tree{flex:1 1 auto;min-height:0;overflow:auto;background:var(--abl-panel2)!important;color:#111!important}
+aside.browser .abl-browser-note{padding:8px;color:#444;line-height:1.4}
+aside.browser .abl-browser-list button{all:unset;box-sizing:border-box;display:flex;gap:6px;align-items:center;width:100%;padding:2px 8px;font:11px var(--abl-font);color:#111;cursor:default;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+aside.browser .abl-browser-list button:hover{background:#d5d5d5}
+aside.browser .abl-browser-list button[draggable="true"]{cursor:grab}
+aside.browser .abl-device-list{flex:1 1 auto;min-height:0;overflow:auto;background:var(--abl-panel2)}
+aside.browser .abl-device-list button:disabled{color:#777}
+aside.browser .abl-device-list .abl-device-row{box-sizing:border-box;display:flex;gap:6px;align-items:center;width:100%;padding:2px 8px;font:11px var(--abl-font);color:#111;cursor:default;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;user-select:none;-webkit-user-select:none}
+aside.browser .abl-device-list .abl-device-row:hover{background:#d5d5d5}
+aside.browser .abl-device-list .abl-device-row[draggable="true"]{cursor:grab;-webkit-user-drag:element}
+aside.browser .abl-device-list .abl-device-row[aria-disabled="true"]{color:#777}
+/* ⌘E optimistic split: the cut and the right half's title, painted until the slice saves (QA r7) */
+#playlist .clip.abl-split-pending{overflow:hidden}
+#playlist .clip .abl-split-pending-cut{position:absolute;top:0;bottom:0;margin-left:-1px;width:2px;background:var(--abl-grid-bg,#cfd2d4);z-index:3;pointer-events:none}
+#playlist .clip .abl-split-pending-cut .abl-split-pending-title{position:absolute;left:3px;top:0;padding:0 3px;font:11px var(--abl-font);color:#111;white-space:nowrap;background:inherit;opacity:.85}
+aside.browser .browser-footer{background:var(--abl-panel)!important;border-top:1px solid #8f8f8f!important;color:#111}
+aside.browser .browser-legacy-preview{display:none!important}
+aside.browser #browser-tree :is(.library-sound-row,.browser-item,.browser-folder){color:#111!important;background:transparent;border-color:#a8a8a8!important;font:11px var(--abl-font)!important}
+aside.browser #browser-tree .library-sound-row.selected,aside.browser #browser-tree .library-sound-row[aria-selected="true"]{background:#7a7a7a!important;color:#fff!important}
+aside.browser #browser-tree :is(button,select,input){color:#111!important;background:#cfcfcf!important;border-color:#8a8a8a!important;border-radius:0!important;box-shadow:none!important}
+aside.browser #browser-tree :is(h3,h4,p,span,small,label){color:inherit}
+
+/* ---- Menus, dialogs, toast in Live's grey ---- */
+#context-menu.context-menu,.context-menu{background:#cfcfcf!important;border:1px solid #555!important;border-radius:0!important;box-shadow:2px 3px 8px #0006!important;padding:2px 0!important;backdrop-filter:none}
+/* Live's menu rows are 20 px (the menu bar's Edit and View menus are long: abl-shell.js columnize uses this height) */
+.context-menu button{font:11.5px var(--abl-font)!important;color:#111!important;border-radius:0!important;min-height:20px!important;padding-top:2px!important;padding-bottom:2px!important}
+.context-menu .menu-column+.menu-column{border-left:1px solid #9a9a9a!important;margin-left:0!important;padding-left:0!important}
+.context-menu button:hover:not(:disabled),.context-menu button:focus-visible,.context-menu button.menu-active:not(:disabled),.context-menu .menu-sub.open>button{background:#5f5f5f!important;color:#fff!important}
+.context-menu button:hover:not(:disabled) small{color:#eee!important}
+.context-menu button:disabled{color:#888!important}
+/* QA r8: unavailable items are aria-disabled (hoverable, so the reason shows), never highlighted */
+.context-menu button[aria-disabled="true"],.context-menu button[aria-disabled="true"]:hover,.context-menu button[aria-disabled="true"]:focus-visible,.context-menu button[aria-disabled="true"].menu-active{background:transparent!important;color:#888!important;cursor:default}
+.context-menu button[aria-disabled="true"] small{color:#999!important}
+.context-menu button small{color:#444!important;font:11px var(--abl-font)!important}
+.context-menu hr{border-top:1px solid #9a9a9a!important;margin:2px 0!important}
+.context-menu .menu-check{color:#111!important}
+.context-menu .abl-swatches{display:grid;grid-template-columns:repeat(7,14px);gap:2px;padding:4px 8px}
+.context-menu .abl-swatches button{width:14px!important;height:12px!important;min-height:12px!important;padding:0!important;border:1px solid #444!important}
+.context-menu .abl-swatches button:hover{outline:1px solid #000}
+dialog.studio-dialog{background:#c6c6c6!important;color:#111!important;border:1px solid #555!important;border-radius:0!important;font:11.5px var(--abl-font)!important}
+dialog.studio-dialog>header{background:#a8a8a8!important;color:#111!important;font:600 11.5px var(--abl-font)!important;border-bottom:1px solid #777!important}
+dialog.studio-dialog :is(input,select,textarea){background:#e6e6e6!important;color:#111!important;border:1px solid #777!important;border-radius:0!important}
+dialog.studio-dialog button{border-radius:0!important;background:#d4d4d4!important;color:#111!important;border:1px solid #777!important;box-shadow:none!important}
+/* Inherited dark-theme dialog text (New track, routing, ranges…): readable on Live's light grey. */
+dialog.studio-dialog :is(label,p,li,legend,small,span,output,.lane-create-kind-note,.lane-create-instrument-availability,.lane-create-status,[class*="-note"],[class*="-hint"]){color:#111!important}
+dialog.studio-dialog :is(.lane-create-kind-note,[class*="-note"],[class*="-hint"]){color:#3a3a3a!important}
+dialog.studio-dialog :is(input,select,textarea):disabled,dialog.studio-dialog button:disabled{color:#6a6a6a!important;opacity:1!important}
+dialog.studio-dialog :is([role="alert"],.error,[class*="-error"]){color:#a00000!important}
+dialog.studio-dialog button.primary{background:var(--abl-orange)!important;border-color:#8a5a12!important;color:#111!important}
+#toast{background:#2b2b2bf0!important;color:#f0f0f0!important;border:1px solid #111!important;border-radius:0!important;font:11.5px var(--abl-font)!important}
+
+/* ======== Round 2 (lead screenshot review) ======== */
+/* Menu row + control bar: Live light grey (beats the Logic dark title bar / bar-row skin). */
+body header.abl-control-bar .logic-titlebar{background:#b4b4b4!important;border-bottom:1px solid #8c8c8c!important;color:#111!important}
+body header.abl-control-bar .logic-titlebar .brand{display:none!important}
+body header.abl-control-bar .logic-app-name{color:#111!important;font:700 11.5px var(--abl-font)!important;letter-spacing:.2px;padding:0 4px 0 2px}
+body header.abl-control-bar .logic-titlebar .hint-display strong::after,body header.abl-control-bar .logic-titlebar .hint-display strong::before{content:none!important}
+body header.abl-control-bar .abl-bar{background:var(--abl-win)!important;border:0!important}
+body header.abl-control-bar .abl-bar .abl-text{color:#111!important;opacity:1!important;min-width:30px}
+body header.abl-control-bar .abl-bar .abl-text:disabled{color:#666!important}
+/* Live's metronome ▾ (Count-In None / 1 Bar / 2 Bars …): a narrow arrow fused to the metronome's right edge.
+ * Lit (orange) while a count-in is chosen, like Live's arrow under an active Count-In. Right-click the
+ * metronome opens the same menu. */
+body header.abl-control-bar #logic-count-in{display:inline-flex!important;align-items:center;justify-content:center;width:12px!important;min-width:12px!important;height:20px!important;margin-left:-3px!important;padding:0!important;font:9px/1 var(--abl-font)!important;letter-spacing:0!important;color:#111!important;background:var(--abl-field,#c8c8c8)!important;border:1px solid #6b6b6b!important;border-left:0!important;border-radius:0!important;box-shadow:none!important}
+body header.abl-control-bar #logic-count-in.lit{background:var(--abl-orange)!important}
+/* Exactly one play triangle: only #play draws ▶. */
+body header.abl-control-bar .abl-bar-center>:not(#time-display):not(.abl-transport):not(#logic-cycle):not(.abl-loop-box):not(#abl-draw):not(#abl-follow):not(#abl-overdub):not(#abl-automation-arm):not(#abl-reenable-automation):not(#abl-capture-midi):not(#abl-session-record):not(#abl-punch-in):not(#abl-punch-out){display:none!important}
+body header.abl-control-bar .abl-lcd::before,body header.abl-control-bar .abl-lcd::after,body header.abl-control-bar .abl-transport::before{content:none!important;display:none!important}
+
+/* Arrangement: the arrangement is always at least viewport + gutter wide, so the sticky header column
+ * reaches the viewport's right edge (scrollbar to its right) at every window width. */
+body.abl-headers-right #playlist #arrangement{min-width:var(--abl-arr-min-w,calc(100% + var(--playlist-gutter)))!important}
+body.abl-headers-right #playlist .arrangement-scroll{scrollbar-gutter:auto}
+
+/* Compact Live tracks (~24 px): a one-line header and clip title strip; the tiny preview fills the rest. */
+:root{--lane:24px}
+#playlist .track-label.abl-track-header{align-items:center!important;padding:0 4px!important}
+#playlist .abl-track-title,#playlist .abl-track-controls button{height:16px!important;min-height:16px!important}
+#playlist .clip .clip-title,#playlist .clip.audio-clip .clip-title{height:12px!important;font:10px/11px var(--abl-font)!important;padding:0 3px!important;overflow:hidden;white-space:nowrap}
+#playlist .track-lane:not(.abl-unfolded) .clip .audio-clip-label{display:none!important}
+#playlist .track-lane.abl-unfolded .track-label.abl-track-header{align-items:flex-start!important;padding-top:3px!important}
+/* QA r4 (auto1-s.png): in Automation Mode the header wraps (choosers on line 2). A long name sized the title at its
+ * content width and pushed the number/S/arm buttons onto their own line. Live truncates the name instead: the title
+ * takes the space left on line 1 (basis 0) and its name ellipsizes, so the buttons never wrap. */
+#playlist .track-lane.abl-auto-track .track-label.abl-track-header>.abl-track-title{flex:1 1 0%!important;min-width:0!important;overflow:hidden}
+#playlist .track-lane.abl-auto-track .track-label.abl-track-header>.abl-track-controls{flex:0 0 auto!important}
+
+/* Browser content list: Live's plain light list (Logic library skin neutralised). */
+body aside.browser{--lb-bg:#bdbdbd;--lb-alt:#b6b6b6;--lb-line:#9a9a9a;--lb-text:#111;--lb-dim:#444;--lb-blue:#7a7a7a;--lb-blue-text:#fff;--lb-key:#c9c9c9;--lb-key-on:#ffa31a;--lb-font:var(--abl-font)}
+body aside.browser .browser-tabs.logic-browser-segments,body aside.browser .panel-heading,body aside.browser .logic-browser-scope{display:none!important}
+body aside.browser .abl-browser-content>.browser-search{background:#d7d7d7!important;border:1px solid #777!important;border-radius:0!important}
+body aside.browser .abl-browser-content>.browser-search input{color:#111!important}
+body aside.browser #browser-tree{background:var(--lb-bg)!important;color:#111!important}
+body aside.browser #browser-tree .library-rows>*{background:transparent!important}
+body aside.browser #browser-tree .library-rows>:nth-child(even){background:var(--lb-alt)!important}
+body aside.browser #browser-tree :is(.library-sound-row,.library-asset-row){grid-template-columns:16px minmax(0,1fr)!important;grid-template-rows:18px!important;grid-auto-flow:column!important;grid-auto-columns:18px!important;height:18px!important;min-height:18px!important;border:0!important;color:#111!important;font:11px var(--abl-font)!important}
+body aside.browser #browser-tree :is(.library-sound-row,.library-asset-row) :is(.library-sound-meta,.library-asset-meta,.library-sound-duration,.library-info){display:none!important}
+body aside.browser #browser-tree :is(.library-sound-row,.library-asset-row) :is(button,.library-sound-name,.library-asset-name){background:transparent!important;border:0!important;box-shadow:none!important;color:inherit!important;border-radius:0!important;text-align:left;justify-content:flex-start;font:11px var(--abl-font)!important;height:18px!important;min-height:18px!important}
+body aside.browser #browser-tree :is(.library-sound-row,.library-asset-row).selected{background:#7a7a7a!important;color:#fff!important}
+body aside.browser #browser-tree :is(.library-sound-row,.library-asset-row):hover:not(.selected){background:#cacaca!important}
+body aside.browser #browser-tree .logic-browser-columns{grid-template-columns:16px minmax(0,1fr) 18px!important;background:#c3c3c3!important;color:#333!important;border-color:#9a9a9a!important;height:18px}
+body aside.browser #browser-tree .logic-browser-columns>:nth-child(n+3):not(:last-child){display:none!important}
+/* QA r10 (Current Project showed a stray empty ☆ row): a row is ONE line — play | name | ☆ (+) in auto columns on the same line; the empty Length cell and the read-only dot are not shown, so nothing wraps into a second grid row. The column header's Name spans the play + name columns. */
+body aside.browser #browser-tree :is(.library-sound-row,.library-asset-row) :is(.logic-browser-length,.library-readonly){display:none!important}
+body aside.browser #browser-tree .logic-browser-columns .logic-column-length{display:none!important}
+body aside.browser #browser-tree .logic-browser-columns .logic-column-name{grid-column:1 / 3}
+body aside.browser #browser-tree .logic-keyword-grid .logic-keyword,body aside.browser #browser-tree .library-filters input{background:#cfcfcf!important;color:#111!important;border:1px solid #8a8a8a!important;border-radius:0!important}
+body aside.browser #browser-tree .logic-keyword-grid .logic-keyword[aria-pressed="true"]{background:var(--abl-orange)!important}
+body aside.browser #browser-tree .library-more{background:#cfcfcf!important;color:#111!important;border:1px solid #8a8a8a!important;border-radius:0!important}
+body aside.browser #browser-tree :is(.library-count,.library-heading,.library-message){color:#333!important}
+/* Preview strip: Live's headphone toggle + mini waveform / scrubber on light grey. */
+body aside.browser .browser-footer,body aside.browser .browser-footer:has(.library-preview-player){background:var(--abl-panel)!important;border-top:1px solid #8f8f8f!important;padding:3px 6px!important;color:#111!important}
+body aside.browser .library-preview-controls button{color:#111!important;border-radius:0!important}
+body aside.browser .library-preview-controls button:hover:not(:disabled){background:#cfcfcf!important;color:#111!important}
+body aside.browser .library-preview-progress::-webkit-slider-runnable-track{height:14px!important;background:linear-gradient(to right,#ffa31a33 0 var(--preview-position,0%),transparent var(--preview-position,0%) 100%),repeating-linear-gradient(90deg,#555 0 1px,transparent 1px 3px)!important;background-size:100% 100%,100% 60%!important;background-position:0 0,0 50%!important;background-repeat:no-repeat!important;border:1px solid #8a8a8a}
+body aside.browser .library-preview-progress::-webkit-slider-thumb{width:2px!important;height:14px!important;margin-top:0!important;border-radius:0!important;background:#111!important;box-shadow:none!important}
+body aside.browser .library-preview-volume::-webkit-slider-runnable-track{background:linear-gradient(to right,#555 0 var(--preview-level,100%),#bbb var(--preview-level,100%) 100%)!important}
+body aside.browser .library-preview-volume::-webkit-slider-thumb{background:#333!important;box-shadow:none!important}
+body aside.browser .abl-preview-toggle{all:unset;box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;width:20px;height:18px;border:1px solid #777;background:#cfcfcf;color:#111;cursor:default}
+body aside.browser .abl-preview-toggle[aria-pressed="true"]{background:var(--abl-orange)}
+body aside.browser .abl-preview-toggle svg{width:13px;height:13px}
+/* Breadcrumb / filter-chip row under the search field. */
+aside.browser .abl-browser-title{display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+aside.browser .abl-crumb{font:11px var(--abl-font);color:#222}
+aside.browser .abl-crumb+.abl-crumb::before{content:"›";margin-right:4px;color:#555}
+aside.browser .abl-browser-list button[draggable="true"],aside.browser #browser-tree [data-abl-device]{cursor:grab}
+
+/* Status bar: one Live info line. */
+.abl-status-bar #hint.abl-dup{display:none!important}
+
+/* Live keeps the playhead at the first Stop's position (abl-shell.js holdStop) until Play / a second Stop. */
+/* QA r4: #arrangement is shifted left by the gutter (headers on the right), so left:0 put the line 300px off-screen.
+ * Same origin as #song-playhead (.playhead{left:var(--playlist-gutter)}). */
+#playlist .abl-held-playhead{position:absolute;left:var(--playlist-gutter);top:0;bottom:0;width:1px;background:#111;pointer-events:none;z-index:10}
+/* Track Color (lane A): Live's 14 × 5 swatch grid popover. */
+.abl-color-picker{position:fixed;z-index:10050;background:#c3c3c3;border:1px solid #1d1d1d;padding:4px;width:max-content;max-width:calc(100vw - 8px);font:11px -apple-system,"Helvetica Neue",Arial,sans-serif;color:#111}
+.abl-color-picker .abl-color-grid{display:grid;grid-template-columns:repeat(14,16px);gap:2px}
+.abl-color-picker .abl-color-swatch{width:16px;height:16px;padding:0;border:1px solid rgba(0,0,0,.45);border-radius:0;cursor:pointer}
+.abl-color-picker .abl-color-swatch:hover,.abl-color-picker .abl-color-swatch:focus-visible{outline:2px solid #111;outline-offset:-1px}
+.abl-color-picker .abl-color-swatch.is-current{outline:2px solid #fff;outline-offset:-3px;box-shadow:0 0 0 1px #111}
+.abl-color-picker .abl-color-note{margin:4px 0 0;max-width:262px;color:#333;font-size:10px;line-height:1.25}
+.abl-save-version label{display:block;margin:0 0 8px}.abl-save-version input[name="name"]{display:block;width:100%;margin-top:3px}
+.abl-save-version .abl-save-status{min-height:1.2em;margin:4px 0}
+/* Read-only live session (abl-readonly.js): one badge after ● and greyed transport/MIDI controls. */
+body header.abl-control-bar .abl-transport .abl-readonly{display:inline-flex;align-items:center;height:20px;padding:0 6px;margin-left:4px;border-radius:2px;background:#5a4a1e;color:#ffd970;font:700 10px var(--abl-font);letter-spacing:.3px;text-transform:uppercase;cursor:help;white-space:nowrap}
+body header.abl-control-bar [data-read-only="1"]{opacity:.45!important;cursor:not-allowed!important}
+
+/* Canvas waveforms (abl-waveforms.js + waveform-pyramid.js): only the visible part of a clip is a canvas. */
+#playlist .clip.audio-clip canvas.abl-wave-canvas{position:absolute;left:0;top:12px;pointer-events:none;z-index:1;display:block}
+#playlist .track-lane:not(.abl-unfolded) .clip.audio-clip canvas.abl-wave-canvas{top:11px}
+
+/* A take being recorded: Live's red recording clip that grows with the playhead. */
+#playlist .clip.audio-clip.abl-recording-clip{position:absolute;top:0;bottom:0;background:#e5604f!important;border-color:#7d1f14!important;pointer-events:none;z-index:3}
+#playlist .clip.audio-clip.abl-recording-clip .clip-title{background:#b83a2b!important;color:#fff!important}
+
+aside.browser .abl-device-list .abl-device-row.selected{background:var(--abl-select)}
+
+/* Control bar: Live's transport-side switches (some are shown disabled with the reason in their tooltip). */
+header.abl-control-bar .abl-bar #abl-overdub:disabled[aria-pressed="true"]{background:var(--abl-orange-dim)!important;color:#222!important}
+header.abl-control-bar .abl-bar #abl-session-record{color:#8c2a20!important}
+
+/* Beat ruler subdivisions at high zoom (bars.beats.sixteenths); the bar numbers stay in the inherited ruler. */
+#playlist .abl-beat-ruler{position:absolute;overflow:hidden;pointer-events:none;z-index:6;font:10px var(--abl-font);color:#333}
+#playlist .abl-beat-ruler>span{position:absolute;top:0;bottom:0;padding-left:3px;border-left:1px solid #8a8a8a;white-space:nowrap;line-height:20px}
+#playlist .abl-beat-ruler>span.abl-beat-ruler-edge{border-left:0;background:var(--abl-panel2);padding-right:6px;font-weight:600;z-index:1}
+
+/* A queued clip launch (Live: the launch button blinks until the clip starts). */
+@keyframes abl-queued-blink{0%,49%{opacity:1}50%,100%{opacity:.15}}
+#abl-session-grid .abl-slot.abl-queued .abl-launch{animation:abl-queued-blink .5s steps(1,end) infinite;color:#1a7f2e!important}
+
+/* Session: the keyboard cursor on a clip slot (filled or empty). */
+#abl-session-grid .abl-slot.abl-cursor{outline:1px solid #111;outline-offset:-1px}
+#abl-session-grid .abl-slot.empty.abl-cursor{background:var(--abl-select)!important}

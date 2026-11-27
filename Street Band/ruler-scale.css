@@ -1,0 +1,32 @@
+/* Zoom-adaptive bar rulers (ruler-scale.js) and the track-header corner that clips the ruler.
+ * Shared rules first; the per-app theme block is at the end. Load after the app's ruler CSS
+ * (right after logic-tracks.css; a test pins the sheets that follow logic-browser.css). */
+
+/* ── Corner cell: the top row of the track-header column ─────────────────────────────────
+ * The ruler scrolls horizontally with the lanes. This opaque cell stays in the top-left
+ * corner above it (and above the playhead cap and cycle strip), so nothing of the ruler is
+ * ever drawn over the header column. The headers themselves sit above the playhead line.
+ * Stacking inside #arrangement: ruler 8 < playhead 9-10 < track headers 11 < corner 12. */
+.timeline-corner{position:sticky;left:0;top:0;z-index:12;box-sizing:border-box;width:var(--playlist-gutter);height:var(--timeline-ruler-height,20px);margin-bottom:calc(-1*var(--timeline-ruler-height,20px));background:var(--timeline-corner-bg,#263741);border-right:1px solid var(--timeline-corner-edge,#1b2e38);border-bottom:1px solid var(--timeline-corner-edge,#192c36);cursor:default;-webkit-user-select:none;user-select:none}
+#arrangement .track-label{z-index:11}
+
+/* ── Bar cells ───────────────────────────────────────────────────────────────────────────── */
+.timeline-ruler>.ruler-bar,.piano-ruler>.ruler-bar{position:relative}
+/* Zoomed out: a bar is narrower than its number. The cell keeps its exact width (no padding),
+ * the number overflows it, and only every Nth bar keeps a full-height tick. */
+.timeline-ruler>.ruler-bar.ruler-compact,.piano-ruler>.ruler-bar.ruler-compact,#playlist .timeline-ruler>.ruler-bar.ruler-compact,#piano .piano-ruler .ruler-bar.ruler-compact{padding-left:0!important;padding-right:0!important;overflow:visible!important;min-width:0}
+#playlist .timeline-ruler>.ruler-bar.ruler-compact:is(.ruler-tick,.ruler-none),#piano .piano-ruler .ruler-bar.ruler-compact:is(.ruler-tick,.ruler-none){border-left-color:transparent!important}
+.ruler-bar.ruler-compact.ruler-tick::before{content:"";position:absolute;left:-1px;bottom:0;width:1px;height:5px;background:var(--ruler-tick,#55666f);pointer-events:none}
+.ruler-bar>.ruler-num{position:absolute;left:3px;top:var(--ruler-num-top,3px);z-index:1;white-space:nowrap;pointer-events:none}
+/* Zoomed in: beat and division marks inside a bar; unlabelled ones are short ticks on the baseline. */
+.ruler-bar>.ruler-sub{position:absolute;top:3px;height:100%;padding-left:3px;border-left:1px solid var(--ruler-tick,#55666f);font-size:.9em;opacity:.85;white-space:nowrap;pointer-events:none}
+.ruler-bar>.ruler-sub.ruler-sub-tick,#playlist .timeline-ruler>.ruler-bar>.ruler-sub.ruler-sub-tick{top:auto;bottom:0;height:5px;padding:0}
+.ruler-bar>.ruler-sub.ruler-division.ruler-sub-tick,#playlist .timeline-ruler>.ruler-bar>.ruler-division.ruler-sub-tick{height:3px}
+/* Zoomed far in: ticks finer than a division are one repeating background per bar, not elements. */
+.ruler-fine>.ruler-bar::after{content:"";position:absolute;left:0;right:0;bottom:0;height:3px;background:linear-gradient(90deg,var(--ruler-tick,#55666f) 1px,transparent 1px) 0 0/var(--grid-fine,100%) 100% repeat-x;opacity:.75;pointer-events:none}
+
+/* ── Street Band theme (the ruler's own look is in sb-shell.css; the header row with + and Catch sits on this cell) ── */
+#playlist{--timeline-ruler-height:38px;--timeline-corner-bg:#484848;--timeline-corner-edge:#1d1d1d;--ruler-tick:#6a6a6a}
+#playlist .timeline-corner{border-bottom-color:#2a2a2a;background-image:linear-gradient(#4b4b4b,#454545);box-shadow:inset 0 1px 0 #ffffff14}
+#piano{--ruler-tick:#555;--ruler-num-top:0px}
+#piano .piano-ruler .ruler-bar.ruler-compact>.ruler-num{left:4px}

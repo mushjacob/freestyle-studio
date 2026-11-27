@@ -1,0 +1,11 @@
+.cloud-region-effects-dialog{width:min(640px,92vw)}
+.region-effect-form{display:grid;gap:12px}
+.region-effect-form label{display:grid;gap:5px}
+.region-effect-form label:has(input[type=checkbox]){display:flex;align-items:center;gap:8px}
+.region-effect-bounds,.region-effect-params{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.region-effect-params{border:1px solid #68777e;padding:12px}
+.region-effect-params[hidden]{display:none}
+.region-effect-description,.region-effect-status{margin:0;line-height:1.4}
+.region-effect-status{min-height:3em;color:#c9dea7}
+.region-effect-actions{display:flex;flex-wrap:wrap;gap:8px}
+.region-effect-player audio{width:100%}

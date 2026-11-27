@@ -1,0 +1,78 @@
+.plugin-editor-window{width:min(1180px,96vw);max-height:92vh;padding:0;border:1px solid #64747c;border-radius:3px;background:#2b363e;color:#c4d0d4;box-shadow:0 18px 60px #09151bcc;font:11px Arial,sans-serif;overflow:hidden}
+.plugin-editor-window::backdrop{background:#101b2455}
+.plugin-editor-window header{height:34px;display:flex;align-items:center;gap:8px;padding:0 8px 0 10px;background:linear-gradient(#58676e,#46565f);border-bottom:1px solid #24333d}
+.plugin-editor-window header strong{font-weight:400}
+.plugin-editor-slot{font-size:8px;letter-spacing:1px;color:#9fb2bb}
+.plugin-editor-zoom{margin-left:auto;display:flex;align-items:center;gap:5px}
+.plugin-editor-window button,.plugin-editor-window select,.plugin-editor-window input[type=search]{font:10px Arial;color:#c4d0d4;background:#263843;border:1px solid #1c2e39;border-radius:2px;min-height:23px;padding:3px 7px}
+.plugin-editor-window button{background:linear-gradient(#50616b,#3c4e58);cursor:pointer}
+.plugin-editor-window button[aria-pressed=true]{background:#7f9a5c;color:#1f2d22}
+.plugin-editor-window .plugin-editor-close{border:0;background:none;font-size:19px;padding:0 4px}
+.plugin-editor-dot{width:7px;height:7px;border-radius:50%;background:#647278}
+.plugin-editor-window[data-editor-state=ready] .plugin-editor-dot{background:#a2c56a}
+.plugin-editor-window[data-editor-state=error] .plugin-editor-dot,.plugin-editor-window[data-editor-state=release-failed] .plugin-editor-dot{background:#e0735e}
+.plugin-editor-body{display:flex;min-height:180px;max-height:calc(92vh - 62px)}
+.plugin-editor-viewport{flex:1;min-width:0;overflow:auto;background:#111a20;display:flex;justify-content:center;align-items:flex-start}
+.plugin-editor-mirror{display:flex;flex-direction:column;align-items:center;width:100%}
+.plugin-editor-status{align-self:stretch;padding:6px 8px;color:#bbc5c4}
+.plugin-editor-surface{position:relative;outline:none;touch-action:none;user-select:none;-webkit-user-select:none;cursor:default;min-width:64px;min-height:40px}
+.plugin-editor-surface:focus-visible{box-shadow:0 0 0 1px #a5c873}
+.plugin-editor-frame{display:block;pointer-events:none;image-rendering:auto}
+.plugin-editor-controls{width:300px;flex:none;border-left:3px solid #24343f;background:#303e47;overflow:auto}
+.plugin-parameter-panel header{height:auto;flex-wrap:wrap;padding:7px 8px;background:none;border-bottom:1px solid #24343f}
+.plugin-parameter-panel header input{flex:1;min-width:90px}
+.plugin-parameter-status{font-size:9px;color:#94aab0;width:100%}
+.plugin-parameter-status.error,.plugin-editor-footer.error{color:#f09b88}
+.plugin-parameter-grid{padding:8px;display:grid;gap:7px}
+.plugin-parameter{display:grid;grid-template-columns:1fr auto;gap:2px 6px;align-items:center}
+.plugin-parameter span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.plugin-parameter small{color:#9db1b8;font-size:9px}
+.plugin-parameter input{grid-column:1/-1;width:100%}
+.plugin-parameter-empty{color:#8ea3ab}
+.plugin-editor-footer{min-height:20px;padding:4px 10px;border-top:1px solid #24333d;background:#35424b;font-size:10px}
+@media (max-width:720px){.plugin-editor-body{flex-direction:column}.plugin-editor-controls{width:auto;border-left:0;border-top:3px solid #24343f}}
+.plugin-editor-loading{width:min(560px,80vw);height:320px;display:flex;align-items:center;justify-content:center;background:repeating-linear-gradient(135deg,#17222a 0 12px,#1a262e 12px 24px)}
+.plugin-editor-spinner{width:22px;height:22px;border-radius:50%;border:2px solid #4b5f69;border-top-color:#a5c873;animation:plugin-editor-spin .9s linear infinite}
+@keyframes plugin-editor-spin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.plugin-editor-spinner{animation:none}}
+.plugin-parameter-scroll{position:relative;overflow:auto;height:min(60vh,520px)}
+.plugin-parameter-scroll .plugin-parameter{position:absolute;left:8px;right:8px;height:40px;box-sizing:border-box}
+.plugin-parameter-progress{font-size:9px;color:#8ea3ab;padding:0 8px 6px}
+
+/* Native EQ band editor in its own window (rules shared with mixer-tools.css). */
+.plugin-editor-eq{padding:12px;min-width:min(620px,90vw)}
+.native-eq-editor header{display:flex;align-items:center;gap:8px;height:auto;background:none;border:0;padding:0 0 8px}.native-eq-editor header strong{font-size:11px;color:#d4dfdf}.native-eq-status{flex:1;font-size:9px;color:#94aab0}.native-eq-status.error{color:#f09b88}.native-eq-bands{display:flex;flex-direction:column;gap:4px}.native-eq-band{display:grid;grid-template-columns:40px 110px minmax(120px,1.4fr) minmax(110px,1fr) minmax(100px,1fr);gap:6px;align-items:center;padding:5px 6px;background:#304650;border:1px solid #233944;border-radius:2px}.native-eq-band.disabled{opacity:.6}.native-eq-band label{display:flex!important;align-items:center;gap:4px;font-size:9px;color:#a7bbc5}.native-eq-band input[type=range]{flex:1;min-width:50px;accent-color:#a5c974}.native-eq-band input[type=number]{width:58px;font-size:9px!important;padding:3px!important}.native-eq-type{font-size:8px;color:#86a0af;overflow:hidden;text-overflow:ellipsis}.native-eq-empty{font-size:10px;color:#a0b3bf}@media(max-width:740px){.native-eq-band{grid-template-columns:40px 1fr;}.native-eq-band label{grid-column:1/-1}}
+
+.native-eq-curve{display:block;width:100%;height:150px;background:#1b2a33;border:1px solid #233944;border-radius:2px;margin:0 0 8px}.native-eq-curve line.grid{stroke:#2f4552;stroke-width:1}.native-eq-curve line.zero{stroke:#5a7380;stroke-width:1}.native-eq-curve text{fill:#7f98a7;font:8px Arial}.native-eq-curve path.curve{fill:none;stroke:#a5c974;stroke-width:2}.native-eq-curve circle{fill:#e2e8e8;stroke:#263843}.native-eq-band select{font-size:9px;padding:2px;max-width:110px}
+/* Native EQ: dark toolbar, wide sliders, curve handles (overrides earlier band grid). */
+.native-eq-editor .native-eq-toolbar{display:flex;align-items:center;gap:6px;min-height:26px;margin:0 0 6px;padding:3px 6px;background:#2b3a43;border:1px solid #1c2e39;border-radius:2px;color:#c4d0d4;font:11px Arial,sans-serif}
+.native-eq-editor .native-eq-toolbar strong{font-size:11px;font-weight:600;color:#d8e2e4}
+.native-eq-editor .native-eq-toolbar .native-eq-status{flex:1;min-width:0;font-size:10px;color:#a9bcc3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.native-eq-editor .native-eq-toolbar .native-eq-status.error{color:#f09b88}
+.native-eq-editor .native-eq-toolbar button{all:unset;display:inline-block;box-sizing:border-box;font:10px Arial,sans-serif;line-height:18px;height:20px;padding:0 8px;color:#d0dadd;background:linear-gradient(#55666f,#3f505a);border:1px solid #22333d;border-radius:2px;cursor:pointer}
+.native-eq-editor .native-eq-toolbar button:hover:not(:disabled){background:#5d6f78;color:#fff}
+.native-eq-editor .native-eq-toolbar button:focus-visible{outline:1px solid #a5c873;outline-offset:1px}
+.native-eq-editor .native-eq-toolbar button:disabled{opacity:.4;cursor:default}
+.native-eq-editor .native-eq-band{display:flex!important;flex-wrap:wrap;align-items:center;gap:4px 10px;padding:5px 8px}
+.native-eq-editor .native-eq-band .native-eq-on{flex:0 0 34px}
+.native-eq-editor .native-eq-band select{flex:0 0 120px;max-width:120px}
+.native-eq-editor .native-eq-band label:not(.native-eq-on){flex:1 1 170px;min-width:150px;display:flex!important;align-items:center;gap:5px}
+.native-eq-editor .native-eq-band input[type=range]{flex:1 1 auto;min-width:100px;width:auto}
+.native-eq-editor .native-eq-band input[type=number]{width:54px;flex:0 0 54px;-moz-appearance:textfield;appearance:textfield}
+.native-eq-editor .native-eq-band input[type=number]::-webkit-inner-spin-button,.native-eq-editor .native-eq-band input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.native-eq-editor .native-eq-curve circle[data-handle]{cursor:grab;fill:#e2e8e8;stroke:#263843;stroke-width:1.5}
+.native-eq-editor .native-eq-curve circle[data-handle]:hover{fill:#b5e664}
+.native-eq-editor .native-eq-curve{touch-action:none}
+
+/* Floating (non-modal) editor: a movable window over the workspace, below the toolbars, above every panel. */
+.plugin-editor-window:not(:modal){position:fixed;top:72px;left:0;right:0;margin:0 auto;z-index:9000}
+.plugin-editor-window header{cursor:move;user-select:none}
+.audacity-mode .plugin-editor-window.studio-dialog{background:#2b363e;color:#c4d0d4;border-color:#64747c}
+.audacity-mode .plugin-editor-window.studio-dialog header{background:linear-gradient(#58676e,#46565f);color:#eef3f5;border-color:#24333d}
+.audacity-mode .plugin-editor-window button{color:#e3eaed;background:linear-gradient(#50616b,#3c4e58);border:1px solid #1c2e39}
+.audacity-mode .plugin-editor-window button:hover{background:linear-gradient(#5d707b,#475a65);color:#fff;border-color:#1c2e39}
+.audacity-mode .plugin-editor-window button[aria-pressed=true]{background:#7f9a5c;color:#1f2d22}
+.audacity-mode .plugin-editor-window .plugin-editor-close{border:0;background:none;color:#eef3f5}
+.audacity-mode .plugin-editor-window select{color:#e3eaed;background:#263843;border:1px solid #1c2e39}
+.audacity-mode .plugin-editor-window button,.audacity-mode .plugin-editor-window select{font:11px Arial,sans-serif}
+.audacity-mode .plugin-editor-window .plugin-editor-controls-toggle{font:11px Arial,sans-serif;min-height:23px;padding:3px 9px}

@@ -1,0 +1,29 @@
+.rack-graph-editor{width:100%;min-width:0;background:#425660;border:1px solid #293b44;box-sizing:border-box}.rack-graph-editor[hidden]{display:none}.rack-graph-label{font-size:10px;padding:3px 6px;color:#b9c9cf}.rack-graph-columns{position:relative;display:grid;grid-template-columns:repeat(var(--graph-columns,16),minmax(0,1fr));height:190px;touch-action:none;user-select:none;background:repeating-linear-gradient(to top,transparent 0,transparent calc(25% - 1px),#354954 calc(25% - 1px),#354954 25%)}.rack-graph-column{position:relative;border-right:1px solid #344a55;min-width:0}.rack-graph-column:nth-child(4n){border-right-color:#263d48}.rack-graph-bar{position:absolute;bottom:0;left:0;right:1px;background:#38bddc;pointer-events:none}.rack-graph-column:nth-child(4n+1) .rack-graph-bar{background:#59d4e8}.rack-graph-column.inactive .rack-graph-bar{display:none}.rack-graph-tabs{display:flex;overflow-x:auto;background:#4c5a60;border-top:1px solid #2b414b}.rack-graph-tabs button{flex:1 0 auto;min-width:0;padding:5px 7px;font-size:11px;font-style:italic;border:0;border-right:1px solid #394b53;border-radius:0;background:#4a5860;color:#d5dfe3;clip-path:polygon(9px 0,100% 0,calc(100% - 9px) 100%,0 100%)}.rack-graph-tabs button[aria-selected=true]{background:#394e5a;color:#56d6f0}.rack-graph-tabs button:disabled{opacity:.5;cursor:not-allowed}.rack-graph-status{min-height:14px;font-size:10px;color:#c0d1d8;padding:2px 5px}
+
+/* Channel menu → Advanced fill… (FL stepsequencer_advancedfilltool.htm). */
+.advanced-fill{display:grid;gap:6px;min-width:260px}
+.advanced-fill label{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.advanced-fill input,.advanced-fill select{width:110px}
+.advanced-fill-target{margin:0;opacity:.75;font-size:11px}
+.advanced-fill-preview{display:flex;flex-wrap:wrap;gap:3px;padding:6px 0}
+.advanced-fill-preview span{width:10px;height:14px;border-radius:2px;background:#3a4147;box-shadow:inset 0 0 0 1px #1c2125}
+.advanced-fill-preview span.on{background:#9fd06a}
+.advanced-fill-actions{display:flex;gap:6px;justify-content:flex-end}
+/* Advanced fill v2: channel, wheel, transport and FL's red value boxes. */
+.advanced-fill .af-body{display:flex;align-items:center;gap:10px}
+.advanced-fill .af-wheel{width:160px;height:160px;touch-action:none;user-select:none}
+.advanced-fill .af-ring{fill:#2b3338;stroke:#1c2125;stroke-width:2}
+.advanced-fill .af-node{fill:#3a4147;stroke:#1c2125;cursor:grab}
+.advanced-fill .af-node.on{fill:#9fd06a}
+.advanced-fill .af-rotate{fill:#c2ced3;font-size:16px}
+.advanced-fill .af-transport{display:grid;gap:4px}
+.advanced-fill .af-solo.lit{background:#9fd06a;color:#1c2125}
+.advanced-fill .af-values label input,.advanced-fill .af-values label select{background:#5a1f22;color:#ff8f8a;border:1px solid #2a0f11;font-family:monospace}
+/* FL red value boxes (fl-value-box.js) and the wheel's centre knob. */
+.fl-value-box{display:inline-block;min-width:96px;padding:2px 6px;background:#5a1f22;color:#ff8f8a;border:1px solid #2a0f11;font-family:monospace;font-size:12px;text-align:right;cursor:ns-resize;user-select:none;touch-action:none}
+.fl-value-box:focus-visible{outline:1px solid #ff8f8a}
+.fl-value-box[aria-disabled=true]{opacity:.45}
+.advanced-fill .af-row{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.advanced-fill .af-knob circle{fill:#3a4147;stroke:#1c2125;stroke-width:2;cursor:ns-resize}
+.advanced-fill .af-knob line{stroke:#c2ced3;stroke-width:3;stroke-linecap:round}
+.advanced-fill .af-error{margin:0;color:#ff8f8a;font-size:11px}

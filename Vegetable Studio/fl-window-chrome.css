@@ -1,0 +1,42 @@
+/* FL window chrome: edge/corner resize cursors, no text selection in rulers/headers/toolbars, LCD position readout, default layout. */
+.floating-window,.playlist-window{resize:none!important}
+.wm-hover-n,.wm-hover-n *,.wm-hover-s,.wm-hover-s *{cursor:ns-resize!important}
+.wm-hover-e,.wm-hover-e *,.wm-hover-w,.wm-hover-w *{cursor:ew-resize!important}
+.wm-hover-ne,.wm-hover-ne *,.wm-hover-sw,.wm-hover-sw *{cursor:nesw-resize!important}
+.wm-hover-nw,.wm-hover-nw *,.wm-hover-se,.wm-hover-se *{cursor:nwse-resize!important}
+.window-resizing{transition:none!important;user-select:none!important;contain:layout style}
+.window-resizing>*{pointer-events:none}
+/* Rulers, window headers, toolbars and the transport LCD are never selectable (inputs keep their own selection). */
+.timeline-ruler,.timeline-ruler *,.piano-ruler,.piano-ruler *,.ruler-bar,.panel-heading,.panel-heading *:not(input):not(textarea),.toolbar,.toolbar *:not(input):not(textarea),.track-label,.pattern-picker,.time-display,.time-display *{-webkit-user-select:none;user-select:none}
+.timeline-ruler,.piano-ruler{touch-action:none;cursor:pointer}
+.piano-edit-cursor{position:absolute;left:var(--piano-key-width,70px);top:var(--piano-ruler-height,20px);bottom:0;width:1px;background:#c7ed8e;opacity:.85;z-index:2;pointer-events:none;will-change:transform}
+.piano-edit-cursor.is-hidden{display:none}
+/* Fixed-width LCD digits: tabular numerals in per-digit cells, separators never move. */
+#time-value{display:inline-flex;align-items:baseline;font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1;letter-spacing:0;white-space:pre}
+#time-value .tv-d{display:inline-block;width:.54em;text-align:center;overflow:visible}
+#time-value .tv-s{display:inline-block;width:.28em;text-align:center}
+/* FL default layout: Channel rack top-left over the Playlist, Mixer docked along the lower part of the desktop. */
+#desktop>.rack-window{height:min(440px,calc(46% - 8px));max-height:none;min-height:200px}
+#desktop>.mixer-window{left:8px;right:8px;top:calc(46% + 2px);bottom:10px;width:auto;height:auto}
+
+/* FL plug-in wrapper chrome (plugin-window-chrome.js) */
+dialog.studio-dialog.fl-plugin-wrapper > header{display:flex;align-items:center;gap:4px;padding:3px 5px;min-height:26px}
+dialog.fl-plugin-wrapper > header .plugin-wrapper-title{flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:0 4px}
+dialog.fl-plugin-wrapper > header button{flex:0 0 auto;min-width:20px;height:20px;min-height:20px;padding:0 4px;border:1px solid #2d4553;border-radius:2px;background:linear-gradient(#4c5a63,#374650);color:#c8d5dc;font-size:11px;line-height:18px}
+dialog.fl-plugin-wrapper > header button:hover:not(:disabled){background:linear-gradient(#60717a,#455761);color:#fff}
+dialog.fl-plugin-wrapper > header button:disabled{opacity:.4;cursor:default}
+dialog.fl-plugin-wrapper > header .plugin-wrapper-gear[aria-pressed="true"]{color:#fff0c8;border-color:#b76c20;background:linear-gradient(#ffc35a,#ec7812)}
+dialog.fl-plugin-wrapper > header .plugin-wrapper-presets{display:inline-flex;align-items:center;gap:2px;flex:0 1 auto;min-width:0}
+dialog.fl-plugin-wrapper > header .plugin-wrapper-preset-name{max-width:170px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:0 6px;height:20px;line-height:20px;font-size:10px;color:#b9c9d1;background:#26353d;border:1px solid #1d2a31;border-radius:2px}
+dialog.fl-plugin-wrapper .plugin-window-tabs{display:none}
+dialog.fl-plugin-wrapper .native-plugin-viewport{max-height:calc(100vh - 170px);padding:0;border-width:1px 0 0;margin-bottom:0}
+dialog.fl-plugin-wrapper .plugin-gui-frame{display:block;max-width:100%}
+dialog.fl-plugin-wrapper[data-plugin-tab="gui"] .plugin-original-gui{display:none}
+
+/* Default layout (parity pass): the Channel rack sits beside the Playlist instead of over its
+   tool buttons and ruler start; the Mixer floats over the lower tracks. Dragging a window
+   still places it anywhere (inline geometry wins). */
+@media (min-width:1101px){
+  #desktop>.rack-window{left:0;top:0;width:490px}
+  #desktop>.playlist-window{left:494px;top:0;right:0;bottom:0}
+}

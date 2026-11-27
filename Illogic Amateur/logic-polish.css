@@ -1,0 +1,124 @@
+/* Illogic Amateur — depth, press states, transitions and responsive layout.
+   Linked after the component sheets and before logic-popups.css. */
+
+/* ================= Control bar ================= */
+header.logic-control-bar{background:linear-gradient(#353535,#2c2c2c 60%,#282828)!important;box-shadow:inset 0 1px 0 #ffffff0d,0 1px 0 #3a3a3a,0 2px 6px #0006!important}
+.logic-titlebar{box-shadow:inset 0 1px 0 #ffffff0a}
+.logic-control-bar .logic-bar-row button{transition:background-color .1s ease,color .1s ease,transform .08s ease,box-shadow .1s ease,opacity .12s ease}
+.logic-control-bar .logic-bar-row button:active:not(:disabled){background:#1f1f1f!important;transform:translateY(.5px) scale(.97);box-shadow:inset 0 1px 3px #000a!important}
+.logic-control-bar .logic-bar-row button.lit,.logic-control-bar .logic-bar-row button[aria-pressed="true"]{background:linear-gradient(#585858,#494949)!important;box-shadow:inset 0 1px 0 #ffffff24,0 0 0 .5px #000a,0 1px 1px #0006!important}
+.logic-control-bar .logic-bar-row button:focus-visible{outline:2px solid #3d8bf7a6!important;outline-offset:1px}
+.logic-titlebar .cloud-button{background:linear-gradient(#444,#383838)!important;border-color:#1c1c1c!important;box-shadow:inset 0 1px 0 #ffffff14,0 1px 1px #0005!important;transition:filter .1s ease}
+.logic-titlebar .cloud-button:hover{filter:brightness(1.15)}
+.logic-titlebar .cloud-button:active{filter:brightness(.85)}
+/* Transport cluster: a recessed well with raised keys */
+.logic-transport{background:linear-gradient(#1d1d1d,#262626)!important;box-shadow:inset 0 1px 2px #000c,inset 0 0 0 1px #111,0 1px 0 #ffffff12!important}
+.logic-control-bar .logic-transport .transport-btn:hover:not(:disabled){background:linear-gradient(#484848,#3a3a3a)!important;box-shadow:inset 0 1px 0 #ffffff1a,0 1px 1px #0008!important}
+.logic-control-bar .logic-transport .transport-btn:active:not(:disabled){background:#161616!important;box-shadow:inset 0 1px 3px #000!important}
+.logic-control-bar #play.playing{color:#4fd25b!important;text-shadow:0 0 8px #4fd25b80}
+.logic-control-bar #record.recording{background:radial-gradient(circle,#7a2a24,#4a1c19)!important;box-shadow:inset 0 0 0 1px #c2443b,0 0 10px #e5453c66!important}
+.logic-control-bar #logic-cycle.lit{background:linear-gradient(#d0b440,#a98f24)!important;color:#1c1c1c!important;box-shadow:inset 0 1px 0 #ffffff59,0 0 0 .5px #000a!important}
+.logic-control-bar #metronome.lit,.logic-control-bar #metronome.active,.logic-control-bar .logic-count-in.lit,.logic-control-bar .logic-count-in[aria-pressed="true"]{background:linear-gradient(#8562d0,#6b49b4)!important;color:#fff!important;box-shadow:inset 0 1px 0 #ffffff40,0 0 0 .5px #000a!important}
+/* LCD: inset glass */
+.logic-lcd{background:linear-gradient(#0c0c0c,#161616 70%,#1a1a1a)!important;box-shadow:inset 0 2px 4px #000,inset 0 0 0 1px #050505,0 1px 0 #ffffff17!important}
+.logic-lcd-cell b,.logic-lcd-tempo input#tempo{text-shadow:0 0 6px #ffffff1f}
+.logic-lcd-cell+.logic-lcd-cell::before{background:linear-gradient(transparent,#333 30%,#333 70%,transparent)!important}
+.logic-control-bar .logic-lcd .logic-lcd-mode{transition:background-color .1s ease}
+.logic-control-bar .monitor{background:linear-gradient(#161616,#1e1e1e)!important;box-shadow:inset 0 1px 2px #000c,0 1px 0 #ffffff10!important}
+
+/* ================= Sliders (zoom, track volume, inspector) ================= */
+/* No box: style.css gives every <input> a 1px border, padding and a fill; a slider is only a thin track and a round thumb. */
+#playlist .logic-zoom input,#playlist .logic-track-volume,.logic-zoom-slider input,.logic-audio-zoom input,.logic-slider-row input[type=range]{-webkit-appearance:none;appearance:none;box-sizing:border-box;background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important;outline:0!important;padding:0!important;height:14px;cursor:default}
+:is(#playlist .logic-zoom input,.logic-zoom-slider input,.logic-audio-zoom input,.logic-slider-row input[type=range])::-webkit-slider-runnable-track{height:3px;border:0;border-radius:2px;background:#0e0e0e;box-shadow:0 .5px 0 #ffffff14}
+:is(#playlist .logic-zoom input,.logic-zoom-slider input,.logic-audio-zoom input,.logic-slider-row input[type=range])::-webkit-slider-thumb{-webkit-appearance:none;width:12px;height:12px;margin-top:-4.5px;border:0;border-radius:50%;background:linear-gradient(#d2d2d2,#b4b4b4);box-shadow:0 1px 2px #000b;transition:filter .08s ease}
+:is(#playlist .logic-zoom input,#playlist .logic-track-volume,.logic-zoom-slider input,.logic-audio-zoom input,.logic-slider-row input[type=range]):hover::-webkit-slider-thumb{filter:brightness(1.08)}
+:is(#playlist .logic-zoom input,#playlist .logic-track-volume,.logic-zoom-slider input,.logic-audio-zoom input,.logic-slider-row input[type=range]):active::-webkit-slider-thumb{filter:brightness(.9)}
+:is(#playlist .logic-zoom input,#playlist .logic-track-volume,.logic-zoom-slider input,.logic-audio-zoom input,.logic-slider-row input[type=range]):focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 2px #4d90f0cc}
+:is(#playlist .logic-zoom input,.logic-zoom-slider input,.logic-audio-zoom input,.logic-slider-row input[type=range])::-moz-range-track{height:3px;border:0;border-radius:2px;background:#0e0e0e}
+:is(#playlist .logic-zoom input,.logic-zoom-slider input,.logic-audio-zoom input,.logic-slider-row input[type=range])::-moz-range-thumb{width:12px;height:12px;border:0;border-radius:50%;background:linear-gradient(#d2d2d2,#b4b4b4);box-shadow:0 1px 2px #000b}
+#playlist .logic-zoom,.logic-zoom-slider,.logic-audio-zoom{border:0!important;background:none!important;box-shadow:none!important}
+/* Track-header volume: a dark pill (18px high, up to 128px wide) with a flat light-grey round thumb riding inside it; no value fill. */
+#playlist .logic-track-volume{flex:1 1 110px!important;min-width:44px;max-width:128px!important;height:18px!important;margin:0 8px 0 4px!important;--vol-pill:#161616;--vol-thumb:#8e8e8e;--vol-thumb-hi:#a2a2a2}
+#playlist .logic-track-volume::-webkit-slider-runnable-track{height:18px;border:0;border-radius:9px;background:var(--vol-pill);box-shadow:inset 0 1px 2px #0009,inset 0 0 0 .5px #0006}
+#playlist .logic-track-volume::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;margin-top:0;border:0;border-radius:50%;background:radial-gradient(circle at 50% 50%,var(--vol-thumb) 0 7.5px,#00000059 8px,transparent 9px),radial-gradient(circle at 50% 0,var(--vol-thumb-hi),transparent 60%);background:radial-gradient(circle at 50% 50%,var(--vol-thumb) 0 7.5px,#00000059 8px,transparent 9px);box-shadow:none;transition:filter .08s ease}
+#playlist .logic-track-volume::-moz-range-track{height:18px;border:0;border-radius:9px;background:var(--vol-pill)}
+#playlist .logic-track-volume::-moz-range-thumb{width:16px;height:16px;border:0;border-radius:50%;background:var(--vol-thumb)}
+#playlist .logic-track-volume:disabled{opacity:.45}
+/* Track-header pan: 24px dark ring, 18px cap, pointer that turns with the value, fixed centre tick at 12 o'clock. */
+#playlist .logic-track-pan{--pan-ring:#161616;--pan-cap:#5c5c5c;--pan-cap-hi:#767676;--pan-pointer:#ececec;width:24px!important;height:24px!important;margin:0 2px!important;border-radius:50%;background:radial-gradient(circle at 50% 50%,transparent 0 8.6px,var(--pan-ring) 9.2px),linear-gradient(var(--pan-cap-hi),var(--pan-cap) 22%)!important;box-shadow:inset 0 0 0 .5px #0007!important}
+#playlist .logic-track-pan::before{content:"";position:absolute;left:50%;top:0;width:2px;height:3px;margin-left:-1px;background:#55d769;border-radius:0 0 1px 1px}
+#playlist .logic-track-pan::after{top:3.5px!important;width:2px!important;height:5px!important;background:var(--pan-pointer)!important;transform-origin:50% 8.5px!important}
+
+/* ================= Local bars (tracks, mixer, editors) ================= */
+#playlist .logic-local-bar button,#mixer .logic-mixer-bar button,.logic-piano-header button,.logic-step-header button{transition:background-color .1s ease,color .1s ease,box-shadow .1s ease,transform .08s ease}
+#playlist .logic-local-bar button:active:not(:disabled),#mixer .logic-mixer-bar button:active:not(:disabled){background:#1c1c1c!important;box-shadow:inset 0 1px 2px #000b!important}
+#playlist .logic-local-bar button[aria-expanded="true"],#mixer .logic-mixer-bar button[aria-expanded="true"],#playlist .logic-local-bar button.menu-open,#mixer .logic-mixer-bar button.menu-open,.logic-local-menus button.menu-open{background:#ffffff2b!important;color:#fff!important}
+#playlist .logic-snap select,#playlist .logic-drag select,#playlist .logic-pattern-picker select{background:linear-gradient(#262626,#1c1c1c)!important;border-color:#0d0d0d!important;box-shadow:inset 0 1px 0 #ffffff0f,0 1px 0 #ffffff0a;transition:filter .1s ease}
+#playlist .logic-snap select:hover,#playlist .logic-drag select:hover,#playlist .logic-pattern-picker select:hover{filter:brightness(1.2)}
+#playlist>.panel-heading.logic-local-bar,#mixer .logic-mixer-bar{box-shadow:inset 0 1px 0 #ffffff0a,0 1px 0 #0008}
+
+/* ================= Track headers and regions ================= */
+#playlist .track-label.logic-track-header{background-image:linear-gradient(#ffffff08,transparent 40%,#00000014);box-shadow:inset 0 1px 0 #ffffff0a,inset 0 -1px 0 #0006;transition:background-color .12s ease}
+#playlist .logic-track-icon{background:linear-gradient(#404040,#303030)!important;box-shadow:inset 0 1px 0 #ffffff14,0 1px 2px #0008}
+#playlist .logic-track-buttons button{background:linear-gradient(#4a4a4a,#3a3a3a)!important;box-shadow:inset 0 1px 0 #ffffff1a,0 0 0 .5px #000a,0 1px 1px #0005!important;transition:filter .08s ease,background-color .1s ease,transform .08s ease}
+#playlist .logic-track-buttons button:hover:not(:disabled){filter:brightness(1.2)}
+#playlist .logic-track-buttons button:active:not(:disabled){filter:brightness(.8);transform:translateY(.5px)}
+#playlist .logic-track-buttons .track-enable.off{background:linear-gradient(#55a0ff,#2f7ae6)!important;color:#fff!important}
+#playlist .logic-track-buttons .logic-track-s.on{background:linear-gradient(#f2d552,#d2ae24)!important;color:#111!important}
+#playlist .logic-track-pan,.logic-knob{transition:filter .1s ease}
+#playlist .logic-track-pan:hover,.logic-knob:hover{filter:brightness(1.15)}
+#playlist .clip{background-image:linear-gradient(#ffffff2e,#ffffff0a 18px,#00000000 50%,#0000001f)!important;box-shadow:inset 0 1px 0 #ffffff40,0 1px 2px #0007!important;transition:filter .1s ease,box-shadow .1s ease}
+#playlist .clip:hover{filter:brightness(1.06)}
+#playlist .clip.selected{filter:brightness(1.2);box-shadow:inset 0 0 0 1px #ffffffd9,0 1px 3px #000a!important}
+#playlist .clip .clip-title{background:linear-gradient(#0000002e,#0000001a)!important;box-shadow:inset 0 -1px 0 #0000001f}
+#playlist .timeline-ruler{box-shadow:inset 0 1px 0 #ffffff0a,inset 0 -1px 0 #000a}
+
+/* ================= Mixer strips ================= */
+.logic-strip-top button{transition:filter .08s ease,background-color .1s ease,box-shadow .1s ease}
+.logic-strip-top button:not(.logic-fx-name):not(.logic-send-name):not(.logic-fx-power):not(.logic-fx-menu):not(:disabled){box-shadow:inset 0 1px 0 #ffffff14,0 0 0 .5px #000a,0 1px 1px #0005}
+.logic-strip-top button:active:not(:disabled){filter:brightness(.8)}
+.logic-fx-slot.filled,.logic-send-slot.filled,.logic-strip-top .logic-instrument.filled{background-image:linear-gradient(#ffffff26,#ffffff00 55%,#00000022);box-shadow:inset 0 1px 0 #ffffff38,0 0 0 .5px #000b,0 1px 1px #0006;transition:filter .08s ease}
+.logic-fx-slot.filled:hover,.logic-send-slot.filled:hover{filter:brightness(1.1)}
+.logic-fx-slot.filled:active,.logic-send-slot.filled:active{filter:brightness(.88)}
+.logic-strip-top .logic-fx-slot.empty,.logic-audio-fx,.logic-strip-top .logic-sends{box-shadow:inset 0 1px 2px #0009,0 1px 0 #ffffff0a}
+.logic-strip-top .logic-eq-thumb{box-shadow:inset 0 1px 3px #000c,0 1px 0 #ffffff0d!important}
+.logic-channel-strip :is(.mute,.solo){transition:filter .08s ease,background-color .1s ease,transform .08s ease}
+.logic-channel-strip :is(.mute,.solo):not(:disabled){box-shadow:inset 0 1px 0 #ffffff1f,0 0 0 .5px #000b,0 1px 1px #0006}
+.logic-channel-strip :is(.mute,.solo):hover:not(:disabled){filter:brightness(1.15)}
+.logic-channel-strip :is(.mute,.solo):active:not(:disabled){filter:brightness(.8);transform:translateY(.5px)}
+.logic-channel-strip.logic-channel-strip{transition:background-color .12s ease}
+/* The strip's pan knob: the FL sheet's #mixer rule outranked the grey Logic knob of logic-mixer.css. */
+#mixer .mixer-strip.logic-channel-strip button.small-knob.mixer-pan{background:radial-gradient(circle at 50% 34%,#9a9a9a,#666 58%,#3f3f3f)!important;border:1px solid #0c0c0c!important;box-shadow:0 0 0 3px #161616,inset 0 1px 0 #ffffff33,0 2px 4px #000b!important;transition:filter .1s ease}
+#mixer .mixer-strip.logic-channel-strip button.small-knob.mixer-pan:hover:not(:disabled){filter:brightness(1.12)}
+/* The corner above the track headers kept the FL teal. */
+#playlist .arrangement-scroll{background:#262626!important}
+
+/* ================= Panels ================= */
+.logic-inspector,.main-layout>aside.browser{box-shadow:inset 0 1px 0 #ffffff08}
+.logic-browser-segments{box-shadow:inset 0 1px 2px #000a,0 1px 0 #ffffff0d}
+.logic-browser-segments button{transition:background-color .12s ease,color .12s ease}
+.logic-browser-segments button.selected{box-shadow:inset 0 1px 0 #ffffff26,0 1px 2px #0008}
+.browser-search{box-shadow:inset 0 1px 2px #000a,0 1px 0 #ffffff0a;transition:box-shadow .1s ease}
+.browser-search:focus-within{box-shadow:0 0 0 3px #3d8bf766}
+
+/* ================= Responsive ================= */
+.logic-titlebar nav#main-menu{flex:0 0 auto}
+/* The project title sits in the free space between the menus and the status, so it can never run under the menu titles. */
+.logic-titlebar .hint-display{position:static!important;transform:none!important;max-width:none!important;flex:1 1 0!important;min-width:0;display:flex!important;justify-content:center;align-items:center;gap:6px;line-height:normal!important;overflow:hidden}
+.logic-titlebar .hint-display strong{overflow:hidden;text-overflow:ellipsis;min-width:0}
+.logic-bar-row{overflow:hidden}
+.logic-bar-left,.logic-bar-right{overflow:hidden}
+.logic-bar-left{flex:1 1 0}
+@media(max-width:1500px){.logic-control-bar .logic-lcd [data-lcd="fine"]{display:none!important}}
+@media(max-width:1380px){.logic-control-bar .monitor,.logic-control-bar [data-logic-pane="list"],.logic-control-bar [data-logic-pane="notes"]{display:none!important}.logic-titlebar .hint-display span{display:none}}
+@media(max-width:1240px){.logic-control-bar .logic-lcd .logic-lcd-time{display:none!important}.logic-control-bar [data-logic-pane="smart"],.logic-control-bar .logic-bar-right .logic-bar-sep{display:none!important}.logic-bar-row{gap:6px}}
+@media(max-width:1100px){.logic-control-bar #undo,.logic-control-bar #redo,.logic-control-bar .logic-bar-left .logic-bar-sep,.logic-control-bar #logic-rewind,.logic-control-bar #logic-forward{display:none!important}.logic-titlebar nav#main-menu{min-width:0;overflow:hidden}.logic-titlebar nav#main-menu button{padding:2px 6px!important}}
+@media(max-width:1000px){.logic-control-bar .toolbar-actions{display:flex!important}.logic-control-bar #export,.logic-control-bar #help,.logic-control-bar [data-window="rack"],.logic-control-bar .logic-count-in,.logic-control-bar .toolbar-monitor-level{display:none!important}:root{--logic-inspector:200px;--logic-browser:220px}}
+@media(max-width:900px){.logic-control-bar .logic-lcd-tempo small:not(.logic-lcd-tempo-mode){display:none}.logic-lcd-cell{padding:0 6px!important;min-width:34px!important}.logic-control-bar [data-logic-pane="loops"],.logic-control-bar #save{display:none!important}.logic-transport{gap:2px!important;padding:3px 5px!important}.logic-bar-row{padding:0 6px!important}
+ #playlist .logic-snap,#playlist .logic-pattern-picker>:not(.logic-pattern-drag),#playlist #logic-cmd-tool{display:none!important}:root{--logic-inspector:170px;--logic-browser:190px}}
+@media(max-width:960px){.logic-titlebar .hint-display{display:none!important}.logic-titlebar nav#main-menu{flex:1 1 auto}}
+@media(max-width:820px){.logic-titlebar .brand{display:none}.logic-titlebar nav#main-menu button{padding:2px 5px!important;font-size:11.5px!important}.logic-control-bar [data-window="piano"]{display:none!important}}
+
+@media (prefers-reduced-motion:reduce){
+ .logic-control-bar *,#playlist *,#mixer *,.logic-channel-strip *{transition:none!important}
+}

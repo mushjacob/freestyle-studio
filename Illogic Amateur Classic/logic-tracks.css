@@ -1,0 +1,136 @@
+/* Illogic Amateur — Logic Pro Tracks area: local menu bar, tool pickers, track headers,
+ * ruler with yellow cycle bar, Logic region colours, white playhead. */
+#desktop>.playlist-window{background:#1f1f1f!important;border:0!important;border-radius:0!important;box-shadow:none!important}
+body.editors-open #desktop>.playlist-window{bottom:var(--logic-editor-height,340px)!important}
+#playlist .pattern-picker,#playlist #playlist-navigator,#playlist .logic-tool-backing,#playlist .clip-title .clip-menu-trigger{display:none!important}
+
+/* Local menu bar */
+#playlist>.panel-heading.logic-local-bar{height:34px!important;background:#2b2b2b!important;border-bottom:1px solid #141414!important;gap:6px;padding:0 8px!important;color:#d8d8d8!important;cursor:default}
+#playlist .logic-local-bar button{min-height:24px!important;height:24px;padding:0 8px!important;border-radius:5px!important;border:0!important;background:transparent!important;box-shadow:none!important;color:#d8d8d8!important;font:12.5px var(--lg-font)!important;display:inline-flex;align-items:center;gap:2px}
+#playlist .logic-local-bar button:hover{background:#3b3b3b!important;color:#fff!important}
+#playlist .logic-local-menus{display:flex;gap:2px;padding:0 4px;border-left:1px solid #3a3a3a;border-right:1px solid #3a3a3a}
+#playlist .logic-local-menus button::after{content:"";width:5px;height:5px;margin:-3px 0 0 6px;border-right:1.4px solid #aaa;border-bottom:1.4px solid #aaa;transform:rotate(45deg)}
+#playlist .logic-new-track{width:28px;padding:0!important;justify-content:center;background:#383838!important}
+#playlist .logic-new-track svg{width:15px;height:15px}
+#playlist .logic-local-spacer{flex:1}
+#playlist .logic-pattern-picker{display:flex;align-items:center;gap:3px;font:11px var(--lg-font);color:#9a9a9a;background:none!important;border:0!important}
+#playlist .logic-pattern-picker select{height:22px;max-width:130px;font:11.5px var(--lg-font)!important;background:#1c1c1c!important;border:1px solid #3c3c3c!important;border-radius:5px!important;color:#ddd!important;padding:0 4px!important}
+#playlist .logic-pattern-picker button{padding:0 5px!important;font-size:10px!important}
+/* Drag handle: the current pattern as a region, dragged onto a track. */
+#playlist .logic-pattern-drag{display:inline-flex;align-items:center;justify-content:center;width:28px;height:22px;margin-left:2px;border-radius:5px;border:1px solid #3c3c3c;background:linear-gradient(#3a3a3a,#2c2c2c);color:#cfcfcf;cursor:grab;box-shadow:inset 0 1px 0 #ffffff12;transition:background-color .12s ease,color .12s ease,border-color .12s ease}
+#playlist .logic-pattern-drag:hover{color:#fff;border-color:#5a5a5a;background:linear-gradient(#454545,#333)}
+#playlist .logic-pattern-drag:active{cursor:grabbing;background:#262626}
+#playlist .logic-pattern-drag svg{width:18px;height:11px;pointer-events:none}
+@media(prefers-reduced-motion:reduce){#playlist .logic-pattern-drag{transition:none}}
+#playlist .logic-tool-picker{padding:0 4px!important;background:#1c1c1c!important;border:1px solid #3c3c3c!important}
+#playlist .logic-tool-picker svg{width:15px;height:15px}
+#playlist .logic-tool-picker svg+svg{width:10px;height:10px;opacity:.7}
+#playlist .logic-snap,#playlist .logic-drag{display:flex;align-items:center;gap:5px;font:12px var(--lg-font);color:#9a9a9a;white-space:nowrap}
+#playlist .logic-snap select,#playlist .logic-drag select{height:22px;font:12px var(--lg-font)!important;background:#1c1c1c!important;border:1px solid #3c3c3c!important;border-radius:5px!important;color:#e0e0e0!important;padding:0 4px!important;width:auto!important;margin:0!important}
+#playlist .logic-zoom{display:flex;align-items:center;gap:3px;color:#9a9a9a;font-size:12px}
+#playlist .logic-zoom input{width:62px;accent-color:#cfcfcf;height:14px}
+#playlist>.panel-heading .panel-actions{margin-left:0}
+@media(max-width:1350px){#playlist .logic-drag,#playlist .logic-pattern-picker>span:not(.logic-pattern-drag){display:none}}
+@media(max-width:1100px){#playlist .logic-zoom{display:none}}
+
+/* Track headers */
+#playlist .track-lane{border-bottom:1px solid #161616!important;background:#1f1f1f}
+#playlist .track-label.logic-track-header{display:flex;align-items:center;gap:6px;padding:0 6px 0 0!important;background:#2a2a2a!important;border-right:1px solid #111!important;color:#e0e0e0!important;font:12.5px var(--lg-font)!important;overflow:hidden;cursor:default}
+#playlist .track-lane.logic-track-selected .track-label,#playlist .track-label.logic-track-selected{background:#3a3a3a!important}
+#playlist .logic-track-number{width:24px;flex:0 0 24px;text-align:right;color:#a8a8a8;font-size:12px}
+#playlist .logic-track-icon{flex:0 0 38px;height:34px;margin-left:6px;border-radius:5px;display:flex;align-items:center;justify-content:center;background:#363636;color:#5ed17a}
+#playlist .logic-track-header[data-track-kind="instrument"] .logic-track-icon{color:#5ea2ff}
+#playlist .logic-track-icon svg{width:26px;height:26px}
+#playlist .logic-track-header[data-track-kind="pattern"] .logic-track-icon{color:#f0a640}
+#playlist .logic-track-main{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px;padding-left:4px}
+#playlist .logic-track-name{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:13px;color:#ececec}
+#playlist .logic-track-buttons{display:flex;align-items:center;gap:3px;min-width:0}
+#playlist .logic-track-buttons button{position:static!important;width:19px!important;height:17px!important;min-height:17px!important;padding:0!important;border-radius:3px!important;border:0!important;background:#3d3d3d!important;box-shadow:none!important;color:#d6d6d6!important;font:600 9.5px/15px var(--lg-font)!important;text-align:center;flex:0 0 auto}
+#playlist .logic-track-buttons button:disabled{opacity:.45}
+/* .track-enable "off" = the lane is muted: Logic lights M blue */
+#playlist .logic-track-buttons .track-enable.off{background:#3d8bf7!important;color:#fff!important}
+#playlist .logic-track-buttons .logic-track-s.on{background:#e3c23c!important;color:#111!important}
+#playlist .logic-track-volume{flex:1 1 90px;min-width:40px;max-width:110px;height:12px;margin:0 6px;accent-color:#c8c8c8}
+#playlist .logic-track-volume:disabled{opacity:.4}
+#playlist .logic-track-pan{width:20px;height:20px}
+#playlist .track-lane:has(.track-enable.off) .clip{opacity:.55}
+
+/* Lane grid (Logic: dark lanes, bar lines) */
+#playlist .lane-grid{background-color:#1f1f1f!important;background-image:linear-gradient(90deg,#2f2f2f 1px,transparent 1px),linear-gradient(90deg,#252525 1px,transparent 1px)!important;background-size:var(--grid-major,var(--bar)) 100%,var(--grid-mid,calc(var(--bar)/4)) 100%!important}
+#playlist .track-lane:nth-child(even) .lane-grid{background-color:#212121!important}
+#playlist .track-lane.logic-track-selected .lane-grid{background-color:#262626!important}
+
+/* Ruler + yellow cycle bar */
+#playlist .timeline-ruler{background:#2a2a2a!important;border-bottom:1px solid #141414!important;color:#cfcfcf!important;height:24px!important}
+#playlist .timeline-ruler>.ruler-bar{border-left:1px solid #575757!important;color:#d8d8d8!important;font:11px var(--lg-font)!important;padding:3px 0 0 3px!important;background:none!important;box-shadow:none!important}
+/* Beat ("5 2") and division ("5 2 3") labels inside a bar at high zoom */
+#playlist .timeline-ruler>.ruler-bar{position:relative;overflow:hidden;white-space:nowrap}
+#playlist .timeline-ruler>.ruler-bar>.ruler-sub{position:absolute;top:3px;padding-left:3px;height:100%;border-left:1px solid #4a4a4a;color:#a9a9a9;font:10px var(--lg-font);pointer-events:none}
+#playlist .timeline-ruler>.ruler-bar>.ruler-division{top:9px;height:calc(100% - 9px);color:#8a8a8a;font-size:9px;border-left-color:#3c3c3c}
+#playlist .timeline-ruler>.ruler-bar.in-loop>.ruler-sub{color:#3a3310;border-left-color:#9c8425}
+#playlist .timeline-ruler>.ruler-bar.in-loop{background:var(--lg-yellow)!important;color:#1d1d1d!important;border-left-color:#7e6a1b!important;box-shadow:none!important}
+#playlist .playlist-loop-region{background:#b59a2a55!important;border-color:#cdb03a!important;height:12px!important;top:0!important}
+
+/* Regions: MIDI / pattern green, audio blue, header bar with the name */
+#playlist .clip{border-radius:4px!important;border:1px solid #2f7c45!important;background:#3fa45b!important;color:#0e2b17!important;box-shadow:none!important;top:1px}
+#playlist .clip .clip-title{height:15px!important;background:#00000026!important;border:0!important;color:#062010!important;font:600 10.5px/13px var(--lg-font)!important;padding:1px 5px!important}
+#playlist .clip .pattern-preview-svg,#playlist .clip:not(.audio-clip) svg{opacity:1!important;color:#0f3a1c}
+#playlist .clip:not(.audio-clip) svg :is(rect,line,path){fill:#103d1f;stroke:#103d1f}
+#playlist .clip.audio-clip{background:#3a7bd5!important;border-color:#2a5ea8!important;color:#0b1f3d!important}
+#playlist .clip.audio-clip .clip-title{color:#081a33!important}
+#playlist .clip.audio-clip svg :is(path,rect,polyline,line){fill:#0d2d5c;stroke:#0d2d5c}
+#playlist .clip.audio-clip .audio-clip-label{color:#d7e6ff!important;opacity:.7}
+#playlist .clip.selected{outline:0!important;filter:brightness(1.18);box-shadow:inset 0 0 0 1px #ffffffcc!important}
+#playlist .clip.selected .clip-title{background:#ffffff40!important}
+#playlist .clip.muted-item,#playlist .clip.muted-preview{background:#5b5b5b!important;border-color:#474747!important;opacity:.8!important;filter:none!important}
+#playlist .clip.muted-item .clip-title::before{content:"● ";color:#bbb}
+
+/* Playhead: white line with a ruler handle */
+#playlist .playhead::before{background:#f2f2f2!important;top:24px!important;width:1px}
+#playlist .playhead>span svg{display:none!important}
+#playlist .playhead>span{width:11px!important;height:12px!important;left:-5px!important;background:#f2f2f2;clip-path:polygon(0 0,100% 0,100% 55%,50% 100%,0 55%)}
+#playlist #song-playhead::before{box-shadow:none!important}
+#playlist #song-playhead::after{display:none!important}
+/* Logic has one white playhead; the stopped edit cursor shows as the same white line (dimmed while a playing playhead leads). */
+#playlist #edit-playhead::before{background:#f2f2f2!important;box-shadow:none!important}
+#playlist #edit-playhead>span{background:#f2f2f2}
+#playlist #edit-playhead.is-ghost::before,#playlist #edit-playhead.is-ghost>span{opacity:.35}
+
+/* Tool cursors */
+#playlist[data-playlist-tool=draw] .lane-grid{cursor:crosshair}
+#playlist[data-playlist-tool=erase] :is(.lane-grid,.clip){cursor:not-allowed}
+#playlist[data-playlist-tool=slice] .clip{cursor:col-resize}
+
+
+/* Empty Tracks space below the last track (Logic shows no placeholder tracks; drops and double-click still create one) */
+#playlist .track-lane.logic-empty-row{border-bottom-color:transparent!important;background:#1b1b1b}
+#playlist .track-lane.logic-empty-row .track-label{background:#262626!important;border-right-color:#111!important}
+#playlist .track-lane.logic-empty-row .lane-grid{background-color:#1b1b1b!important;background-image:linear-gradient(90deg,#242424 1px,transparent 1px)!important;background-size:var(--grid-major,var(--bar)) 100%!important}
+/* A track that is being created in Freestyle: shown at once, dimmed, controls off until the saved track replaces it */
+#playlist .track-label.logic-track-pending{opacity:.62;cursor:progress}
+#playlist .track-label.logic-track-pending .logic-track-pending-note{margin-left:6px;font-size:10px;color:#9ab;font-style:italic;white-space:nowrap}
+#playlist .track-label.logic-track-pending button,#playlist .track-label.logic-track-pending input{pointer-events:none}
+
+/* OS file drop: light drop hint while dragging; while importing, the window stays usable and a placeholder region shows progress */
+#desktop>.file-drop-overlay{background:transparent!important;border:2px solid #3d8bf799!important;border-radius:6px!important;align-items:flex-start!important;padding:10px!important}
+#desktop>.file-drop-overlay>span{background:#2e2e2ef2;border:1px solid #4a4a4a;border-radius:6px;padding:4px 10px;font:12px var(--lg-font);color:#e6e6e6}
+body.logic-file-import #desktop>.file-drop-overlay:not([data-state=error]){display:none!important}
+#playlist .logic-import-ghost{position:absolute;z-index:11;opacity:.85;background:#3a7bd5!important;border:1px dashed #cfe0ff!important;overflow:hidden}
+#playlist .logic-import-ghost .logic-import-progress{position:absolute;left:0;right:0;bottom:0;height:4px;background:repeating-linear-gradient(90deg,#cfe0ff 0 12px,transparent 12px 24px);animation:logic-import 0.8s linear infinite}
+@keyframes logic-import{to{background-position:24px 0}}
+#playlist .logic-import-ghost .logic-import-cancel{position:absolute;right:4px;top:18px;min-height:18px!important;height:18px;padding:0 6px!important;font:11px var(--lg-font)!important;border-radius:4px!important;background:#1d3f73!important;border:0!important;color:#fff!important;box-shadow:none!important}
+/* Track header drag-to-reorder (Logic): the dragged header dims, the drop boundary shows as a line. */
+#playlist .track-label.logic-track-dragging{opacity:.55}
+#playlist .track-label.logic-drop-above{box-shadow:inset 0 2px 0 #f0c94a!important}
+#playlist .track-label.logic-drop-below{box-shadow:inset 0 -2px 0 #f0c94a!important}
+body.logic-track-reordering,body.logic-track-reordering *{cursor:grabbing!important}
+
+/* Region waveform canvas (peak pyramid): covers only the visible part of the region */
+#playlist .clip.audio-clip canvas.clip-wave-canvas{position:absolute;top:15px;left:0;height:calc(100% - 15px);pointer-events:none;display:block;z-index:1}
+#playlist .clip.audio-clip .audio-clip-label[hidden]{display:none!important}
+
+/* Recording region (Logic: red while the take is captured) */
+#playlist .clip.audio-clip.logic-recording-region{background:#e0544c!important;border-color:#a52f29!important;color:#3d0b08!important;pointer-events:none;z-index:5;overflow:hidden}
+#playlist .clip.audio-clip.logic-recording-region .clip-title{color:#3d0b08!important;background:#c9463f!important}
+#playlist .clip.audio-clip.logic-recording-region canvas{position:absolute;left:0;top:15px;display:block}
+#playlist .clip.audio-clip.logic-recording-region[data-recording-state="saving"]{opacity:.78}

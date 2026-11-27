@@ -1,0 +1,3 @@
+/* Inside Freestyle: Share · Save · Chat · Mozart live in the Freestyle cluster
+   left of the cloud button (top-right, same spot in every alternate view). */
+html.fs-embedded .toolbar .top-row > .brand-title { visibility: hidden; }

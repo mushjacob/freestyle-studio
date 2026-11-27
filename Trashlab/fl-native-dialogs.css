@@ -1,0 +1,234 @@
+/* FL26 wrapper chrome. Plugin contents remain the engine's real controls. */
+dialog.studio-dialog,
+dialog#cloud-panel.cloud-panel {
+ border:1px solid #273943;
+ border-radius:0;
+ background:#4c5961;
+ color:#c0cad0;
+ padding:0;
+ max-width:calc(100vw - 24px);
+ max-height:calc(100vh - 32px);
+ box-shadow:1px 2px 6px #172a354d;
+ font-family:"Vegetable FL UI",Arial,sans-serif;
+ font-size:11px;
+}
+dialog.studio-dialog {overflow:auto;}
+/* Conditional actions keep their existing HTML hidden state. */
+dialog.studio-dialog [hidden],dialog#cloud-panel.cloud-panel [hidden] {display:none!important;}
+dialog.studio-dialog::backdrop,
+dialog#cloud-panel.cloud-panel::backdrop {
+ background:#17232b26;
+ backdrop-filter:none;
+}
+dialog.studio-dialog > header,
+dialog.studio-dialog.mixer-tools > header,
+dialog#cloud-panel.cloud-panel > .cloud-title {
+ box-sizing:border-box;
+ height:25px;
+ min-height:25px;
+ padding:0 7px;
+ gap:7px;
+ border-bottom:1px solid #273943;
+ background:#3b484f;
+ color:#bcc7ce;
+ font:400 11px/24px "Vegetable FL UI",Arial,sans-serif;
+}
+dialog.studio-dialog > header strong,
+dialog#cloud-panel.cloud-panel > .cloud-title strong {font-size:11px;font-weight:400;}
+dialog.studio-dialog > header > button,
+dialog.studio-dialog.mixer-tools > header > .mix-close,
+dialog#cloud-panel.cloud-panel .cloud-title > #cloud-close {
+ width:21px;
+ height:21px;
+ min-height:21px;
+ padding:0;
+ border:0;
+ border-radius:0;
+ background:transparent;
+ box-shadow:none;
+ color:#a7b7c0;
+ font:18px/20px Arial,sans-serif;
+}
+dialog.studio-dialog > header > button:hover,
+dialog#cloud-panel.cloud-panel .cloud-title > #cloud-close:hover {background:#53616a;color:#e2e9ec;}
+dialog.studio-dialog .dialog-content {padding:8px 10px;}
+dialog.studio-dialog .dialog-content p {font-size:11px;line-height:1.5;overflow-wrap:anywhere;}
+dialog.studio-dialog .dialog-content label {font-size:11px;line-height:1.4;margin:8px 0 4px;}
+dialog.studio-dialog .dialog-content button,
+dialog.studio-dialog.mixer-tools > :not(header) button,
+dialog#cloud-panel.cloud-panel > :not(header) button {
+ min-height:24px;
+ padding:4px 8px;
+ border-color:#2b3e49;
+ border-radius:2px;
+ background:linear-gradient(#5c6a73,#485962);
+ box-shadow:inset 0 1px #a0adb429;
+ color:#c5d0d5;
+ font-family:"Vegetable FL UI",Arial,sans-serif;
+ font-size:11px;
+}
+dialog.studio-dialog .dialog-content button:hover:not(:disabled),
+dialog.studio-dialog.mixer-tools button:hover:not(:disabled),
+dialog#cloud-panel.cloud-panel button:hover:not(:disabled) {background:#61727b;color:#e7edef;}
+dialog.studio-dialog .dialog-content button:disabled,
+dialog.studio-dialog.mixer-tools button:disabled,
+dialog#cloud-panel.cloud-panel button:disabled {opacity:.55;}
+dialog.studio-dialog .dialog-content .primary,
+dialog.studio-dialog.mixer-tools .primary {background:linear-gradient(#7f936e,#637b57);border-color:#425740;color:#e1ead7;}
+dialog.studio-dialog .dialog-content :is(input:not([type=range]):not([type=checkbox]):not([type=radio]),select,textarea),
+dialog.studio-dialog.mixer-tools :is(input:not([type=range]):not([type=checkbox]):not([type=radio]),select,textarea),
+dialog#cloud-panel.cloud-panel :is(input:not([type=range]):not([type=checkbox]):not([type=radio]),select,textarea) {
+ min-height:25px;
+ padding:4px 6px;
+ border:1px solid #283c47;
+ border-top-color:#20333d;
+ border-radius:2px;
+ background:#334752;
+ color:#c5d1d7;
+ font-size:11px;
+}
+dialog.studio-dialog :is(button,input,select,textarea):focus-visible,
+dialog#cloud-panel.cloud-panel :is(button,input,select,textarea,a):focus-visible {outline:1px solid #a8cb7e;outline-offset:1px;}
+
+/* Keep the wrapper close control separate from dynamically loaded tool buttons. */
+dialog.studio-dialog.mixer-tools > header > .mix-close {
+ width:21px;height:21px;min-height:21px;padding:0;border:0;
+ background:transparent;box-shadow:none;color:#a7b7c0;font:18px/20px Arial,sans-serif;
+}
+
+/* Modeless plugin windows are positioned and raised by WindowManager. */
+dialog.studio-dialog.plugin-parameter-dialog[data-modeless] {position:fixed;margin:0;right:auto;bottom:auto;max-height:calc(100vh - max(86px, 20vh) - 12px);}
+dialog.studio-dialog.plugin-parameter-dialog[data-modeless] > header {position:sticky;top:0;z-index:2;cursor:move;touch-action:none;user-select:none;}
+dialog.studio-dialog.plugin-parameter-dialog .plugin-parameter-toolbar {gap:4px;margin:5px 0;}
+dialog.studio-dialog.plugin-parameter-dialog .plugin-parameter-count {margin:2px 0;color:#aabac3;font-size:10px;}
+dialog.studio-dialog.plugin-parameter-dialog .plugin-parameter-page {border-top:1px solid #3b4d58;padding-top:3px;scrollbar-gutter:stable;}
+dialog.studio-dialog.plugin-parameter-dialog .plugin-parameter-page label {margin:5px 0 3px;padding:4px 0;border-bottom:1px solid #40525c;}
+dialog.studio-dialog.plugin-parameter-dialog .plugin-parameter-page input[type=range] {height:19px;padding:0;accent-color:#a4c67c;}
+dialog.studio-dialog.plugin-parameter-dialog .plugin-parameter-status {white-space:normal;overflow-wrap:anywhere;}
+dialog.studio-dialog.plugin-parameter-dialog .plugin-parameter-status:not(:empty) {margin:5px 0;padding:5px 7px;border-left:2px solid #bca070;background:#3b4c55;color:#e0c39f;}
+dialog.studio-dialog .native-plugin-viewport {padding:4px;border-color:#273943;background:#202c34;}
+dialog.studio-dialog .remote-plugin-status {line-height:1.5;overflow-wrap:anywhere;}
+
+/* Effect options retain their complete slots, parameter and recovery layout. */
+dialog.studio-dialog.mixer-tools .mix-toolbar {height:auto;min-height:34px;padding:4px 8px;gap:7px;flex-wrap:wrap;background:#46565f;border-color:#30444f;}
+dialog.studio-dialog.mixer-tools .mix-slots {padding:6px;background:#3a4a53;border-right-color:#2b3d47;}
+dialog.studio-dialog.mixer-tools .mix-slot {height:29px;margin-bottom:3px;background:#30434e;border-color:#273b46;border-bottom-color:#5d6c74;border-radius:0;}
+dialog.studio-dialog.mixer-tools .mix-slot.selected {background:#4b5d63;border-color:#92a77d;}
+dialog.studio-dialog.mixer-tools .mix-slot > button.mix-slot-name {min-height:24px;padding:2px 0;border:0;background:transparent;box-shadow:none;}
+dialog.studio-dialog.mixer-tools .mix-slot > button.mix-led {min-height:8px;padding:0;border-radius:50%;background:#a5ca73;}
+dialog.studio-dialog.mixer-tools .mix-slot > button.mix-led.off {background:#647278;}
+dialog.studio-dialog.mixer-tools .mix-slot .mix-slot-order button {height:12px;min-height:12px;padding:0 4px;border:0;background:transparent;box-shadow:none;}
+dialog.studio-dialog.mixer-tools .mix-slot > button.mix-remove {padding:0 6px;border:0;background:transparent;box-shadow:none;}
+dialog.studio-dialog.mixer-tools .mix-slots > button.mix-empty-slot {height:28px;min-height:28px;background:#364a55;border-color:#2b404b;color:#a3b4be;}
+dialog.studio-dialog.mixer-tools .mix-details {background:#4c5961;}
+dialog.studio-dialog.mixer-tools .mix-tabs {gap:1px;padding:4px 5px 0;flex-wrap:wrap;background:#354852;border-color:#293e49;}
+dialog.studio-dialog.mixer-tools .mix-details > .mix-tabs button {min-height:24px;padding:3px 7px;border-radius:0;background:#3c505b;color:#aebfc8;}
+dialog.studio-dialog.mixer-tools .mix-details > .mix-tabs button.selected {background:#58676f;color:#dce4e7;border-top-color:#acc78b;}
+dialog.studio-dialog.mixer-tools .mix-content {padding:9px 10px;}
+dialog.studio-dialog.mixer-tools .mix-content :is(p,label) {font-size:11px;line-height:1.5;overflow-wrap:anywhere;}
+dialog.studio-dialog.mixer-tools .mix-note,
+dialog.studio-dialog.mixer-tools .mix-empty {color:#b0bfc7;}
+dialog.studio-dialog.mixer-tools .mix-parameter {gap:8px;padding:7px 0;border-bottom-color:#40525d;}
+dialog.studio-dialog.mixer-tools .mix-parameter small {font-size:10px;color:#a9bac3;}
+dialog.studio-dialog.mixer-tools .mix-plugin-meta {padding-bottom:6px;color:#b2c5b0;}
+dialog.studio-dialog.mixer-tools .mix-status {padding:6px 9px;min-height:28px;background:#344953;border-top-color:#293e49;font-size:11px;line-height:1.5;white-space:normal;overflow-wrap:anywhere;}
+dialog.studio-dialog.mixer-tools .mix-status.error {color:#efb49f;border-top-color:#9a7562;}
+
+/* Connection/tools panel uses the same chrome without changing its workflow. */
+dialog#cloud-panel.cloud-panel .cloud-icon {font-size:16px;color:#acbdc7;}
+dialog#cloud-panel.cloud-panel .cloud-title > .cloud-connection {font-size:10px;}
+dialog#cloud-panel.cloud-panel :is(.cloud-connect-bar,.cloud-project-bar,.cloud-shortcuts) {padding:7px 9px;background:#46555e;}
+dialog#cloud-panel.cloud-panel .cloud-tools {padding:7px 6px;background:#364850;border-right-color:#293d47;}
+dialog#cloud-panel.cloud-panel .cloud-tool-editor {padding:10px 12px;background:#4c5961;}
+dialog#cloud-panel.cloud-panel .cloud-tool-editor h2 {font-size:15px;font-weight:400;}
+dialog#cloud-panel.cloud-panel .cloud-tool-editor p {font-size:11px;line-height:1.5;margin:7px 0 12px;}
+dialog#cloud-panel.cloud-panel .cloud-tool-item {padding:6px 7px;background:#40525c;}
+dialog#cloud-panel.cloud-panel .cloud-tool-item.selected {background:#5b625c;border-color:#c2aa78;color:#eed5a8;}
+dialog#cloud-panel.cloud-panel .cloud-tool-item small {font-size:10px;color:#adbdc7;}
+dialog#cloud-panel.cloud-panel .cloud-field small {color:#b5c3cb;}
+dialog#cloud-panel.cloud-panel .cloud-footer {padding:6px 9px;background:#354852;border-color:#293d47;color:#adbdc7;}
+dialog#cloud-panel.cloud-panel .cloud-error {color:#f0b4a7;}
+@media(max-width:620px) {
+ dialog.studio-dialog.plugin-parameter-dialog {width:calc(100vw - 24px);}
+ dialog.studio-dialog.mixer-tools .mix-main {grid-template-columns:minmax(145px,35%) minmax(0,1fr);}
+ dialog.studio-dialog.mixer-tools .mix-parameter {grid-template-columns:minmax(0,1fr) 70px;}
+ dialog.studio-dialog.mixer-tools .mix-parameter input[type=range] {grid-column:1/-1;grid-row:2;}
+}
+@media(forced-colors:active) {
+ dialog.studio-dialog,dialog#cloud-panel.cloud-panel {border-color:CanvasText;box-shadow:none;}
+ dialog.studio-dialog :focus-visible,dialog#cloud-panel.cloud-panel :focus-visible {outline-color:Highlight;}
+}
+
+/* Generic parameter controls use wrapper faders, preserving their full hit area. */
+dialog.studio-dialog.plugin-parameter-dialog .plugin-parameter-page input[type=range],
+dialog.studio-dialog.mixer-tools .mix-parameter input[type=range] {
+ -webkit-appearance:none;
+ appearance:none;
+ height:21px;
+ min-height:21px;
+ margin:2px 0;
+ padding:0;
+ border:0;
+ border-radius:0;
+ background:transparent;
+ box-shadow:none;
+ cursor:ew-resize;
+}
+dialog.studio-dialog.plugin-parameter-dialog .plugin-parameter-page input[type=range]::-webkit-slider-runnable-track,
+dialog.studio-dialog.mixer-tools .mix-parameter input[type=range]::-webkit-slider-runnable-track {
+ height:4px;
+ border:1px solid #2a3b46;
+ border-bottom-color:#687781;
+ border-radius:1px;
+ background:#263945;
+ box-shadow:inset 0 1px 1px #15263099;
+}
+dialog.studio-dialog.plugin-parameter-dialog .plugin-parameter-page input[type=range]::-webkit-slider-thumb,
+dialog.studio-dialog.mixer-tools .mix-parameter input[type=range]::-webkit-slider-thumb {
+ -webkit-appearance:none;
+ appearance:none;
+ box-sizing:border-box;
+ width:12px;
+ height:17px;
+ margin-top:-7px;
+ border:1px solid #293b47;
+ border-radius:2px;
+ background:linear-gradient(#d8dde0 0%,#b2bcc3 20%,#73818c 43%,#d5dce0 47%,#bcc8cf 54%,#8797a2 76%,#566b79 100%);
+ box-shadow:inset 1px 0 #e7edef77,inset -1px 0 #41586788,0 1px 2px #17273180;
+}
+dialog.studio-dialog.plugin-parameter-dialog .plugin-parameter-page input[type=range]::-moz-range-track,
+dialog.studio-dialog.mixer-tools .mix-parameter input[type=range]::-moz-range-track {
+ height:3px;
+ border:1px solid #2a3b46;
+ border-bottom-color:#687781;
+ border-radius:1px;
+ background:#263945;
+ box-shadow:inset 0 1px 1px #15263099;
+}
+dialog.studio-dialog.plugin-parameter-dialog .plugin-parameter-page input[type=range]::-moz-range-thumb,
+dialog.studio-dialog.mixer-tools .mix-parameter input[type=range]::-moz-range-thumb {
+ box-sizing:border-box;
+ width:12px;
+ height:17px;
+ border:1px solid #293b47;
+ border-radius:2px;
+ background:linear-gradient(#d8dde0 0%,#b2bcc3 20%,#73818c 43%,#d5dce0 47%,#bcc8cf 54%,#8797a2 76%,#566b79 100%);
+ box-shadow:inset 1px 0 #e7edef77,inset -1px 0 #41586788,0 1px 2px #17273180;
+}
+dialog.studio-dialog.plugin-parameter-dialog .plugin-parameter-page label > span,
+dialog.studio-dialog.mixer-tools .mix-parameter > span {color:#becbd2;}
+dialog.studio-dialog.mixer-tools .mix-parameter .mix-param-value {color:#d7e0e5;font-variant-numeric:tabular-nums;}
+dialog.studio-dialog.plugin-parameter-dialog .plugin-parameter-page input[type=range]:focus-visible,
+dialog.studio-dialog.mixer-tools .mix-parameter input[type=range]:focus-visible {outline:1px solid #aabfc9;outline-offset:1px;}
+dialog.studio-dialog.plugin-parameter-dialog .plugin-parameter-page input[type=range]:disabled,
+dialog.studio-dialog.mixer-tools .mix-parameter input[type=range]:disabled {opacity:.5;cursor:default;}
+@media(forced-colors:active) {
+ dialog.studio-dialog.plugin-parameter-dialog .plugin-parameter-page input[type=range],
+ dialog.studio-dialog.mixer-tools .mix-parameter input[type=range] {-webkit-appearance:auto;appearance:auto;opacity:1;}
+}
+/* FL plugin window: native GUI and typed parameter tabs. The context menu must stay above raised windows. */
+.plugin-parameter-dialog .plugin-window-tabs {display:flex;gap:2px;margin:0 0 5px;border-bottom:1px solid #2b3c46;}
+.plugin-parameter-dialog .plugin-window-tabs button {border-radius:3px 3px 0 0;border-bottom:0;padding:3px 10px;font-size:11px;background:#3a4952;color:#a9b8c0;}
+.plugin-parameter-dialog .plugin-window-tabs button.selected {background:#56666f;color:#e3ecef;}
+.plugin-parameter-dialog [hidden] {display:none !important;}
+#context-menu {z-index:2147483000;}

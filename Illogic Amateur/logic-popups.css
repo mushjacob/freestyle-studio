@@ -1,0 +1,156 @@
+/* Illogic Amateur — popups: menus, context menus, dialogs / sheets, pickers, toasts.
+   Modeled on the macOS (dark) system controls so every popup in the app shares one look.
+   Linked last. Theme tokens live on :root so a variant stylesheet can re-skin them. */
+:root{
+ --pop-font:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Helvetica,Arial,sans-serif;
+ --pop-accent:#0a60e0;--pop-accent-hi:#3a8bf7;--pop-accent-lo:#1462e0;--pop-focus:#3d8bf7a6;
+ /* menus */
+ --menu-bg:rgba(38,38,38,.82);--menu-border:rgba(255,255,255,.17);--menu-edge:rgba(0,0,0,.72);--menu-shadow:0 10px 32px rgba(0,0,0,.5),0 2px 6px rgba(0,0,0,.28);
+ --menu-text:#ececec;--menu-dim:rgba(235,235,235,.42);--menu-disabled:rgba(235,235,235,.27);--menu-sep:rgba(255,255,255,.13);--menu-hi:#0a60e0;--menu-hi-text:#fff;
+ /* windows / sheets */
+ --win-bg:#2c2c2c;--win-bar:linear-gradient(#3d3d3d,#363636);--win-bar-line:#161616;--win-title:#dedede;--win-text:#e2e2e2;--win-dim:#a2a2a2;--win-border:rgba(255,255,255,.16);--win-edge:#000000b8;
+ --win-shadow:0 26px 70px rgba(0,0,0,.6),0 4px 14px rgba(0,0,0,.35);--win-backdrop:rgba(0,0,0,.3);
+ --field-bg:#1c1c1c;--field-border:#4c4c4c;--field-text:#eaeaea;--field-placeholder:#7e7e7e;
+ --btn-bg:linear-gradient(#6b6b6b,#5f5f5f);--btn-bg-hover:linear-gradient(#777,#6a6a6a);--btn-bg-active:linear-gradient(#858585,#7a7a7a);--btn-text:#fff;--btn-edge:rgba(0,0,0,.55);--btn-top:rgba(255,255,255,.2);
+ --list-line:#383838;--list-alt:rgba(255,255,255,.035);--list-border:#1a1a1a;--list-bg:#232323;--kbd:#e1b33b;
+}
+
+/* ================= Menus (menu bar menus, local menus, context menus, popups) ================= */
+#context-menu.context-menu,.context-menu{box-sizing:border-box!important;min-width:150px;padding:5px!important;border:0!important;border-radius:6px!important;background:var(--menu-bg)!important;-webkit-backdrop-filter:blur(28px) saturate(1.7);backdrop-filter:blur(28px) saturate(1.7);box-shadow:0 0 0 .5px var(--menu-edge),inset 0 0 0 1px var(--menu-border),var(--menu-shadow)!important;color:var(--menu-text)!important;font:13px/1 var(--pop-font)!important;-webkit-font-smoothing:antialiased;user-select:none;-webkit-user-select:none;max-height:calc(100vh - 12px);overflow-y:auto;overscroll-behavior:contain;scrollbar-width:none}
+#context-menu.context-menu:has(.menu-sub.open),#context-menu.context-menu:has(.menu-columns),.context-menu:has(.menu-sub.open),.context-menu:has(.menu-columns){overflow:visible}
+/* Closing: the menu fades out quickly (as system menus do); opening is immediate. */
+#context-menu.context-menu.hidden{display:block!important;visibility:hidden;opacity:0;pointer-events:none;transition:opacity .14s ease-out,visibility 0s linear .14s}
+.context-menu button{box-sizing:border-box!important;display:flex!important;align-items:center!important;justify-content:space-between!important;gap:28px!important;position:relative!important;width:100%!important;height:22px!important;min-height:22px!important;margin:0!important;padding:0 9px 0 21px!important;border:0!important;border-radius:4px!important;background:transparent!important;box-shadow:none!important;color:var(--menu-text)!important;font:13px/22px var(--pop-font)!important;letter-spacing:0!important;text-align:left!important;white-space:nowrap!important;cursor:default!important;outline:none!important;transition:none!important}
+.context-menu button small{flex:none;margin-left:auto;color:var(--menu-dim)!important;font:13px/22px var(--pop-font)!important;letter-spacing:.6px;text-align:right;font-variant-numeric:tabular-nums}
+.context-menu button:hover:not(:disabled),.context-menu button:focus-visible:not(:disabled),.context-menu button.menu-active:not(:disabled),.context-menu .menu-sub.open>button:not(:disabled){background:var(--menu-hi)!important;color:var(--menu-hi-text)!important}
+.context-menu button:hover:not(:disabled) small,.context-menu button:focus-visible:not(:disabled) small,.context-menu button.menu-active:not(:disabled) small,.context-menu .menu-sub.open>button:not(:disabled) small{color:var(--menu-hi-text)!important}
+.context-menu button:disabled{color:var(--menu-disabled)!important;opacity:1!important;background:transparent!important}
+.context-menu button:disabled small{color:var(--menu-disabled)!important}
+.context-menu hr{height:0!important;border:0!important;border-top:1px solid var(--menu-sep)!important;margin:5px 9px!important;background:none!important}
+/* Checkmark column */
+.context-menu .menu-check{position:absolute!important;left:6px!important;top:0!important;width:11px;height:22px;font-size:0!important;color:inherit!important}
+.context-menu [aria-checked="true"] .menu-check::after{content:"";position:absolute;left:1.5px;top:6px;width:8px;height:4.5px;border-left:1.8px solid currentColor;border-bottom:1.8px solid currentColor;transform:rotate(-48deg);border-radius:.5px}
+/* Submenu arrow: a chevron at the right edge */
+.context-menu .menu-arrow{font-size:0!important;width:7px;height:22px;position:relative;margin-right:-1px}
+.context-menu .menu-arrow::after{content:"";position:absolute;right:2px;top:7.5px;width:5.5px;height:5.5px;border-top:1.7px solid currentColor;border-right:1.7px solid currentColor;transform:rotate(45deg);border-radius:.5px}
+.context-menu .menu-sub{position:relative}
+.context-menu .context-submenu{top:-5px!important;left:calc(100% - 2px)!important;min-width:170px;z-index:2;overflow:visible}
+.context-menu .menu-columns{display:flex;align-items:stretch}
+.context-menu .menu-column{min-width:190px}
+.context-menu .menu-column+.menu-column{border-left:1px solid var(--menu-sep)!important;margin-left:5px!important;padding-left:5px!important}
+/* A menu's section caption (disabled item used as a header) keeps the same inset. */
+.context-menu .menu-heading{padding:3px 9px 2px 21px;color:var(--menu-dim);font:600 11px/16px var(--pop-font)}
+
+/* A submenu cannot blur what is behind it (it sits inside the blurred parent), so it is nearly opaque. */
+.context-menu .context-submenu{background:rgba(42,42,42,.97)!important}
+
+/* ================= Pickers: the insert-slot plug-in menu (search field + category ▸ plug-in) ================= */
+.logic-plugin-menu{box-sizing:border-box;padding:5px!important;border:0!important;border-radius:6px!important;background:var(--menu-bg)!important;-webkit-backdrop-filter:blur(28px) saturate(1.7);backdrop-filter:blur(28px) saturate(1.7);box-shadow:0 0 0 .5px var(--menu-edge),inset 0 0 0 1px var(--menu-border),var(--menu-shadow)!important;color:var(--menu-text)!important;font:13px var(--pop-font)!important;animation:pop-window-in .1s ease-out}
+.logic-plugin-menu-search{height:22px!important;margin:1px 1px 6px!important;width:calc(100% - 2px)!important;padding:0 8px!important;border:1px solid var(--menu-sep)!important;border-radius:5px!important;background:rgba(127,127,127,.18)!important;color:var(--menu-text)!important;font:13px var(--pop-font)!important;transition:box-shadow .1s ease}
+.logic-plugin-menu-search::placeholder{color:var(--menu-dim)}
+.logic-plugin-menu-search:focus{border-color:var(--pop-accent-hi)!important;box-shadow:0 0 0 3px var(--pop-focus)}
+.logic-plugin-menu button{height:22px!important;padding:0 9px 0 12px!important;border-radius:4px!important;color:var(--menu-text);font:13px/22px var(--pop-font)!important}
+.logic-plugin-menu button:hover:not(:disabled),.logic-plugin-menu .logic-plugin-menu-group.open>.logic-plugin-menu-category{background:var(--menu-hi)!important;color:var(--menu-hi-text)!important}
+.logic-plugin-menu button:disabled{color:var(--menu-disabled)!important}
+.logic-plugin-menu-category{position:relative}
+.logic-plugin-menu-category::after{content:""!important;float:none!important;position:absolute;right:9px;top:7.5px;width:5.5px;height:5.5px;border-top:1.7px solid currentColor;border-right:1.7px solid currentColor;transform:rotate(45deg);opacity:.75;transition:transform .12s ease}
+.logic-plugin-menu-group.open>.logic-plugin-menu-category::after{transform:rotate(135deg);top:5.5px}
+.logic-plugin-menu-note{margin:6px 12px!important;color:var(--menu-dim)!important;font:12px var(--pop-font)}
+
+/* ================= Windows: dialogs, sheets, panels ================= */
+dialog.studio-dialog,dialog#cloud-panel.cloud-panel,dialog.vegetable-automation{padding:0!important;border:0!important;border-radius:10px!important;background:var(--win-bg)!important;color:var(--win-text)!important;font:13px/1.35 var(--pop-font)!important;box-shadow:0 0 0 .5px var(--win-edge),inset 0 0 0 1px var(--win-border),var(--win-shadow)!important;-webkit-font-smoothing:antialiased;max-width:calc(100vw - 16px)!important;max-height:calc(100vh - 20px)!important}
+dialog.studio-dialog:not(.logic-plugin-window){overflow:hidden auto}
+dialog.studio-dialog::backdrop,dialog#cloud-panel.cloud-panel::backdrop,dialog.vegetable-automation::backdrop{background:var(--win-backdrop)!important;-webkit-backdrop-filter:none;backdrop-filter:none}
+dialog.studio-dialog[open]:not([data-modeless]),dialog#cloud-panel.cloud-panel[open],dialog.vegetable-automation[open]{animation:pop-sheet-in .16s cubic-bezier(.2,.8,.3,1)}
+dialog.studio-dialog[open][data-modeless]{animation:pop-window-in .12s ease-out}
+@keyframes pop-sheet-in{from{opacity:0;transform:translateY(-10px) scale(.985)}to{opacity:1;transform:none}}
+@keyframes pop-window-in{from{opacity:0;transform:scale(.985)}to{opacity:1;transform:none}}
+/* Title bar: centred title, close button as the red window dot at the left. */
+dialog.studio-dialog>header,dialog.studio-dialog.mixer-tools>header,dialog#cloud-panel.cloud-panel>.cloud-title{box-sizing:border-box!important;position:sticky;top:0;z-index:3;display:flex!important;align-items:center!important;justify-content:center!important;height:28px!important;min-height:28px!important;padding:0 34px!important;gap:6px!important;border:0!important;border-bottom:1px solid var(--win-bar-line)!important;border-radius:10px 10px 0 0;background:var(--win-bar)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.1);color:var(--win-title)!important;font:600 13px/27px var(--pop-font)!important;letter-spacing:0!important;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:default}
+dialog.studio-dialog>header strong,dialog#cloud-panel.cloud-panel>.cloud-title strong{font:inherit!important;color:inherit!important}
+dialog.studio-dialog>header>button,dialog.studio-dialog.mixer-tools>header>.mix-close,dialog#cloud-panel.cloud-panel .cloud-title>#cloud-close{position:absolute!important;left:9px!important;right:auto!important;top:8px!important;width:12px!important;height:12px!important;min-height:12px!important;min-width:0!important;margin:0!important;padding:0!important;border:0!important;border-radius:50%!important;background:#ff5f57!important;box-shadow:inset 0 0 0 .5px rgba(0,0,0,.25)!important;color:transparent!important;font:700 10px/12px var(--pop-font)!important;text-align:center!important;overflow:hidden;cursor:default!important;transition:filter .1s ease}
+dialog.studio-dialog>header>button:hover,dialog.studio-dialog.mixer-tools>header>.mix-close:hover,dialog#cloud-panel.cloud-panel .cloud-title>#cloud-close:hover{color:#6e0a06!important;background:#ff5f57!important}
+dialog.studio-dialog>header>button:active,dialog#cloud-panel.cloud-panel .cloud-title>#cloud-close:active{filter:brightness(.8)}
+dialog.studio-dialog>header>button:focus-visible{outline:2px solid var(--pop-focus)!important;outline-offset:1px}
+dialog.studio-dialog:not(.logic-plugin-window) .dialog-content{padding:16px 20px 18px!important;background:transparent;color:var(--win-text)}
+dialog.studio-dialog:not(.logic-plugin-window) .dialog-content p{margin:0 0 10px;font:12px/1.45 var(--pop-font)!important;color:var(--win-dim);overflow-wrap:anywhere}
+dialog.studio-dialog .dialog-content :is(h2,h3,h4){margin:0 0 8px;font:600 13px/1.3 var(--pop-font);color:var(--win-text)}
+dialog.studio-dialog:not(.logic-plugin-window) .dialog-content label{font:13px/1.35 var(--pop-font)!important;color:var(--win-text);margin:8px 0 4px}
+dialog.studio-dialog .dialog-content [role="status"]:empty{display:none}
+
+/* --- Push buttons (default button blue) --- */
+dialog.studio-dialog:not(.mixer-tools):not(.logic-plugin-window) .dialog-content button:not(.logic-popup):not([class*="logic-fx"]):not([role="tab"]),dialog.studio-dialog .dialog-content :is(.lane-create-actions,.dialog-actions,.save-as-form,.cloud-export-form,.range-actions) button,dialog.vegetable-automation button{box-sizing:border-box!important;min-height:22px!important;height:auto;margin:0;padding:2px 13px!important;border:0!important;border-radius:5.5px!important;background:var(--b,var(--btn-bg))!important;box-shadow:inset 0 .5px 0 var(--btn-top),0 0 0 .5px var(--btn-edge),0 1px 1.5px rgba(0,0,0,.35)!important;color:var(--btn-text)!important;font:13px/18px var(--pop-font)!important;letter-spacing:0!important;white-space:nowrap;cursor:default!important;transition:filter .08s ease,background-color .08s ease!important}
+dialog.studio-dialog:not(.mixer-tools):not(.logic-plugin-window) .dialog-content button:not(.logic-popup):not([class*="logic-fx"]):not([role="tab"]):hover:not(:disabled),dialog.vegetable-automation button:hover:not(:disabled){background:var(--btn-bg-hover)!important}
+dialog.studio-dialog:not(.mixer-tools):not(.logic-plugin-window) .dialog-content button:not(.logic-popup):not([class*="logic-fx"]):not([role="tab"]):active:not(:disabled),dialog.vegetable-automation button:active:not(:disabled){background:var(--btn-bg-active)!important}
+dialog.studio-dialog .dialog-content button:focus-visible,dialog.vegetable-automation button:focus-visible{outline:3px solid var(--pop-focus)!important;outline-offset:1px!important}
+dialog.studio-dialog:not(.logic-plugin-window) .dialog-content button:disabled,dialog.vegetable-automation button:disabled{opacity:.42!important;cursor:default!important}
+dialog.studio-dialog:not(.mixer-tools) .dialog-content button:is(.primary,[type="submit"]):not(:disabled),dialog.vegetable-automation button.primary:not(:disabled){--b:linear-gradient(var(--pop-accent-hi),var(--pop-accent-lo));--btn-bg-hover:linear-gradient(#4a96fa,#1f6dea);--btn-bg-active:linear-gradient(#2f79e0,#0f53c4);--btn-text:#fff;--btn-top:rgba(255,255,255,.3);background:var(--b);color:#fff!important;box-shadow:inset 0 .5px 0 rgba(255,255,255,.3),0 0 0 .5px rgba(0,30,90,.6),0 1px 1.5px rgba(0,0,0,.35)!important}
+dialog.studio-dialog:not(.mixer-tools) .dialog-content button:is(.primary,[type="submit"]):hover:not(:disabled){filter:brightness(1.08)}
+dialog.studio-dialog:not(.mixer-tools) .dialog-content button:is(.primary,[type="submit"]):active:not(:disabled){filter:brightness(.86)}
+/* Button rows sit at the bottom right, default button last (as on macOS alerts). */
+dialog.studio-dialog .dialog-content :is(.lane-create-actions,.dialog-actions,.range-actions){display:flex;flex-wrap:wrap;justify-content:flex-end;gap:10px;margin-top:16px}
+dialog.studio-dialog .dialog-content :is(.lane-create-actions,.dialog-actions,.range-actions) button:is(.primary,[type="submit"]){order:9}
+dialog.studio-dialog .dialog-content form>button{margin:14px 0 0 10px!important;float:right}
+dialog.studio-dialog .dialog-content form::after{content:"";display:block;clear:both}
+
+/* --- Text fields, popup buttons, checkboxes, sliders --- */
+dialog.studio-dialog:not(.logic-eq-window) .dialog-content :is(input:not([type=range]):not([type=checkbox]):not([type=radio]):not([type=color]),textarea),dialog.vegetable-automation :is(input:not([type=range]):not([type=checkbox]):not([type=radio]),textarea),.logic-keycmd-search{box-sizing:border-box!important;min-height:22px!important;padding:2px 7px!important;border:1px solid var(--field-border)!important;border-radius:5px!important;background:var(--field-bg)!important;box-shadow:inset 0 1px 2px rgba(0,0,0,.35)!important;color:var(--field-text)!important;font:13px/16px var(--pop-font)!important;outline:none!important;transition:box-shadow .1s ease,border-color .1s ease}
+dialog.studio-dialog .dialog-content :is(input,textarea)::placeholder,.logic-keycmd-search::placeholder{color:var(--field-placeholder)!important}
+dialog.studio-dialog:not(.logic-eq-window) .dialog-content :is(input:not([type=range]):not([type=checkbox]):not([type=radio]),textarea):focus,dialog.vegetable-automation :is(input,textarea):focus,.logic-keycmd-search:focus{border-color:var(--pop-accent-hi)!important;box-shadow:0 0 0 3px var(--pop-focus)!important}
+dialog.studio-dialog .dialog-content input[readonly]{color:var(--win-dim)!important;background:transparent!important;box-shadow:none!important}
+dialog.studio-dialog:not(.logic-eq-window) .dialog-content select,dialog.vegetable-automation select{-webkit-appearance:none!important;appearance:none!important;box-sizing:border-box!important;min-height:22px!important;height:22px;padding:1px 26px 1px 8px!important;border:0!important;border-radius:5.5px!important;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='4' fill='%231a6cf0'/%3E%3Cpath d='M5.2 6.6 8 3.8l2.8 2.8M5.2 9.4 8 12.2l2.8-2.8' fill='none' stroke='%23fff' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") right 3px center/16px 16px no-repeat,var(--btn-bg)!important;box-shadow:inset 0 .5px 0 var(--btn-top),0 0 0 .5px var(--btn-edge),0 1px 1.5px rgba(0,0,0,.35)!important;color:var(--btn-text)!important;font:13px/20px var(--pop-font)!important;outline:none!important;cursor:default}
+dialog.studio-dialog .dialog-content select:focus-visible,dialog.vegetable-automation select:focus-visible{box-shadow:0 0 0 3px var(--pop-focus)!important}
+dialog.studio-dialog .dialog-content select:disabled{opacity:.45}
+dialog.studio-dialog .dialog-content :is(input[type=checkbox],input[type=radio]),dialog.vegetable-automation :is(input[type=checkbox],input[type=radio]){accent-color:#1a6cf0;width:14px;height:14px;margin:0 6px 0 0;vertical-align:-2px}
+dialog.studio-dialog:not(.logic-plugin-window) .dialog-content input[type=range],dialog.vegetable-automation input[type=range]{accent-color:#1a6cf0}
+dialog.studio-dialog .dialog-content progress{-webkit-appearance:none;appearance:none;height:6px;border:0;border-radius:3px;background:#ffffff1f;overflow:hidden}
+dialog.studio-dialog .dialog-content progress::-webkit-progress-bar{background:#ffffff1f;border-radius:3px}
+dialog.studio-dialog .dialog-content progress::-webkit-progress-value{background:#1a6cf0;border-radius:3px}
+dialog.studio-dialog .dialog-content progress::-moz-progress-bar{background:#1a6cf0;border-radius:3px}
+dialog.studio-dialog .dialog-content a{color:#4d9bff}
+
+/* --- Lists and tables inside windows --- */
+.logic-keycmd-dialog .dialog-content{padding-top:12px!important}
+.logic-keycmd-search{width:100%;margin:8px 0 10px!important;border-radius:6px!important;padding-left:9px!important}
+.logic-keycmd-list{max-height:60vh;overflow:auto;border:1px solid var(--list-border)!important;border-radius:6px!important;background:var(--list-bg);box-shadow:inset 0 1px 2px rgba(0,0,0,.25)}
+.logic-keycmd-row{padding:4px 10px!important;font:12px/1.35 var(--pop-font)!important;border-bottom:0!important}
+.logic-keycmd-row:nth-child(even){background:var(--list-alt)}
+.logic-keycmd-row:hover{background:rgba(10,96,224,.22)}
+.logic-keycmd-row kbd{font:12px var(--pop-font)!important;letter-spacing:.5px;color:var(--kbd)!important}
+dialog.studio-dialog .shortcuts{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:0;border:1px solid var(--list-border);border-radius:6px;background:var(--list-bg);overflow:hidden;margin-top:10px}
+dialog.studio-dialog .shortcuts>*{padding:4px 10px!important;margin:0!important;border:0!important;border-radius:0!important;background:none!important;font:12px/1.35 var(--pop-font)!important;color:var(--win-text)}
+dialog.studio-dialog .shortcuts>:nth-child(4n+3),dialog.studio-dialog .shortcuts>:nth-child(4n+4){background:var(--list-alt)!important}
+dialog.studio-dialog .shortcuts :is(kbd,b,code,span:nth-child(even)){color:var(--kbd)!important;font:12px var(--pop-font)!important;letter-spacing:.4px;text-align:right;white-space:nowrap}
+
+/* ================= Plug-in window header (generic plug-ins) ================= */
+dialog.logic-plugin-window{border:0!important;box-shadow:0 0 0 .5px #000,inset 0 0 0 1px rgba(255,255,255,.14),0 24px 64px rgba(0,0,0,.62),0 3px 10px rgba(0,0,0,.4)!important}
+dialog.logic-plugin-window>header{position:relative!important;height:26px!important;min-height:26px!important;border-radius:10px 10px 0 0}
+dialog.logic-plugin-window>header>button{top:7px!important}
+dialog.logic-plugin-window .dialog-content button:disabled{opacity:1}
+/* The Channel EQ window keeps its own flat chrome (logic-plugin.css): one dark surface from title to footer. */
+dialog.studio-dialog.logic-eq-window{background:#262626!important;box-shadow:0 0 0 .5px #000,inset 0 0 0 1px #747474,0 22px 60px rgba(0,0,0,.72),0 2px 8px rgba(0,0,0,.5)!important}
+dialog.studio-dialog.logic-eq-window>header{height:27px!important;min-height:27px!important;background:#262626!important;border-bottom:0!important;box-shadow:none!important;color:#fff!important;font:700 13px/27px var(--pop-font)!important}
+dialog.studio-dialog.logic-eq-window>header>button{top:8px!important}
+.logic-plugin-header{height:34px!important;padding:0 10px!important;background:linear-gradient(#383838,#313131)!important;border-bottom:1px solid #151515!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.05)}
+.logic-plugin-header button,.logic-plugin-subheader button{height:22px!important;line-height:22px!important;border-radius:5px!important;background:linear-gradient(#5d5d5d,#525252)!important;color:#f0f0f0!important;font:500 12px/22px var(--pop-font)!important;box-shadow:inset 0 .5px 0 rgba(255,255,255,.2),0 0 0 .5px rgba(0,0,0,.6),0 1px 1px rgba(0,0,0,.3)!important;transition:filter .08s ease}
+.logic-plugin-header button:hover:not(:disabled),.logic-plugin-subheader button:hover:not(:disabled){filter:brightness(1.14)}
+.logic-plugin-header button:active:not(:disabled),.logic-plugin-subheader button:active:not(:disabled){filter:brightness(.82)}
+.logic-plugin-header button:disabled{color:#8a8a8a!important;background:#3d3d3d!important;box-shadow:0 0 0 .5px rgba(0,0,0,.5)!important}
+.logic-plugin-header .logic-plugin-power{width:24px!important;height:24px!important;border-radius:50%!important;padding:0!important;line-height:24px!important;font-size:13px!important;color:#9a9a9a!important}
+.logic-plugin-header .logic-plugin-power.on{color:#fff!important;background:radial-gradient(circle at 50% 28%,#4d8fd6,#266fb8 62%,#2267ad)!important}
+.logic-plugin-header .logic-plugin-setting{min-width:120px;max-width:180px!important;text-align:left;padding-right:20px!important;position:relative}
+.logic-plugin-header .logic-plugin-link.on{background:linear-gradient(#8e62d6,#7449bd)!important;color:#fff!important}
+.logic-plugin-subheader{height:28px!important;background:#2a2a2a!important;border-bottom:1px solid #151515!important}
+.logic-plugin-modes{border-radius:6px!important;box-shadow:0 0 0 .5px #000a!important;background:#3a3a3a;padding:1px;gap:1px}
+.logic-plugin-modes button{background:transparent!important;box-shadow:none!important;height:20px!important;line-height:20px!important;border-radius:5px!important}
+.logic-plugin-modes button.selected{background:linear-gradient(#777,#6a6a6a)!important;box-shadow:inset 0 .5px 0 rgba(255,255,255,.25),0 .5px 1px rgba(0,0,0,.4)!important;color:#fff!important}
+
+/* ================= Toasts ================= */
+#toast{left:50%!important;bottom:44px!important;padding:9px 16px!important;border:0!important;border-radius:10px!important;background:var(--menu-bg)!important;-webkit-backdrop-filter:blur(28px) saturate(1.7);backdrop-filter:blur(28px) saturate(1.7);box-shadow:0 0 0 .5px var(--menu-edge),inset 0 0 0 1px var(--menu-border),0 12px 34px rgba(0,0,0,.45)!important;color:var(--menu-text)!important;font:13px/1.35 var(--pop-font)!important;max-width:min(560px,86vw)!important;transform:translate(-50%,10px) scale(.98)!important;transition:opacity .16s ease,transform .16s cubic-bezier(.2,.8,.3,1)!important}
+#toast.show{transform:translate(-50%,0) scale(1)!important}
+
+@media (prefers-reduced-motion:reduce){
+ #context-menu.context-menu.hidden{transition:none}
+ dialog.studio-dialog[open],dialog#cloud-panel.cloud-panel[open],dialog.vegetable-automation[open]{animation:none!important}
+ #toast{transition:opacity .01s!important}
+}

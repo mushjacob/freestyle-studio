@@ -1,0 +1,295 @@
+/* Vegetable Studio polish layer (linked last).
+   Popups, window chrome, depth, state transitions and narrow-window layout.
+   It only refines presentation: no rule here changes what a control does. */
+
+:root{
+ --pop-bg-top:#414f58;--pop-bg-bottom:#38464e;--pop-edge:#1c2930;--pop-hi:#8fa2ab33;
+ --pop-row:#5d7079;--pop-row-edge:#7f939c66;--pop-text:#d3dce0;--pop-dim:#93a4ad;--pop-off:#71828b;
+ --pop-shadow:0 1px 0 #0b141944,0 8px 22px #0d181e8c,0 2px 5px #0d181e66;
+ --win-title-top:#4a5962;--win-title-bottom:#3a4850;--win-edge:#1f2d35;
+ --ease:cubic-bezier(.2,.7,.3,1);--t-fast:90ms;--t-med:140ms;
+}
+
+/* ───────────────────────── 1. Menu bar ───────────────────────── */
+.toolbar .top-row nav#main-menu{background:linear-gradient(#5b7577,#4c666b);border-color:#34494f;box-shadow:inset 0 1px #b6c6bf2e,inset 0 -1px #2f43482e,0 1px #7d8b8f30;}
+.toolbar .top-row nav#main-menu button{position:relative;border-radius:2px;transition:background-color var(--t-fast) var(--ease),color var(--t-fast) var(--ease),box-shadow var(--t-fast) var(--ease);}
+.toolbar .top-row nav#main-menu button:hover{color:#fff7dc;background:#a9bcab30;}
+.toolbar .top-row nav#main-menu button:active{background:#2b3f4470;}
+/* The open title stays lit for as long as its menu shows; while tracking, hovering does not light a second title. */
+.toolbar .top-row nav#main-menu button.menu-open,
+.toolbar .top-row nav#main-menu button.menu-open:hover{color:#fff;background:linear-gradient(#34474e,#3d5058);box-shadow:inset 0 1px 2px #0f1b2099,inset 0 0 0 1px #24353c,0 1px #a9bcb040;text-shadow:0 1px #0008;}
+.toolbar .top-row nav#main-menu.menu-tracking button:not(.menu-open):hover{background:#a9bcab1c;}
+
+/* ───────────────────────── 2. Popup menus ───────────────────────── */
+.context-menu{
+ padding:3px;border:1px solid var(--pop-edge);border-radius:3px;
+ background:linear-gradient(var(--pop-bg-top),var(--pop-bg-bottom));
+ box-shadow:inset 0 0 0 1px var(--pop-hi),var(--pop-shadow);
+ color:var(--pop-text);
+ animation:veg-pop-in var(--t-fast) var(--ease) both;transform-origin:0 0;
+}
+.context-menu.main-menu-popup{border-top-left-radius:0;}
+.context-menu.hidden{animation:none;}
+@keyframes veg-pop-in{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:none}}
+@keyframes veg-sub-in{from{opacity:0;transform:translateX(-3px)}to{opacity:1;transform:none}}
+@keyframes veg-dialog-in{from{opacity:0;transform:translateY(6px) scale(.985)}to{opacity:1;transform:none}}
+@keyframes veg-backdrop-in{from{opacity:0}to{opacity:1}}
+
+.context-menu button{
+ min-height:22px;height:auto;padding:3px 9px 3px 24px;gap:28px;border:0;border-radius:2px;
+ font-family:"Vegetable FL UI",Arial,sans-serif;font-size:11.5px;line-height:16px;letter-spacing:0;color:var(--pop-text);
+ background:none;box-shadow:none;filter:none;transition:none;
+}
+.context-menu button:hover:not(:disabled),
+.context-menu button:focus-visible:not(:disabled),
+.context-menu .menu-sub.open>button:not(:disabled){
+ background:linear-gradient(#677b84,#566a73);color:#fff;box-shadow:inset 0 0 0 1px var(--pop-row-edge),inset 0 1px #ffffff1f;outline:none;
+}
+.context-menu button:active:not(:disabled){background:linear-gradient(#52656e,#5b6f78);box-shadow:inset 0 1px 2px #0f1b2080;}
+.context-menu button:hover:not(:disabled)>small,.context-menu .menu-sub.open>button>small{color:#e4ecee;}
+/* Shortcut column: right aligned, tabular, dimmer than the label. */
+.context-menu button>small{
+ margin-left:auto;padding-left:4px;font-family:"Vegetable FL UI",Arial,sans-serif;font-size:10.5px;line-height:16px;color:var(--pop-dim);
+ font-variant-numeric:tabular-nums;letter-spacing:.2px;text-align:right;white-space:nowrap;
+}
+.context-menu button>small:empty{display:none;}
+/* Submenu arrow: a drawn chevron instead of a text glyph. */
+.context-menu button>small.menu-arrow{font-size:0;width:5px;height:8px;padding:0;margin-right:2px;background:currentColor;clip-path:polygon(0 0,100% 50%,0 100%);opacity:.8;flex:0 0 5px;}
+/* Check / radio glyph column. */
+.context-menu .menu-check{position:absolute;left:0;top:0;bottom:0;width:24px;display:flex;align-items:center;justify-content:center;font-size:0;color:#bfe58a;}
+.context-menu button[aria-checked="true"]>.menu-check::before{content:"";width:9px;height:5px;border-left:2px solid currentColor;border-bottom:2px solid currentColor;transform:translateY(-1.5px) rotate(-45deg);filter:drop-shadow(0 1px #0006);}
+.context-menu button[aria-checked="true"]{color:#eef4e4;}
+/* Disabled rows: dimmed, no hover band. */
+.context-menu button:disabled{color:var(--pop-off);opacity:1;cursor:default;text-shadow:0 1px #1a272e55;}
+.context-menu button:disabled>small{color:#66777f;}
+.context-menu button:disabled>.menu-check{color:#7f9668;}
+.context-menu button:disabled:hover{background:none;box-shadow:none;}
+/* Section separator: engraved double line, inset from the edges. */
+.context-menu hr{height:0;margin:3px 2px;border:0;border-top:1px solid #25333a;border-bottom:1px solid #6c7e8738;}
+.context-menu .menu-column{min-width:190px;}
+.context-menu .menu-column+.menu-column{border-left:1px solid #25333a;box-shadow:inset 1px 0 #6c7e8730;margin-left:3px;padding-left:3px;}
+.context-menu .context-submenu.menu-tall,.context-menu.menu-tall{column-rule:1px solid #25333a;}
+/* Submenus overlap their parent by the border, as cascading menus do. */
+.context-menu .context-submenu{top:-4px;left:calc(100% - 2px);min-width:170px;animation:veg-sub-in var(--t-fast) var(--ease) both;transform-origin:0 0;}
+.context-menu .context-submenu.menu-left{left:auto;right:calc(100% - 2px);}
+
+/* ───────────────────────── 3. Dialogs and floating tool windows ───────────────────────── */
+dialog.studio-dialog,dialog#cloud-panel.cloud-panel{
+ border:1px solid var(--win-edge);border-radius:4px;
+ background:linear-gradient(#515f68,#48565e);
+ box-shadow:inset 0 0 0 1px #8b9da624,0 1px 0 #0b141944,0 18px 44px #0b151b99,0 4px 10px #0b151b66;
+ color:#c9d3d8;
+}
+dialog.studio-dialog[open]:not(.mix-picker[data-picker-active="true"]),dialog#cloud-panel.cloud-panel[open]{animation:veg-dialog-in var(--t-med) var(--ease) both;}
+dialog.studio-dialog::backdrop,dialog#cloud-panel.cloud-panel::backdrop{background:radial-gradient(ellipse at 50% 40%,#101b2233,#0c161c8a);animation:veg-backdrop-in var(--t-med) ease-out both;}
+/* Title bar: gradient, engraved bottom edge, title on the left, window buttons on the right. */
+dialog.studio-dialog > header,
+dialog.studio-dialog.mixer-tools:not(.mix-picker[data-picker-active="true"]) > header,
+dialog#cloud-panel.cloud-panel > .cloud-title{
+ display:flex;align-items:center;height:27px;min-height:27px;padding:0 4px 0 9px;gap:7px;
+ border-bottom:1px solid #202e36;border-radius:3px 3px 0 0;
+ background:linear-gradient(var(--win-title-top),var(--win-title-bottom));
+ box-shadow:inset 0 1px #9fb0b83d,inset 0 -1px #5c6c7430;
+ color:#d5dee2;font:400 12px/26px "Vegetable FL UI",Arial,sans-serif;letter-spacing:.1px;text-shadow:0 1px #101b2199;
+ user-select:none;-webkit-user-select:none;
+}
+dialog.studio-dialog[data-modeless] > header{cursor:move;}
+dialog.studio-dialog > header > button,
+dialog.studio-dialog.mixer-tools:not(.mix-picker[data-picker-active="true"]) > header > .mix-close,
+dialog#cloud-panel.cloud-panel .cloud-title > #cloud-close{
+ flex:0 0 auto;margin-left:auto;width:22px;height:19px;min-height:19px;padding:0;
+ border:1px solid transparent;border-radius:2px;background:transparent;box-shadow:none;
+ color:#aebcc4;font:400 17px/16px Arial,sans-serif;text-shadow:none;
+ transition:background-color var(--t-fast) var(--ease),color var(--t-fast) var(--ease),border-color var(--t-fast) var(--ease);
+}
+dialog.studio-dialog > header > button:hover,
+dialog.studio-dialog.mixer-tools:not(.mix-picker[data-picker-active="true"]) > header > .mix-close:hover,
+dialog#cloud-panel.cloud-panel .cloud-title > #cloud-close:hover{background:linear-gradient(#c7604f,#a8483b);border-color:#6d2c24;color:#fff;box-shadow:inset 0 1px #ffffff40;}
+dialog.studio-dialog > header > button:active,
+dialog#cloud-panel.cloud-panel .cloud-title > #cloud-close:active{background:#8f3c31;box-shadow:inset 0 1px 3px #0008;}
+dialog.studio-dialog .dialog-content{padding:11px 12px 12px;}
+dialog.studio-dialog .dialog-content p{margin:0 0 9px;color:#c3ced3;}
+dialog.studio-dialog .dialog-content p:last-child{margin-bottom:0;}
+dialog.studio-dialog .dialog-content label{color:#b4c1c8;}
+/* Buttons: raised bevel, lit hover, pressed inset. */
+dialog.studio-dialog .dialog-content button,
+dialog.studio-dialog.mixer-tools:not(.mix-picker[data-picker-active="true"]) > :not(header) button:not(.mix-led):not(.mix-slot-name):not(.mix-remove),
+dialog#cloud-panel.cloud-panel > :not(header):not(.cloud-title) button{
+ border:1px solid #25353e;border-radius:3px;
+ background:linear-gradient(#63727b,#4b5b64);
+ box-shadow:inset 0 1px #b4c2c933,inset 0 -1px #2a3a4340,0 1px 1px #17232a66;
+ color:#d3dce0;text-shadow:0 1px #1a272e88;
+ transition:background-color var(--t-fast) var(--ease),border-color var(--t-fast) var(--ease),color var(--t-fast) var(--ease),box-shadow var(--t-fast) var(--ease),filter var(--t-fast) var(--ease);
+}
+dialog.studio-dialog .dialog-content button:hover:not(:disabled),
+dialog.studio-dialog.mixer-tools:not(.mix-picker[data-picker-active="true"]) > :not(header) button:not(.mix-led):not(.mix-slot-name):not(.mix-remove):hover:not(:disabled),
+dialog#cloud-panel.cloud-panel > :not(header):not(.cloud-title) button:hover:not(:disabled){background:linear-gradient(#70818a,#566770);border-color:#1f2f38;color:#fff;}
+dialog.studio-dialog .dialog-content button:active:not(:disabled),
+dialog.studio-dialog.mixer-tools:not(.mix-picker[data-picker-active="true"]) > :not(header) button:not(.mix-led):not(.mix-slot-name):not(.mix-remove):active:not(:disabled),
+dialog#cloud-panel.cloud-panel > :not(header):not(.cloud-title) button:active:not(:disabled){background:linear-gradient(#45545c,#516169);box-shadow:inset 0 2px 3px #101b2199;}
+dialog.studio-dialog .dialog-content .primary,dialog.studio-dialog.mixer-tools .primary{background:linear-gradient(#93ab78,#6c8759);border-color:#3b5136;color:#f3f8ea;box-shadow:inset 0 1px #d8ecc24d,inset 0 -1px #3b513640,0 1px 1px #17232a66;}
+dialog.studio-dialog .dialog-content .primary:hover:not(:disabled),dialog.studio-dialog.mixer-tools .primary:hover:not(:disabled){background:linear-gradient(#a2bb86,#789463);border-color:#34492f;}
+dialog.studio-dialog .dialog-content button:disabled,dialog.studio-dialog.mixer-tools button:disabled,dialog#cloud-panel.cloud-panel button:disabled{opacity:.5;text-shadow:none;}
+/* Fields: recessed wells. */
+dialog.studio-dialog .dialog-content :is(input:not([type=range]):not([type=checkbox]):not([type=radio]),select,textarea),
+dialog.studio-dialog.mixer-tools:not(.mix-picker[data-picker-active="true"]) :is(input:not([type=range]):not([type=checkbox]):not([type=radio]),select,textarea),
+dialog#cloud-panel.cloud-panel :is(input:not([type=range]):not([type=checkbox]):not([type=radio]),select,textarea){
+ border:1px solid #223039;border-bottom-color:#5d6d7566;border-radius:3px;background:linear-gradient(#2a3c46,#30434d);
+ box-shadow:inset 0 1px 2px #101b2180;color:#d0dade;
+ transition:border-color var(--t-fast) var(--ease),box-shadow var(--t-fast) var(--ease),background-color var(--t-fast) var(--ease);
+}
+dialog.studio-dialog .dialog-content :is(input:not([type=range]):not([type=checkbox]):not([type=radio]),select,textarea):hover:not(:disabled),
+dialog#cloud-panel.cloud-panel :is(input:not([type=range]):not([type=checkbox]):not([type=radio]),select,textarea):hover:not(:disabled){border-color:#3a4d57;}
+dialog.studio-dialog .dialog-content :is(input:not([type=range]):not([type=checkbox]):not([type=radio]),select,textarea):focus,
+dialog#cloud-panel.cloud-panel :is(input:not([type=range]):not([type=checkbox]):not([type=radio]),select,textarea):focus{border-color:#9dbb78;box-shadow:inset 0 1px 2px #101b2180,0 0 0 2px #a8cb7e33;outline:none;}
+dialog.studio-dialog :is(input[type=checkbox],input[type=radio]){accent-color:#a4c67c;width:14px;height:14px;vertical-align:-3px;margin:0 6px 0 0;}
+dialog.studio-dialog .dialog-content hr{border:0;border-top:1px solid #2b3a42;border-bottom:1px solid #6c7e8730;margin:9px 0;}
+/* Keyboard shortcut sheet: two tidy columns, key caps on the right. */
+dialog.studio-dialog .shortcuts{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:0;align-items:center;font-size:11px;border:1px solid #2a3942;border-radius:3px;background:#3f4d55;box-shadow:inset 0 1px 2px #101b2155;}
+dialog.studio-dialog .shortcuts>span{padding:5px 12px 5px 9px;line-height:15px;color:#c6d0d5;border-bottom:1px solid #34434b;min-width:0;}
+dialog.studio-dialog .shortcuts>kbd{justify-self:end;margin:3px 7px 3px 0;padding:2px 7px;border:1px solid #1f2d35;border-bottom-width:2px;border-radius:3px;background:linear-gradient(#34454f,#2a3a43);box-shadow:inset 0 1px #8fa2ab2b;color:#f0c98b;font:11px/15px ui-monospace,Menlo,Consolas,monospace;white-space:normal;text-align:right;max-width:calc(100% - 7px);box-sizing:border-box;}
+dialog.studio-dialog .shortcuts>span:nth-of-type(even),dialog.studio-dialog .shortcuts>span:nth-of-type(even)+kbd{background-color:#ffffff06;}
+/* Title bars stay put while a tall dialog scrolls. */
+dialog.studio-dialog:not(.mix-picker[data-picker-active="true"]) > header{position:sticky;top:0;z-index:3;}
+/* Sliders inside dialogs: recessed groove with a metal cap, like the mixer faders. */
+dialog.studio-dialog .dialog-content input[type=range]{-webkit-appearance:none;appearance:none;height:19px;min-height:19px;margin:2px 0;padding:0;border:0;background:transparent;box-shadow:none;cursor:ew-resize;vertical-align:middle;}
+dialog.studio-dialog .dialog-content input[type=range]::-webkit-slider-runnable-track{height:4px;border:1px solid #223039;border-bottom-color:#687781;border-radius:2px;background:linear-gradient(90deg,#a4c67c,#a4c67c) no-repeat 0 0/0 100%,#263945;box-shadow:inset 0 1px 1px #15263099;}
+dialog.studio-dialog .dialog-content input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;box-sizing:border-box;width:11px;height:17px;margin-top:-8px;border:1px solid #1f2d35;border-radius:2px;background:linear-gradient(#e0e5e8 0%,#b2bcc3 20%,#73818c 44%,#d5dce0 48%,#bcc8cf 55%,#8797a2 77%,#566b79 100%);box-shadow:0 1px 2px #0b151b99,inset 0 1px #ffffff80;}
+dialog.studio-dialog .dialog-content input[type=range]::-moz-range-track{height:3px;border:1px solid #223039;border-bottom-color:#687781;border-radius:2px;background:#263945;}
+dialog.studio-dialog .dialog-content input[type=range]::-moz-range-thumb{box-sizing:border-box;width:11px;height:17px;border:1px solid #1f2d35;border-radius:2px;background:linear-gradient(#e0e5e8 0%,#b2bcc3 20%,#73818c 44%,#d5dce0 48%,#bcc8cf 55%,#8797a2 77%,#566b79 100%);box-shadow:0 1px 2px #0b151b99;}
+dialog.studio-dialog .dialog-content input[type=range]:hover::-webkit-slider-thumb{filter:brightness(1.1);}
+dialog.studio-dialog .dialog-content input[type=range]:disabled{opacity:.5;cursor:default;}
+dialog.studio-dialog .shortcuts>span:nth-last-child(2){border-bottom:0;}
+dialog.studio-dialog:has(.shortcuts){width:min(560px,calc(100vw - 24px));}
+/* Action row sits clear of the last field. */
+dialog.studio-dialog .dialog-content :is(label,input,select,textarea)+button,
+dialog.studio-dialog .dialog-content :is(label,input,select,textarea)+button+button{margin-top:12px;}
+dialog.studio-dialog .dialog-content button+button{margin-left:3px;}
+/* Parametric EQ editor: recessed analyser well, one aligned field row. */
+dialog.studio-dialog .eq-editor{font-family:"Vegetable FL UI",Arial,sans-serif!important;font-size:11px!important;color:#c3ced3!important;gap:9px!important;}
+dialog.studio-dialog .eq-editor .eq-plot{background:linear-gradient(#141d22,#1b262c 60%,#1f2b32)!important;border:1px solid #121b20!important;border-bottom-color:#5d6d7566!important;border-radius:3px;box-shadow:inset 0 2px 7px #060c0fcc;}
+dialog.studio-dialog .eq-editor .eq-fields{gap:6px 12px!important;padding:7px 8px;border:1px solid #2a3942;border-radius:3px;background:#44525a;box-shadow:inset 0 1px #8fa2ab1f;}
+dialog.studio-dialog .eq-editor .eq-fields label{display:inline-flex;align-items:center;gap:5px;margin:0;white-space:nowrap;color:#b4c1c8;}
+dialog.studio-dialog .eq-editor .eq-fields :is(select,input[type=number]){min-height:22px;height:22px;padding:1px 5px;}
+dialog.studio-dialog .eq-editor .eq-fields input[type=checkbox]{margin:0;}
+dialog.studio-dialog .eq-editor .eq-status{color:#9fb0b9;font-size:10.5px;min-height:14px;}
+/* Mixer tools window details. */
+dialog.studio-dialog.mixer-tools:not(.mix-picker[data-picker-active="true"]) .mix-toolbar{background:linear-gradient(#4b5b64,#44535c);box-shadow:inset 0 1px #8fa2ab1f;}
+dialog.studio-dialog.mixer-tools .mix-slot{box-shadow:inset 0 1px 2px #101b2166;transition:background-color var(--t-fast) var(--ease),border-color var(--t-fast) var(--ease);}
+dialog.studio-dialog.mixer-tools .mix-slot:hover{background:#384c57;}
+dialog.studio-dialog.mixer-tools .mix-details > .mix-tabs button{border-radius:3px 3px 0 0;transition:background-color var(--t-fast) var(--ease),color var(--t-fast) var(--ease);}
+dialog.studio-dialog.mixer-tools .mix-details > .mix-tabs button.selected{background:linear-gradient(#63727a,#566570);box-shadow:inset 0 1px #b4c2c92e;}
+dialog.studio-dialog.mixer-tools .mix-status{box-shadow:inset 0 1px 2px #101b2155;}
+.plugin-parameter-dialog .plugin-window-tabs button.selected{background:linear-gradient(#63727a,#56666f);box-shadow:inset 0 1px #b4c2c92e;}
+/* Plug-in wrapper title bar buttons keep their own bevel; align with the new bar height. */
+dialog.studio-dialog.fl-plugin-wrapper > header{padding:3px 5px 3px 7px;height:auto;min-height:28px;}
+dialog.fl-plugin-wrapper > header button{margin-left:0;box-shadow:inset 0 1px #9fb0b82e,0 1px #17232a55;transition:background-color var(--t-fast) var(--ease),color var(--t-fast) var(--ease),border-color var(--t-fast) var(--ease);}
+dialog.fl-plugin-wrapper > header button:active:not(:disabled){box-shadow:inset 0 1px 3px #0b151b99;}
+dialog.fl-plugin-wrapper > header .plugin-wrapper-preset-name{box-shadow:inset 0 1px 2px #0b151b80;}
+dialog.studio-dialog .native-plugin-viewport{box-shadow:inset 0 1px 4px #0b151bb3;}
+/* Full-screen plug-in picker: tiles lift on hover. */
+dialog.studio-dialog.mixer-tools.mix-picker[data-picker-active="true"] .mix-catalog-item{transition:background-color var(--t-med) var(--ease),border-color var(--t-med) var(--ease),box-shadow var(--t-med) var(--ease),transform var(--t-med) var(--ease),color var(--t-med) var(--ease);}
+dialog.studio-dialog.mixer-tools.mix-picker[data-picker-active="true"] .mix-catalog-item:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 4px 12px #0b151b80,0 0 8px #adbec432,inset 0 1px #ffffff1a;}
+dialog.studio-dialog.mixer-tools.mix-picker[data-picker-active="true"] .mix-catalog-item:active:not(:disabled){transform:none;box-shadow:inset 0 1px 4px #0b151b99;}
+dialog.studio-dialog.mixer-tools.mix-picker[data-picker-active="true"] .mix-categories button{transition:color var(--t-fast) var(--ease),box-shadow var(--t-fast) var(--ease);}
+dialog.studio-dialog.mixer-tools.mix-picker[data-picker-active="true"] .mix-search{box-shadow:inset 0 1px 3px #0b151b99;transition:border-color var(--t-fast) var(--ease),box-shadow var(--t-fast) var(--ease);}
+dialog.studio-dialog.mixer-tools.mix-picker[data-picker-active="true"] .mix-search:focus{border-color:#9dbb78;box-shadow:inset 0 1px 3px #0b151b99,0 0 0 2px #a8cb7e33;outline:none;}
+dialog.studio-dialog.mixer-tools.mix-picker[data-picker-active="true"] .mix-close{border-radius:50%;transition:background-color var(--t-fast) var(--ease),color var(--t-fast) var(--ease);}
+dialog.studio-dialog.mixer-tools.mix-picker[data-picker-active="true"] .mix-close:hover{background:#ffffff1f;color:#fff;}
+
+/* ───────────────────────── 4. Toast / hint bar ───────────────────────── */
+#toast{
+ bottom:34px;padding:8px 14px 8px 13px;max-width:min(560px,calc(100vw - 32px));
+ border:1px solid var(--pop-edge);border-left:3px solid var(--orange);border-radius:3px;
+ background:linear-gradient(#3d4b54f7,#313f47f7);
+ box-shadow:inset 0 1px #8fa2ab2e,var(--pop-shadow);
+ color:#dbe3e6;font:11.5px/16px "Vegetable FL UI",Arial,sans-serif;text-shadow:0 1px #0b151b88;
+ transform:translate(-50%,8px);transition:opacity var(--t-med) var(--ease),transform var(--t-med) var(--ease);
+}
+#toast.show{transform:translate(-50%,0);}
+.toolbar .hint-display{background:linear-gradient(#32434d,#3a4b55);border-color:#24363f;border-bottom-color:#5d6d7559;box-shadow:inset 0 1px 3px #101b2180;border-radius:2px;}
+.toolbar .hint-display strong{color:#c4d1d7;}
+
+/* ───────────────────────── 5. Depth: toolbar, panels, window title bars ───────────────────────── */
+header.toolbar{box-shadow:inset 0 -1px #78888d40,0 2px 6px #17232a59;}
+.toolbar .top-row{background:linear-gradient(#5b676e,#535f66);box-shadow:inset 0 1px #95a3a92e;}
+.toolbar .second-row{background:linear-gradient(#566269,#4f5b62);box-shadow:inset 0 1px #8b999f24;}
+#rack > .panel-heading,#mixer > .panel-heading,#piano > .panel-heading,#playlist > .panel-heading{
+ background-image:linear-gradient(#ffffff12,#ffffff00 55%,#0000001a);box-shadow:inset 0 1px #a3b3ba2e;
+}
+.browser > .panel-heading{background-image:linear-gradient(#ffffff0f,#00000014);}
+.floating-window{box-shadow:0 0 0 1px #17232a40,0 10px 26px #101b2180,0 2px 6px #101b2166;transition:box-shadow var(--t-med) var(--ease);}
+.floating-window.window-resizing{transition:none;}
+.status-bar{background-image:linear-gradient(#ffffff0a,#0000001a);box-shadow:inset 0 1px #8fa2ab1f;}
+.status-bar button{transition:color var(--t-fast) var(--ease),background-color var(--t-fast) var(--ease);}
+.browser .browser-search{box-shadow:inset 0 1px 3px #0b151b80;}
+
+/* ───────────────────────── 6. Control states and transitions ───────────────────────── */
+button,select,input:not([type=range]),.browser-tabs button,.mixer-strip .strip-name,.track-label{
+ transition:background-color var(--t-fast) var(--ease),border-color var(--t-fast) var(--ease),color var(--t-fast) var(--ease),box-shadow var(--t-fast) var(--ease),opacity var(--t-fast) var(--ease),filter var(--t-fast) var(--ease);
+}
+.context-menu button{transition:none;}
+/* Toolbar and window-header buttons: lit hover, pressed inset. */
+.toolbar button:hover:not(:disabled):not(.menu-open),.panel-heading button:hover:not(:disabled){filter:brightness(1.1);}
+.toolbar button:active:not(:disabled):not([data-menu]),.panel-heading button:active:not(:disabled):not(.small-knob){filter:brightness(.9);box-shadow:inset 0 2px 4px #0b151b99;}
+.toolbar select:hover:not(:disabled),.panel-heading select:hover:not(:disabled){filter:brightness(1.1);}
+.browser-tabs button:active,.playlist-tools button:active,.piano-tools button:active{transform:translateY(.5px);}
+.panel-heading .panel-actions button[title^="Close"]:hover{background:linear-gradient(#c7604f,#a8483b);color:#fff;}
+/* Keyboard focus is always visible. */
+:is(button,select,input,[tabindex]):focus-visible{outline:1px solid #f6a14b;outline-offset:1px;}
+.context-menu button:focus-visible{outline:none;}
+
+/* ───────────────────────── 7. Narrow windows (down to ~800px) ───────────────────────── */
+/* The page becomes a column so the toolbar can grow when its rows wrap. */
+body{display:flex;flex-direction:column;}
+body > header.toolbar{flex:0 0 auto;}
+body > .main-layout{flex:1 1 0;min-height:0;height:auto;}
+body > .status-bar{flex:0 0 auto;}
+@media (max-width:1240px){
+ header.toolbar{height:auto;}
+ header.toolbar .top-row,header.toolbar .second-row{height:auto;min-height:40px;flex-wrap:wrap;row-gap:3px;overflow:visible;}
+ header.toolbar .top-row > .brand-title{display:none;}
+ header.toolbar .top-row > .cloud-button{margin-left:auto;}
+ header.toolbar .top-row > .cloud-button > span{display:none;}
+}
+/* The Playlist always docks beside the Channel rack instead of sliding under it. */
+#desktop > .playlist-window{left:494px;}
+#playlist > .panel-heading > .playlist-tools{flex:0 1 auto;min-width:0;}
+@media (max-width:1240px){
+ #playlist > .panel-heading > .playlist-tools{overflow-x:auto;overflow-y:hidden;scrollbar-width:none;}
+ #playlist > .panel-heading > .playlist-tools::-webkit-scrollbar{display:none;}
+ #playlist > .panel-heading > .playlist-tools > button{flex:0 0 auto;}
+ #playlist > .panel-heading > span{flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;}
+ #playlist > .panel-heading > .panel-actions{flex:0 0 auto;margin-left:auto;}
+}
+@media (max-width:1000px){
+ #playlist > .panel-heading > span{display:none;}
+ :root{--fl-native-browser:168px;}
+ .browser{flex-basis:168px;width:168px;min-width:168px;}
+ header.toolbar .top-row > .monitor{display:none;}
+ /* The rack narrows with the window and scrolls its step grid sideways, so the Playlist keeps its tools visible. */
+ #desktop > .rack-window{width:clamp(330px,58%,490px);min-width:330px;}
+ #desktop > .rack-window #rack-channels{overflow-x:auto;scrollbar-width:thin;}
+ #desktop > .playlist-window{left:calc(clamp(330px,58%,490px) + 4px);min-width:0;}
+ #rack > .panel-heading > #channel-filter{margin-left:30px;flex-basis:64px;width:64px;}
+ #mixer > .panel-heading > .mixer-view{margin-left:8px;}
+}
+@media (max-width:860px){
+ :root{--fl-native-browser:150px;}
+ .browser{flex-basis:150px;width:150px;min-width:150px;}
+ header.toolbar .top-row > .cpu-panel{display:none;}
+ .status-bar > span:nth-of-type(3){display:none;}
+}
+/* Dialogs never exceed the window. */
+dialog.studio-dialog:not(.mix-picker[data-picker-active="true"]){max-width:calc(100vw - 16px);max-height:calc(100dvh - 16px);}
+.context-menu{max-height:calc(100dvh - 8px);}
+
+/* ───────────────────────── 8. Reduced motion / forced colours ───────────────────────── */
+@media (prefers-reduced-motion:reduce){
+ *,*::before,*::after,dialog::backdrop{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;}
+ dialog.studio-dialog.mixer-tools.mix-picker[data-picker-active="true"] .mix-catalog-item:hover:not(:disabled),.browser-tabs button:active,.playlist-tools button:active,.piano-tools button:active{transform:none;}
+}
+@media (forced-colors:active){
+ .context-menu,dialog.studio-dialog,#toast{box-shadow:none;border-color:CanvasText;background:Canvas;}
+ .context-menu button:hover:not(:disabled),.toolbar .top-row nav#main-menu button.menu-open{background:Highlight;color:HighlightText;}
+}

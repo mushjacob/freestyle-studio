@@ -1,0 +1,45 @@
+/* Measured against the running FL Studio 2026 v26.1.7 desktop at 2x.
+   Window-manager inline geometry remains authoritative after a user moves a window. */
+:root{--fl-native-desktop:#5d6870;--fl-native-browser:240px;--fl-native-header:#3a4950;--fl-native-border:#293b44}
+html,body{background:var(--fl-native-desktop);font-size:12px;color:#b7c0c5}
+.toolbar{height:80px;background:#56636a;border-bottom:1px solid #34464f;box-shadow:inset 0 -1px #7b878c35}
+.top-row{height:40px;padding:3px 5px;gap:4px;background:#56646a;border-bottom:1px solid #44535a}
+.second-row{height:40px;padding:3px 4px;gap:4px;background:#526168}
+.top-row nav{padding:2px 1px;background:#586c6e;border-color:#3d5157}
+.top-row nav button{font-family:"Vegetable FL Narrow","Arial Narrow",sans-serif;font-size:14px;font-weight:400;padding:0 3px;color:#e1e6dc}
+.brand{width:28px;flex:0 0 28px;margin-right:0}.brand svg{width:23px;height:28px}
+.transport-btn{width:31px;height:31px;min-height:31px}.transport .mode{width:31px;height:31px}
+#mode{border-radius:12px 0 0 12px}#mode:not(.song){color:#ffe2b7;background:linear-gradient(#f0a342 0 50%,#35464e 50%)}#mode.song{color:#99a8af;background:linear-gradient(#3b4c55 0 50%,#8caf4c 50%)}
+#mode span{background:transparent}.transport-btn.record{height:29px;width:29px;min-height:29px;border-radius:50%;background:radial-gradient(circle,#58686f 54%,#34474f 59%,#53626b 74%)}
+#tempo{height:29px;width:57px;font-size:19px;font-weight:400}
+#metronome{height:32px;min-height:32px;width:31px;flex:0 0 31px}
+.time-display{height:33px;min-width:132px;font-size:32px;line-height:33px;font-weight:400;letter-spacing:1px;color:#c8e1d8;border:1px solid #32464c;background:#456264}
+.time-display small{font-size:7px;right:5px;color:#b7d0d0}.monitor{width:158px;height:33px;background:#34434c}
+.monitor canvas{width:100%;height:24px}.monitor span{font-size:8px;opacity:.65}
+.brand-title{margin-left:auto;font-size:10px;color:#93a1a7;letter-spacing:1px}
+.cloud-button{height:30px;min-height:30px;font-size:11px;color:#bbc9cb;background:linear-gradient(#58666d,#3e4d56);border:1px solid #31434d}
+.hint-display{width:277px;min-width:180px;height:32px;padding:2px 6px;background:#39474f;border:1px solid #263c45;box-shadow:inset 0 1px #89939715}
+.hint-display strong,.hint-display span{font-family:"Vegetable FL Condensed",sans-serif;font-size:11px;line-height:12px;font-weight:400}
+.hint-display span{margin-top:0;color:#8e9ea6}.second-row>button,.window-buttons button{height:31px;min-height:31px;width:31px}
+.window-buttons{gap:2px}.second-row .snap-label{padding:0 3px;gap:3px}.snap-label select{height:25px;width:65px}
+#pattern-select{width:112px;height:27px;font-family:"Vegetable FL Narrow",sans-serif;font-size:16px;font-weight:400;background:linear-gradient(#d6e3df,#afc2c2);color:#263c44;border:1px solid #30434c}
+#add-pattern{width:18px;padding:0;min-width:18px;font-size:18px}.session-status{margin-left:auto;font-size:8px;opacity:.7}
+.main-layout{height:calc(100% - 100px)}
+.browser{width:var(--fl-native-browser);min-width:var(--fl-native-browser);flex:0 0 var(--fl-native-browser);background:#273941;border-right:2px solid #1d333d}
+.browser>.panel-heading{height:25px;background:#3d4d55;font-size:12px}
+.browser-tabs{height:33px;min-height:33px;justify-content:flex-start;gap:9px;padding:3px 8px;background:#1e333d}
+.browser-tabs button{width:27px;height:27px;min-height:27px;border-radius:7px;color:#a8b6bd}.browser-tabs button.selected{color:#ee942c;border:1px solid #e58f28;background:#263d47}
+.browser-search{margin:6px 6px 4px;background:#101e29;border:1px solid #23343e;border-radius:3px}.browser-search input{font-family:"Vegetable FL UI",sans-serif;font-size:12px;padding:5px}
+.browser-footer{background:#1d333d;border-color:#3b4e57}.browser-footer strong{font-size:11px;color:#a4b3bb}
+#desktop{--fl-left-width:490px;background:var(--fl-native-desktop)}
+#desktop>.playlist-window{left:0;top:0;right:0;bottom:0;z-index:1}
+#desktop>.rack-window{left:0;top:0;width:490px;min-width:490px;max-width:calc(100% - 4px);max-height:calc(100% - 32px);z-index:9}
+#rack-channels{overflow:auto;min-height:0;scrollbar-width:thin}
+#desktop>.mixer-window{left:16px;top:42%;right:16px;bottom:18px;width:auto;height:auto;min-width:620px;min-height:320px;z-index:4}
+#desktop>.piano-window{left:35%;top:92px;width:min(914px,calc(65% - 16px));height:min(730px,calc(100% - 110px));min-width:500px;min-height:300px;z-index:18}
+#desktop>.piano-window.expanded{inset:0;width:auto;height:auto;min-width:0;max-width:none;z-index:25}
+.status-bar{height:20px;font-size:9px;background:#3b4b53;border-top:1px solid #293e48;color:#91a1ab}
+.desktop-mark{right:13%;bottom:15%;opacity:.11;transform:scale(3);transform-origin:center;color:#273e48}
+#desktop>:is(.floating-window,.playlist-window):focus-visible{outline:1px solid #82929b;outline-offset:-1px}
+@media(max-width:1100px){:root{--fl-native-browser:200px}.brand-title,.session-status{display:none}.hint-display{width:220px}#desktop>.piano-window{left:15px;width:calc(100% - 30px)}#desktop>.mixer-window{left:4px;right:4px;min-width:540px}.top-row nav button{font-size:12px;padding:0 2px}}
+@media(max-width:800px){:root{--fl-native-browser:170px}#desktop>.rack-window{min-width:450px;width:490px}.monitor{display:none}.top-row nav button{font-size:11px}.hint-display{width:185px;min-width:150px}.window-buttons button{width:27px}.second-row{gap:2px}#pattern-select{width:100px}}

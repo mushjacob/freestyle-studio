@@ -1,0 +1,284 @@
+/* Audacity's light chrome and dark track canvas, referenced from the native Mac app. */
+body.audacity-mode{--au-paper:#f7f7f9;--au-control:#dedee3;--au-ink:#17181b;--au-canvas:#333544;color:#17181b;background:#333544;font:12px Arial,Helvetica,sans-serif;display:flex;flex-direction:column;color-scheme:light}
+.audacity-mode>.toolbar{display:none}.audacity-mode .main-layout{height:auto;flex:1;min-height:0;display:flex}.audacity-mode .browser{display:none}.audacity-mode.au-show-library .browser{display:flex;flex-direction:column;color:#c5cbd0}.audacity-mode #desktop{height:auto;flex:1;min-width:0;position:relative;background:#333544;overflow:hidden}.audacity-mode #playlist,.audacity-mode .desktop-mark{display:none!important}
+.audacity-mode button{background:#dedee3;color:#17181b;border:1px solid transparent;border-radius:3px;box-shadow:none}.audacity-mode button:hover{background:#cdcdd6;border-color:#adaeba;color:#17181b}.audacity-mode button:disabled{opacity:.45;cursor:default}.audacity-mode button:focus-visible,.audacity-mode input:focus-visible{outline:2px solid #517bd1;outline-offset:1px}.audacity-mode input,.audacity-mode select{color:#191a20;background:#fff;border:1px solid #d4d4db;border-radius:2px}.audacity-mode button.active{background:#b8c4dc;border-color:#7e91b6}.au-header{background:#f7f7f9;flex-shrink:0;border-bottom:1px solid #85858c}.au-titlebar{height:27px;display:flex;align-items:center;justify-content:space-between;gap:20px;background:#e7e7e9;color:#747479;border-bottom:1px solid #d1d1d7;padding:0 13px;font-size:11px}.au-titlebar strong{font-size:12px;font-weight:500;color:#5d5e65;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.au-app-name{font-weight:600}.au-cloud-state{font-size:10px}#au-menus{display:flex;gap:0;height:26px;padding:0 5px;border-bottom:1px solid #e2e2e7}#au-menus button{background:transparent;padding:0 9px;font-size:12px;min-height:23px}#au-menus button:hover{background:#dedee3}.au-toolbar{display:flex;align-items:center;gap:5px;min-height:65px;padding:5px 8px 5px 2px;overflow-x:auto}.au-grip{width:9px;flex-shrink:0;color:#aaaab5;font-size:18px;line-height:14px;align-self:center;overflow:hidden}.au-transport{display:flex;gap:4px}.au-transport button{width:49px;height:52px}.au-toolbar svg{display:block;width:24px;height:24px;margin:auto}.au-transport .au-green{color:#578268}.au-transport .au-red{color:#944941}.au-transport #au-record.active{background:#e8b3af}.au-tool-grid{display:grid;grid-template-columns:repeat(5,26px);grid-template-rows:26px 26px;grid-auto-flow:column;gap:2px}.au-tool-grid button{width:26px;height:26px;padding:2px;min-height:0}.au-tool-grid svg{width:20px;height:20px}.au-wide{height:54px;min-width:83px;padding:4px 7px;display:flex;flex-direction:column;justify-content:space-around;gap:3px;white-space:nowrap}.au-wide span{font-size:11px}.au-meters{min-width:255px;max-width:400px;flex:1;display:grid;gap:3px}.au-meters>div{display:flex;height:26px;align-items:center;gap:4px}.au-meters svg{width:20px;height:20px;margin:0;background:#e2e2e7;border-radius:3px;padding:2px}.au-meters>div>span{font-size:9px;line-height:9px}.au-meter-scale{border:1px solid #dedee5;position:relative;flex:1;height:25px;overflow:hidden;background:repeating-linear-gradient(90deg,transparent 0,transparent 29px,#b8b8c4 30px,transparent 31px)}.au-meter-scale>span{position:absolute;z-index:1;top:4px;font-size:8px;white-space:nowrap;padding-left:4px;pointer-events:none}.au-meter-fill{height:100%;width:0;background:linear-gradient(90deg,#4d9c67 0%,#8eaa4e 75%,#d6a54f 92%,#bd564b 100%);opacity:.65;transition:width 70ms linear}
+#audacity-workspace{position:absolute;inset:0;z-index:0}#au-scroll{width:100%;height:100%;overflow:auto;position:relative;outline:none;scrollbar-color:#848589 #e9e9ec;scrollbar-width:auto}#au-timeline{min-height:100%;position:relative;padding-bottom:90px}#au-ruler{height:31px;position:sticky;top:0;z-index:8;display:flex;background:#eaeaec;color:#16171c;border-bottom:2px solid #262730}.au-ruler-gutter{position:sticky;left:0;z-index:9;width:190px;flex-shrink:0;border-right:1px solid #16171c;background:#eaeaec;padding:1px 8px}.au-ruler-gutter button{width:27px;height:26px;min-height:0;font-size:18px}.au-ruler-time{position:relative;flex:1;cursor:crosshair;background:repeating-linear-gradient(90deg,transparent 0,transparent 42px,#8c8d98 43px,transparent 44px);background-size:86px 7px;background-repeat:repeat-x;background-position:left bottom}.au-ruler-time>span{position:absolute;bottom:0;height:28px;padding:3px 4px;font-size:11px;font-weight:600;border-left:1px solid #454651;white-space:nowrap}.au-track{position:relative;display:flex;border:1px solid #171820;border-bottom:5px solid #333544;margin:4px 5px 0 4px;background:#444656;min-height:90px}.au-track-panel{position:sticky;left:0;z-index:6;flex-shrink:0;width:155px;background:#f7f7f9;color:#15161a;border-right:1px solid #41424d;padding:2px 4px;overflow:hidden}.au-selected-track .au-track-panel{background:#e8edf7}.au-track-title{display:flex;align-items:center;height:23px;gap:3px}.au-track-title strong{flex:1;min-width:0;text-overflow:ellipsis;white-space:nowrap;overflow:hidden;font-size:12px;font-weight:500}.au-track-title button{background:transparent;min-width:16px;min-height:20px;padding:0;font-size:17px}.au-track-ms{display:flex;gap:4px;margin-bottom:4px}.au-track-ms button{flex:1;min-height:22px;font-size:11px}.au-track-effects{width:100%;min-height:24px;font-size:11px}.au-gain-label{display:flex;justify-content:space-between;font-size:10px;margin:3px 5px -4px}.au-track-panel input[type=range]{display:block;width:calc(100% - 10px);margin:0 5px;height:22px;padding:0;accent-color:#767e8e;cursor:pointer;background:transparent;box-shadow:none;border:0}.au-track-panel input:disabled{opacity:.55;cursor:default}.au-track-format{font-size:9px;line-height:14px;color:#747783;margin:7px 5px}.au-amplitude{width:30px;flex-shrink:0;position:sticky;left:155px;z-index:5;display:flex;flex-direction:column;justify-content:space-between;align-items:flex-end;background:#f7f7f9;color:#272834;font-size:10px;padding:20px 2px 4px 0;border-right:1px solid #171820}.au-lane{position:relative;flex-shrink:0;overflow:hidden;cursor:crosshair;background:#444656}.au-selected-track .au-lane{background:#494c60}.au-zero{position:absolute;top:55%;height:1px;background:#272a38;width:100%}.au-clip{position:absolute;top:2px;bottom:3px;overflow:hidden;background:#a8bce4;border:1px solid #728ac4;border-radius:5px 5px 0 0;min-width:3px;outline:none}.au-clip.au-selected-clip{border:2px solid #7299ef}.au-clip-head{height:23px;background:#b6c8ea;color:#252e4a;font-size:11px;display:flex;align-items:center;gap:5px;cursor:grab;padding:0 5px;border-bottom:1px solid #7b96ce;touch-action:none}.au-clip-head>span{flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}.au-clip-head button{background:transparent!important;min-height:16px;height:18px;line-height:12px;padding:0;width:23px;color:#25314c;font-size:16px}.au-clip-body{height:calc(100% - 23px);position:relative}.au-clip-body svg{display:block;width:100%;height:100%;fill:#3155b2;stroke:#3155b2;stroke-width:.7}.au-clip-body .au-note-preview{fill:#285a77;stroke:none}.au-midi-clip{background:#b4cecb;border-color:#729d9a}.au-midi-clip .au-clip-head{background:#c2d8d4;border-bottom-color:#7caaa5;color:#244841}.au-waveform-unavailable{position:absolute;top:45%;left:12px;color:#4d638a;font-size:10px;white-space:nowrap}.au-trim-left,.au-trim-right{position:absolute;top:23px;bottom:0;width:5px;cursor:ew-resize;z-index:4}.au-trim-left{left:0}.au-trim-right{right:0}.au-time-selection{position:absolute;top:23px;bottom:0;pointer-events:none;z-index:3;background:#8aacf340;border-left:1px solid #9fbcff;border-right:1px solid #9fbcff}.au-track-resize{position:absolute;bottom:-4px;left:0;right:0;height:7px;z-index:7;cursor:ns-resize}.au-empty{position:sticky;left:190px;width:360px;margin:60px 0 0 230px;padding:30px;color:#c1c4d0;font-size:13px;line-height:1.7}.au-empty strong{font-size:17px;font-weight:400}.au-empty button{padding:4px 15px}.au-empty p{color:#9b9fb1}#au-cursor{position:absolute;top:31px;bottom:0;width:1px;background:#719277;z-index:4;pointer-events:none}#au-cursor span{position:absolute;top:-25px;left:-5px;color:#497e57;font-size:13px;z-index:10}.au-bottom{height:73px;flex-shrink:0;display:flex;align-items:stretch;gap:0;background:#f5f5f7;color:#17181b;border-top:1px solid #d0d0d6;overflow-x:auto}.au-musical{display:flex;gap:14px;padding:9px 15px 7px;border-right:1px solid #d9d9df}.au-musical label{display:flex;flex-direction:column;gap:7px;white-space:nowrap;font-size:11px}.au-musical input{width:63px;height:24px;padding:2px 5px;font-size:14px}.au-signature{font-size:15px;padding:3px 15px;background:#fff;border:1px solid #dddde3;border-radius:2px}.au-snap{display:flex;flex-direction:column;gap:9px;padding:6px 17px;min-width:115px}.au-snap label{display:flex;align-items:center;gap:4px}.au-snap input{margin:0}.au-snap select{height:24px}.au-position{font-family:monospace;font-size:25px;white-space:nowrap;align-self:center;letter-spacing:1px;background:#333544;color:#f7f7fb;margin:0 13px;padding:4px 6px}.au-selection{display:grid;grid-template-columns:auto 1fr;gap:4px 10px;padding:9px 13px;border-left:1px solid #d9d9df}.au-selection>span{grid-row:span 2;align-self:center}.au-selection label{display:flex;align-items:center;gap:6px;font-size:10px}.au-selection input{width:135px;font:15px monospace;padding:1px 5px;background:#333544;color:#f7f7fb}.au-bottom-info{display:flex;flex-direction:column;justify-content:center;gap:9px;font-size:10px;color:#656877;padding:0 17px;border-left:1px solid #d9d9df;white-space:nowrap}.audacity-mode .status-bar{height:23px;flex-shrink:0;background:#eaeaec;color:#777985;border:0;border-top:1px solid #d5d5dc;font-size:10px}.audacity-mode .status-bar button{background:transparent;min-height:20px;color:#6a7080;font-size:9px}.audacity-mode .context-menu{background:#f7f7f9;color:#17181b;border:1px solid #bdbdc8;box-shadow:0 5px 20px #0004;min-width:240px;z-index:5000}.audacity-mode .context-menu button{background:transparent;color:#17181b}.audacity-mode .context-menu button:hover{background:#d6e1f5}.audacity-mode .context-menu button small{color:#767a86}.audacity-mode .context-menu hr{border-color:#dddde5}.audacity-mode .studio-dialog{background:#f7f7f9;color:#17181b;border-color:#adadba}.audacity-mode .studio-dialog header{background:#e7e7ed;color:#20212a;border-color:#d0d0d9}.audacity-mode .dialog-content p,.audacity-mode .dialog-content label{color:#626574}.audacity-mode .dialog-content .primary{background:#d2def4;color:#233451;border-color:#a2b5da}.audacity-mode #toast{z-index:6000}.audacity-mode .floating-window{z-index:20;color:#c5cbd0}.audacity-mode .floating-window button{background:#dedee3;color:#17181b}.audacity-mode ::-webkit-scrollbar{width:13px;height:13px}.audacity-mode ::-webkit-scrollbar-track{background:#e9e9ec}.audacity-mode ::-webkit-scrollbar-thumb{background:#848589;border:3px solid #e9e9ec;border-radius:10px}.audacity-mode ::-webkit-scrollbar-corner{background:#e9e9ec}@media(max-width:1000px){.au-cloud-state{display:none}.au-toolbar{gap:3px}.au-transport button{width:39px}.au-meters{min-width:200px}.au-position{font-size:19px}.au-bottom-info{display:none}}@media(max-width:650px){.au-titlebar{height:23px}#au-menus button{padding:0 6px;font-size:11px}.au-bottom{height:68px}.au-musical{gap:7px;padding-left:7px}.au-musical label:nth-child(2){display:none}.au-snap{min-width:80px;padding:6px}.au-position{font-size:15px;margin:0 6px}.au-selection{padding:9px 6px}.au-selection>span{display:none}.au-selection input{width:95px}.au-app-name{display:none}}
+
+.audacity-mode.au-cloud-busy .au-track :is(button,input),.audacity-mode.au-cloud-busy .au-clip{pointer-events:none;opacity:.7}
+
+.au-clip-body .pattern-preview-svg{fill:#285a77;stroke:none}
+
+.au-meter-level{width:65px;height:20px;accent-color:#888c98;padding:0!important;margin:0 3px;border:0!important;background:transparent!important}
+.au-clip-body>.au-envelope{position:absolute;inset:0;width:100%;height:100%;z-index:5;touch-action:none;cursor:crosshair;overflow:hidden;fill:none;stroke:none;outline:none}.au-envelope-mode .au-clip-body>.au-envelope{pointer-events:auto}.au-clip-body>.au-envelope .au-envelope-line{fill:none;stroke:#e8f0ff;stroke-width:1.5;vector-effect:non-scaling-stroke}.au-clip-body>.au-envelope circle{fill:#fff;stroke:#345cb3;stroke-width:1.5;cursor:ns-resize;vector-effect:non-scaling-stroke}.au-clip-body>.au-envelope circle:focus{fill:#f8d791;stroke:#355cab;outline:none}.au-clip-body>.au-envelope .au-envelope-message{fill:#334c77;stroke:none;font:10px Arial,sans-serif;pointer-events:none}.au-envelope-mode .au-trim-left,.au-envelope-mode .au-trim-right{pointer-events:none}.au-envelope-mode .au-time-selection{opacity:.35}
+.au-clip[style*="--au-custom-clip-color"]{background:color-mix(in srgb,var(--au-custom-clip-color) 25%,#fff);border-color:var(--au-custom-clip-color)}.au-clip[style*="--au-custom-clip-color"] .au-clip-head{background:var(--au-custom-clip-color);color:var(--au-custom-clip-ink);border-color:var(--au-custom-clip-color)}.au-clip[style*="--au-custom-clip-color"] .au-clip-head button{color:var(--au-custom-clip-ink)}
+.au-track.au-drop-lane .au-lane{box-shadow:inset 0 0 0 2px #99b5ed}.au-drag-ghost{box-shadow:0 7px 22px #0006;cursor:grabbing}
+.audacity-mode .au-export-dialog{width:570px;max-width:95vw}.audacity-mode .au-export-dialog .dialog-content{padding:16px 18px 12px}.au-export-fields{display:grid;grid-template-columns:85px 1fr;gap:9px 12px;align-items:center}.audacity-mode .au-export-fields>label{font-size:12px;text-align:right;margin:0;color:#262831}.audacity-mode .au-export-fields>input,.audacity-mode .au-export-fields>select{height:30px;padding:4px 8px;font-size:12px}.au-export-form fieldset{border:1px solid #d4d5dc;border-radius:5px;margin:16px 0;padding:13px 17px}.au-export-form legend{font-size:11px;color:#444751;padding:0 5px}.au-export-form .au-export-audio{background:#eeeef1;display:grid;gap:9px}.audacity-mode .au-export-audio>label{display:grid;grid-template-columns:140px 1fr;align-items:center;margin:0;gap:12px;color:#242630;font-size:12px;text-align:right}.audacity-mode .au-export-audio select{width:100%;padding:4px 8px;font-size:12px}.au-export-range{display:flex;flex-direction:column;gap:9px}.audacity-mode .au-export-range>label{display:flex;align-items:center;gap:8px;font-size:12px;margin:0;color:#262831}.au-export-range label:has(input:disabled){opacity:.5}.au-export-range input[type=radio],.au-export-range input[type=checkbox]{margin:0;width:14px;height:14px;accent-color:#397edb}.au-export-selection{margin-left:22px;color:#717582;font-size:10px;line-height:1.5}.au-export-trim{margin-top:7px!important}.audacity-mode .au-export-state{font-size:11px;line-height:1.5;color:#51586b;margin:9px 0}.au-export-progress{width:100%;height:7px;accent-color:#467fc6}.au-export-results{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.au-export-results[hidden],.au-export-resume[hidden],.au-export-refresh[hidden],.au-export-direct[hidden],.au-export-progress[hidden]{display:none}.au-export-direct{font-size:11px;color:#356cb4;text-decoration:none}.au-export-direct:hover{text-decoration:underline}.audacity-mode .au-export-download-error{font-size:11px;line-height:1.5;color:#855a46}.au-export-form footer{display:flex;gap:8px;align-items:center;padding-top:9px}.au-export-form footer>span{flex:1}.audacity-mode .au-export-form footer button{margin:0;padding:5px 12px;min-width:65px}.audacity-mode .au-export-form footer .primary{background:#3285e7;color:#fff;border-color:#3285e7}.audacity-mode .au-export-form footer .primary:disabled{background:#a6b6cb;border-color:#a6b6cb;opacity:1}@media(max-width:600px){.au-export-fields{grid-template-columns:65px 1fr}.audacity-mode .au-export-audio>label{grid-template-columns:100px 1fr}.au-export-form footer{flex-wrap:wrap}}
+
+.audacity-mode .au-project-save-dialog{width:530px;max-width:95vw}.au-project-save-dialog .dialog-content{padding:20px 24px 14px}.audacity-mode .au-project-save-intro{font-size:13px;text-align:center;margin:0 0 24px}.au-project-save-fields{display:grid;grid-template-columns:85px 1fr;gap:16px 14px;align-items:center}.audacity-mode .au-project-save-fields>label{text-align:right;color:#777;font-size:13px;margin:0}.audacity-mode .au-project-save-fields>input,.audacity-mode .au-project-save-fields>select{height:32px;padding:4px 8px;font-size:13px;border-radius:5px}.au-project-save-state{font-size:12px;line-height:1.5;min-height:18px;margin:18px 0 8px}.au-project-save-state.au-save-error{color:#9a362e}.au-project-save-receipt{color:#69707a;font-size:10px;overflow-wrap:anywhere;margin:8px 0}.au-project-save-footer{display:flex;justify-content:flex-end;gap:8px;border-top:1px solid #d8d8dd;margin-top:16px;padding-top:14px;flex-wrap:wrap}.audacity-mode .au-project-save-footer button{min-width:72px;padding:6px 12px;margin:0}.audacity-mode .au-project-save-footer .primary{background:#3285e7;color:white}.au-project-save-footer button[hidden],.au-project-save-receipt[hidden]{display:none}
+
+.au-native-selection{grid-template-columns:68px 1fr;gap:2px 6px;padding:7px 12px}.au-selection-setup{grid-row:span 2;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:2px}.au-selection-setup>span{font-size:11px}.audacity-mode .au-selection-mode{background:transparent;font-size:19px;min-height:23px;height:23px;padding:0 6px;color:#858891}.au-time-field{position:relative;display:flex;align-items:center;background:#333544;min-width:224px;height:27px}.au-time-label{position:absolute!important;clip-path:inset(50%);width:1px;height:1px;overflow:hidden;white-space:nowrap}.audacity-mode .au-time-field>.au-time-input{border:0;border-radius:0;background:#333544;color:#f7f7fb;font:18px ui-monospace,Menlo,monospace;letter-spacing:1px;padding:2px 5px;width:211px;min-width:0;height:27px}.audacity-mode .au-time-field>.au-time-format{padding:0 3px;min-height:27px;height:27px;width:20px;border:0;border-radius:0;background:#333544;color:#f7f7fb}.audacity-mode .au-time-field:focus-within{outline:2px solid #7790ba;outline-offset:1px}.audacity-mode .au-time-field>.au-time-input:focus-visible{outline:0}.audacity-mode .au-time-input:invalid{box-shadow:inset 0 -2px #d78f7d}.au-native-position{font:29px ui-monospace,Menlo,monospace;letter-spacing:1px;cursor:context-menu}@media(max-width:1000px){.au-native-position{font-size:23px}.au-native-selection{padding:7px 8px;grid-template-columns:60px 1fr}.au-time-field{min-width:215px}.audacity-mode .au-time-field>.au-time-input{font-size:16px;width:202px}}
+
+/* Edit cursor is local selection state; playback cursor follows the cloud clock. */
+#au-edit-cursor,#au-cursor{position:absolute;top:0;bottom:0;width:1px;height:auto;z-index:10;pointer-events:none}#au-edit-cursor{background:#1c1d26}#au-cursor{background:#719277}#au-cursor span{position:sticky;display:block;top:5px;margin-left:-5px;left:auto;font-size:13px;color:#497e57;line-height:14px}
+
+.au-time-field{width:max-content;min-width:0}.audacity-mode .au-time-field>.au-time-input{flex:0 0 auto}
+
+.audacity-mode .au-tempo-dialog{width:490px;max-width:95vw}.au-tempo-dialog .dialog-content{padding:14px 20px}.au-tempo-target{font-size:11px;text-align:center;margin:0 0 16px}.au-tempo-percent{display:grid;grid-template-columns:auto 120px;gap:8px 14px;align-items:center;justify-content:center}.au-tempo-percent label{font-size:12px}.au-tempo-percent input[type=range]{grid-column:1/-1;width:100%;margin:6px 0;accent-color:#718093}.audacity-mode .au-tempo-form input[type=number]{height:29px;padding:4px 7px;font-size:13px;width:120px}.au-tempo-form fieldset{border:1px solid #cfd0d7;border-radius:4px;padding:13px 14px;margin:13px 0}.au-tempo-form legend{font-size:12px;padding:0 5px;color:#363942}.au-tempo-pair{display:grid;grid-template-columns:auto 120px auto 120px;gap:10px;align-items:center;justify-content:center}.audacity-mode .au-tempo-pair label{font-size:12px;margin:0}.audacity-mode .au-tempo-hint{font-size:10px;line-height:1.5;margin:9px 0 0}.audacity-mode .au-tempo-quality{display:flex;gap:7px;font-size:12px;align-items:center;opacity:.6}.au-tempo-quality input{margin:0}.au-tempo-status{font-size:11px;line-height:1.5;min-height:17px;overflow-wrap:anywhere}.au-tempo-progress{width:100%;height:7px;accent-color:#467fc6}.au-tempo-form footer{display:flex;gap:7px;align-items:center;padding-top:8px;flex-wrap:wrap}.au-tempo-form footer>span{flex:1}.audacity-mode .au-tempo-form footer button{padding:5px 12px;font-size:12px;min-width:65px;margin:0}.audacity-mode .au-tempo-form footer .primary{background:#3285e7;color:white;border-color:#3285e7}.au-tempo-form [hidden]{display:none!important}@media(max-width:550px){.au-tempo-pair{grid-template-columns:auto 100px auto 100px}.audacity-mode .au-tempo-form input[type=number]{width:100px}}
+
+.au-lane,.au-clip-body{cursor:text}.au-lane[data-selection-edge]{cursor:ew-resize}.au-track.au-focused-track{outline:1px solid #8b9ec8;outline-offset:-2px}
+
+/* Remembered loop bounds remain separate from the full-height edit cursor. */
+.au-loop-region{position:absolute;top:0;bottom:0;background:#b6b8c74d;border-left:1px solid #363843;border-right:1px solid #363843;cursor:grab;touch-action:none;z-index:1}.au-loop-region[hidden]{display:none}.au-loop-region.au-loop-inactive{background:#c5c5ca26;border-color:#8a8b94}.au-loop-region.au-loop-pending{background:#b6b8c780;border-style:dashed}.au-loop-start,.au-loop-end{position:absolute;top:0;bottom:0;width:9px;cursor:ew-resize}.au-loop-start{left:-5px}.au-loop-end{right:-5px}.au-loop-start:after,.au-loop-end:after{content:"";position:absolute;bottom:0;width:7px;height:7px;background:#363843}.au-loop-start:after{right:4px;clip-path:polygon(100% 0,0 100%,100% 100%)}.au-loop-end:after{left:4px;clip-path:polygon(0 0,0 100%,100% 100%)}
+.au-loop-time-dialog{min-width:360px}.au-loop-time-form>label{display:block;margin-bottom:6px}.au-loop-time-row{display:flex;align-items:center;gap:0}.au-loop-time-row .au-time-input{min-width:26ch;width:100%;font:20px monospace;background:#333544;color:#f7f7fb;padding:5px 8px;white-space:nowrap}.au-loop-position-format{min-height:36px;border-radius:0}.au-loop-time-status{min-height:1.4em;font-size:12px}.au-loop-time-form footer{display:flex;justify-content:flex-end;gap:8px;margin-top:16px}.au-loop-time-form footer button{min-width:75px}
+.au-ruler-labels{position:absolute;inset:0;pointer-events:none}.au-ruler-tick{position:absolute;bottom:0;height:28px;padding:3px 4px;font-size:11px;font-weight:600;border-left:1px solid #454651;white-space:nowrap}.au-ruler-time{background-image:linear-gradient(to right,transparent calc(50% - 1px),#8c8d98 50%,transparent calc(50% + 1px))}.au-zoom-presets{display:grid;gap:14px;min-width:310px}.au-zoom-presets label{display:grid;grid-template-columns:75px 1fr;align-items:center;gap:10px}.au-zoom-presets select{padding:4px 8px}.au-zoom-presets footer{display:flex;justify-content:flex-end;gap:8px}.au-zoom-presets footer button{min-width:75px}
+#au-cursor span.au-pinned-head{pointer-events:auto;cursor:ew-resize;touch-action:none}
+
+/* Horizontal scrolling maps a bounded native rail to logical project time. */
+#au-scroll-content{position:relative;min-height:100%}
+#au-timeline{position:sticky;left:0;min-width:0;overflow:clip}
+.au-ruler-time{overflow:hidden;min-width:0}.au-track{overflow:hidden}.au-lane{min-width:0}.au-trim-left[hidden],.au-trim-right[hidden]{display:none}
+
+.au-track{margin-right:0;border-right:0}
+
+.au-source-waveform path{fill:none;stroke:#3155b2;stroke-width:1;vector-effect:non-scaling-stroke}.au-source-waveform .au-waveform-rms{stroke:#254285;opacity:.55}
+
+/* Native amplitude view bounds do not change audio gain or source samples. */
+.au-amplitude{display:block;padding:0;user-select:none;touch-action:none;cursor:default}
+.au-amplitude.au-amplitude-advanced{cursor:zoom-in}
+.au-amplitude-display{position:absolute;left:0;right:0;overflow:hidden}
+.au-amplitude-channel{position:absolute;left:0;right:0;overflow:hidden;outline:none}
+.au-amplitude-channel:focus-visible{outline:1px solid #517bd1;outline-offset:-1px}
+.au-amplitude-tick{position:absolute;right:0;width:3px;height:1px;background:#60616a;pointer-events:none}
+.au-amplitude-major{width:5px}
+.au-amplitude-tick>span{position:absolute;right:6px;top:0;font:10px/10px Arial,Helvetica,sans-serif;white-space:nowrap;color:#272834}
+.au-zero{inset:0;top:0;height:auto;background:none;pointer-events:none}
+.au-zero-line{position:absolute;left:0;right:0;height:1px;background:#272a38}
+.au-amplitude-drag{position:absolute;left:0;right:0;background:#4f76bd44;border-top:1px solid #365e9e;border-bottom:1px solid #365e9e;pointer-events:none}
+.au-amplitude-drag[hidden]{display:none}
+
+.au-meter-scale>.au-meter-labels{inset:0;width:100%;height:100%;padding:0;top:0;overflow:hidden}
+.au-meter-tick{position:absolute;top:0;width:1px;height:3px;background:#92929b;pointer-events:none}
+.au-meter-tick>span{position:absolute;top:4px;left:0;font:8px/9px Arial,Helvetica,sans-serif;white-space:nowrap;background:transparent}
+
+/* Native collapsed group height includes linked channels; retain expanded state in the view controller. */
+.au-track{min-height:44px}.au-track-resize{bottom:0}.au-minimized-track .au-track-panel>:not(.au-track-title){display:none}.au-minimized-track .au-track-title{height:24px}.au-minimized-track .au-amplitude{padding-top:20px}
+#audacity-workspace[data-tool="multi"] .au-envelope{pointer-events:auto;cursor:inherit}#audacity-workspace[data-tool="multi"] .au-envelope circle{cursor:inherit}#audacity-workspace[data-tool="multi"] .au-trim-left,#audacity-workspace[data-tool="multi"] .au-trim-right{z-index:6}.au-multi-zoom-region{color:#dce9ff;overflow:visible}
+
+/* One measured linked-channel boundary; the divider never changes clip timing or gain. */
+.au-channel-divider{position:absolute;left:155px;right:0;height:1px;z-index:8;background:#262a37;cursor:ns-resize;touch-action:none}.au-channel-divider:hover{background:#aec5f4}.au-clip.au-selected-clip{border-width:1px;box-shadow:inset 0 0 0 1px #7299ef}
+
+#audacity-workspace.au-file-drop{outline:3px solid #68a2ee;outline-offset:-3px;}
+
+#audacity-workspace[data-tool="draw"] .au-lane{cursor:crosshair}#audacity-workspace[data-tool="draw"] .au-clip-body{cursor:inherit}
+
+.au-waveform-live-pending{top:4px;left:6px;max-width:calc(100% - 12px);overflow:hidden;text-overflow:ellipsis;pointer-events:none;padding:1px 3px;background:#d9e5f2dd;border-radius:2px}
+.au-waveform-unavailable.au-waveform-live-pending{top:auto;bottom:4px;left:8px;max-width:calc(100% - 16px);padding:2px 4px;white-space:normal;background:#e8eefbe6;border-radius:2px;pointer-events:none}
+
+/* Audacity 3.2.1 (macOS, Light theme) parity. Colors are sampled from the native
+ * app at default zoom: canvas #636781, track info #e6e6e6, buttons #bfc8d7,
+ * clip body #bfbfbf, clip title #dadada, waveform #323cbf, RMS #6367d4. */
+body.audacity-mode{--au-canvas:#636781;--au-info:#e6e6e6;--au-info-button:#bfc8d7;--au-clip:#bfbfbf;--au-clip-title:#dadada;--au-wave:#323cbf;--au-rms:#6367d4;--au-blank:#d4d4d4;--au-toolbar:#ebebeb;background:var(--au-canvas)}
+.audacity-mode #desktop,.audacity-mode #au-scroll{background:var(--au-canvas)}
+.au-header{background:var(--au-toolbar);border-bottom:1px solid #b4b4b4}
+.au-titlebar{background:#e3e3e3;color:#3c3c3c;border-bottom-color:#c8c8c8}.au-titlebar strong{color:#262626;font-weight:600}
+#au-menus{background:var(--au-toolbar);border-bottom-color:#d2d2d2}
+.au-toolbar{min-height:56px;padding:3px 8px 3px 2px;gap:6px}
+.au-grip{color:#b9b9b9}
+.au-transport{gap:3px}
+.audacity-mode .au-transport button{width:35px;height:36px;padding:0;background:linear-gradient(#fdfdfd,#e2e2e2);border:1px solid #a9a9a9;border-radius:5px;box-shadow:0 1px 0 #fff inset}
+.audacity-mode .au-transport button:hover{background:linear-gradient(#fff,#d9d9d9);border-color:#8c8c8c}
+.au-transport svg{width:20px;height:20px}
+.au-transport #au-record{margin:0 7px}.au-transport #au-loop{margin-left:2px}
+.au-transport .au-green{color:#4e8a5c}.au-transport .au-red{color:#a3392f}
+.audacity-mode .au-tool-grid button{background:linear-gradient(#fbfbfb,#e6e6e6);border:1px solid #b1b1b1;border-radius:3px}
+.audacity-mode .au-tool-grid button.active{background:linear-gradient(#8f8f8f,#b4b4b4);border-color:#7a7a7a}
+.audacity-mode .au-wide{height:44px;background:linear-gradient(#fdfdfd,#e8e8e8);border:1px solid #b1b1b1;border-radius:4px}
+.au-meters svg{background:transparent}
+.au-meter-scale{border-color:#c9c9c9;background-color:#f2f2f2}
+
+/* Timeline ruler. */
+#au-ruler{height:31px;background:var(--au-info);color:#000;border-bottom:1px solid #9b9b9b}
+.au-ruler-gutter{width:var(--au-gutter,188px);background:var(--au-info);border-right:0;padding:2px 10px}
+.au-empty{left:var(--au-gutter,188px)}
+.audacity-mode .au-ruler-gutter button{width:24px;height:23px;background:linear-gradient(#fbfbfb,#e3e3e3);border:1px solid #b1b1b1;border-radius:3px;font-size:15px;color:#555}
+.audacity-mode .au-ruler-gutter #au-timeline-options{font-size:0;padding:0}
+#au-timeline-options::after{content:"";display:block;margin:4px auto 0;width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-top:13px solid #2f6b2f}
+#au-timeline-options::before{content:"";position:absolute;margin:6px 0 0 7px;width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:10px solid #8bd07a;z-index:1}
+.audacity-mode .au-ruler-gutter #au-timeline-options{position:relative;display:block}
+#au-timeline-options::before{left:0;top:0}
+.au-ruler-tick{height:28px;padding:2px 4px 0 3px;font-size:12px;font-weight:700;color:#000;border-left:1px solid #000}
+/* Minor ticks: one 1px line at the start of each minor-step tile; JS sets the tile
+ * size and phase from Audacity's FindLinearTickSizes. Labels mark major ticks. */
+.au-ruler-time{background-color:var(--au-info);background-image:linear-gradient(to right,#000 0,#000 1px,transparent 1px);background-repeat:repeat-x;background-position-y:bottom}
+
+/* Tracks: 1px black frame, light info panel, light amplitude ruler. */
+.au-track{background:var(--au-blank);border:1px solid #000;border-bottom:1px solid #000;margin:4px 5px 0 var(--au-track-margin-left,4px)}
+.au-track.au-focused-track{outline:3px solid #f5f391;outline-offset:1px;box-shadow:0 0 0 1px #424129}
+.au-track-panel{width:var(--au-track-panel-width,151px);background:var(--au-info);color:#000;border-right:1px solid #3c3c3c;padding:3px 3px 22px;font-size:11px}
+.au-selected-track .au-track-panel{background:#d2d2d2}
+.au-track-title{height:18px;gap:0;margin-bottom:1px}
+.audacity-mode .au-track-title button{min-height:18px;height:18px;border-radius:0;font-size:13px;color:#000}
+.audacity-mode .au-track-title [data-action=remove]{width:18px;background:var(--au-info-button);border:1px solid #9aa0aa;font-size:14px;line-height:14px}
+.au-track-title strong{height:18px;line-height:16px;padding:0 3px;font-size:11px;font-weight:400;background:var(--au-info-button);border:1px solid #9aa0aa;border-left:0;border-right:0}
+.audacity-mode .au-track-title [data-action=menu]{width:18px;font-size:0;background:var(--au-info-button);border:1px solid #9aa0aa;border-left:0}
+.au-track-title [data-action=menu]::after{content:"\25BC";font-size:10px;line-height:16px}
+.audacity-mode .au-track-title [data-action=collapse]{position:absolute;left:4px;bottom:3px;width:17px;height:17px;min-height:0;font-size:0;background:var(--au-info-button);border:1px solid #9aa0aa;z-index:1}
+.au-track-title [data-action=collapse]::after{content:"\25B2";font-size:9px;line-height:15px}
+.au-track-title [data-action=collapse][aria-expanded=false]::after{content:"\25BC"}
+.au-track-panel::after{content:"Select";position:absolute;left:20px;right:4px;bottom:3px;height:17px;box-sizing:border-box;border:1px solid #9aa0aa;background:var(--au-info-button);font-size:11px;line-height:15px;text-align:center;cursor:default}
+.au-track-ms{gap:0;margin-bottom:3px}
+.audacity-mode .au-track-ms button,.audacity-mode .au-track-effects{min-height:19px;height:19px;font-size:11px;background:var(--au-info-button);border:1px solid #9aa0aa;border-radius:0;color:#000;padding:0}
+.audacity-mode .au-track-ms button+button{border-left:0}
+.audacity-mode .au-track-ms button.active{background:#8f9bb3;color:#000}
+.audacity-mode .au-track-effects{height:23px;min-height:23px;margin-bottom:2px}
+.au-gain-label{font-size:9px;margin:4px 6px -5px;color:#3c3c3c}
+.au-track-panel input[type=range]{height:18px;accent-color:#6f6f6f}
+.au-track-format{font-size:10px;line-height:12px;color:#000;margin:5px 2px}
+.au-amplitude{width:var(--au-amplitude-width,32px);left:var(--au-track-panel-width,151px);background:var(--au-info);color:#000;border-right:1px solid #000}
+.au-amplitude-tick{background:#000}
+.au-amplitude-tick>span{font:bold 11px/11px -apple-system,"Helvetica Neue",Arial,sans-serif;color:#000}
+.au-lane{background:var(--au-blank)}
+.au-selected-track .au-lane{background:#dcdcdc}
+.au-zero-line{background:#a6a6a6}
+.au-channel-divider{left:var(--au-track-panel-width,151px);background:#333;height:2px}
+
+/* Clips: grey body, light title bar, dark frame, Audacity blue waveform. */
+.au-clip{top:0;bottom:0;background:var(--au-clip);border:1px solid #2e2e2e;border-radius:3px 3px 0 0}
+.au-clip-head{height:16px;background:var(--au-clip-title);color:#000;font-size:12px;font-weight:500;border-bottom:1px solid #9f9f9f;padding:0 4px}
+.audacity-mode .au-clip-head button{height:14px;min-height:14px;color:#3c3c3c;font-size:13px}
+.au-clip-body{height:calc(100% - 16px)}
+.au-clip-body svg{fill:var(--au-wave);stroke:var(--au-wave);stroke-width:1}
+.au-source-waveform path{stroke:var(--au-wave)}
+.au-source-waveform .au-waveform-rms{stroke:var(--au-rms);opacity:1}
+.au-clip.au-selected-clip{border:1px solid #000;box-shadow:none}
+.au-clip.au-selected-clip .au-clip-head{background:#fff}
+.au-trim-left,.au-trim-right{top:16px}
+.au-waveform-unavailable{color:#3c3c5a}
+
+/* Time selection: Audacity paints the selected span white behind the waveform. */
+.au-time-selection{top:16px;background:#404040;mix-blend-mode:color-dodge;border:0}
+.au-envelope-mode .au-time-selection{opacity:.6}
+
+/* Play head: green triangle in the ruler, green line in tracks. */
+#au-edit-cursor,#au-cursor{top:0;bottom:auto}
+#au-cursor{background:#3c8c3c}
+#au-cursor span{color:#8bd07a;-webkit-text-stroke:.6px #2d6b2d;font-size:14px}
+#au-edit-cursor{background:#000}
+
+/* Selection toolbar and status bar. */
+.au-bottom{height:62px;background:var(--au-toolbar);border-top:1px solid #c4c4c4}
+.au-musical,.au-selection,.au-bottom-info{border-color:#d0d0d0}
+.audacity-mode .au-position{background:#b5b9c0;color:#001cab;font:30px/1 -apple-system,"Helvetica Neue",Arial,sans-serif;letter-spacing:2px;padding:4px 6px;border:2px solid #cfcfcf}
+.au-time-field,.audacity-mode .au-time-field>.au-time-input,.audacity-mode .au-time-field>.au-time-format{background:#b5b9c0;color:#001cab}
+.au-time-field{border:2px solid #cfcfcf;height:25px}
+.audacity-mode .au-time-field>.au-time-input{height:21px;font-size:15px}
+.audacity-mode .au-time-field>.au-time-format{height:21px;min-height:21px;color:#000}
+.audacity-mode .status-bar{height:22px;background:#e7e5e8;color:#5b5b5b;font-size:10px;border-top:1px solid #c4c4c4;padding:0 6px}
+.audacity-mode .status-bar>#status-message{color:#000;font-size:12px}
+
+/* Timeline scrollbars match Audacity 3.2.1: an always-visible 15px rail (#fafafa,
+ * 1px #e6e6e5 edge) with an 8px #808080 pill thumb. Standard scrollbar-color /
+ * scrollbar-width must stay unset here: in Chrome they take precedence over the
+ * ::-webkit-scrollbar rules and macOS then shows auto-hiding overlay bars, so
+ * horizontal scrolling had no visible thumb. */
+.audacity-mode #au-scroll{scrollbar-color:auto;scrollbar-width:auto}
+.audacity-mode #au-scroll::-webkit-scrollbar{width:15px;height:15px;background:#ededee}
+.audacity-mode #au-scroll::-webkit-scrollbar-track{background:#fafafa}
+/* As in Audacity, the horizontal bar starts at the track panel's right edge and
+ * the vertical bar below the timeline ruler. */
+.audacity-mode #au-scroll::-webkit-scrollbar-track:horizontal{box-shadow:inset 0 1px #e6e6e5;margin-left:var(--au-gutter,188px)}
+.audacity-mode #au-scroll::-webkit-scrollbar-track:vertical{box-shadow:inset 1px 0 #e6e6e5;margin-top:31px}
+.audacity-mode #au-scroll::-webkit-scrollbar-thumb{background:#808080;background-clip:padding-box;border:0 solid transparent;border-radius:8px}
+.audacity-mode #au-scroll::-webkit-scrollbar-thumb:horizontal{border-width:4px 2px 3px;min-width:24px}
+.audacity-mode #au-scroll::-webkit-scrollbar-thumb:vertical{border-width:2px 3px 2px 4px;min-height:24px}
+.audacity-mode #au-scroll::-webkit-scrollbar-thumb:hover{background-color:#6a6a6a}
+.audacity-mode #au-scroll::-webkit-scrollbar-thumb:active{background-color:#555}
+.audacity-mode #au-scroll::-webkit-scrollbar-corner{background:#fafafa}
+/* Per-clip mute (setClipMuted): dimmed waveform like the Freestyle Studio's muted clip; lane mute is unchanged. */
+.au-clip.au-clip-muted .au-clip-body{opacity:.35;filter:grayscale(1)}.au-clip.au-clip-muted .au-clip-head>span{opacity:.6;font-style:italic}.au-clip.au-clip-muted .au-clip-head>span::after{content:' · muted';font-style:normal}.au-clip.au-clip-mute-pending .au-clip-head>span::after{content:' · muted (saved; reload to hear)'}
+
+.au-waveform-loading{position:absolute;top:45%;left:12px;color:#4d638a99;font-size:10px;white-space:nowrap;pointer-events:none}
+
+/* Audacity 3.2.1 TrackInfo in a 95px column: controls stack at fixed native
+ * sizes and, like TrackInfo::Hide*, lower items drop out of short tracks
+ * instead of overflowing under the Select bar. */
+.au-track-panel{container-type:size;container-name:au-track-info}
+.au-gain-label{font-size:8px;line-height:8px;margin:3px 3px -3px}
+.au-track-panel input[type=range]{height:15px;width:calc(100% - 6px);margin:0 3px}
+.au-track-format{font-size:9px;line-height:11px;margin:4px 1px 0;white-space:nowrap;overflow:hidden}
+@container au-track-info (max-height:168px){.au-track-format{display:none}}
+@container au-track-info (max-height:128px){.au-track-panel>.au-gain-label:nth-of-type(2),.au-track-panel>input[data-action=pan]{display:none}}
+@container au-track-info (max-height:98px){.au-track-panel>.au-gain-label,.au-track-panel>input[data-action=gain]{display:none}}
+
+/* Realtime effects side panel (docked left of the tracks). */
+.au-effects-panel{position:absolute;left:0;top:0;bottom:0;width:232px;box-sizing:border-box;z-index:3;display:flex;flex-direction:column;background:var(--au-toolbar,#ebebeb);border-right:1px solid #8d92a3;color:#17181b;font:12px Arial,Helvetica,sans-serif}
+.au-effects-panel[hidden]{display:none}
+#audacity-workspace.au-with-effects{left:232px}
+.au-fx-head{display:flex;align-items:center;justify-content:space-between;height:28px;padding:0 6px 0 10px;border-bottom:1px solid #c3c6cf;background:#dfe2ea}
+.au-fx-head strong{font-size:12px}
+.au-effects-panel button{font:inherit;color:inherit;cursor:pointer}
+.au-fx-close{border:0;background:none;font-size:16px!important;line-height:1;width:22px;height:22px;border-radius:3px}
+.au-fx-close:hover,.au-fx-more:hover{background:#cfd4e0}
+.au-fx-body{flex:1;overflow:auto;padding:6px 8px}
+.au-fx-section{margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid #c9ccd5}
+.au-fx-section:last-child{border-bottom:0}
+.au-fx-section>header{display:flex;align-items:center;gap:6px;margin-bottom:6px}
+.au-fx-section h3{margin:0;font-size:12px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.au-fx-list{list-style:none;margin:0 0 6px;padding:0;display:flex;flex-direction:column;gap:3px}
+.au-fx-row{display:flex;align-items:center;gap:3px;height:28px;border-radius:3px}
+.au-fx-grip{width:12px;display:flex;justify-content:center;color:#7a7f8e;cursor:grab}
+.au-effects-panel .au-fx-power{flex:none;width:26px;height:26px;display:inline-flex;align-items:center;justify-content:center;border:1px solid #9aa0aa;border-radius:3px;background:#3e6fd8;color:#fff!important;padding:0}
+.au-effects-panel .au-fx-power[aria-pressed="false"]{background:#f4f4f6;color:#70757f!important}
+.au-fx-power:disabled{opacity:.45;cursor:default}
+.au-effects-panel span.au-fx-power{background:#d8dae0;border-style:dashed}
+.au-fx-name{flex:1;min-width:0;height:26px;border:1px solid #9aa0aa;border-radius:3px;background:var(--au-info-button,#bfc8d7);text-align:left;padding:0 8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+button.au-fx-name:hover{background:#aebbd2}
+.au-fx-off .au-fx-name{color:#5d626d!important;background:#dcdfe6}
+.au-fx-pending .au-fx-name{display:flex;align-items:center;font-style:italic;opacity:.7}
+.au-fx-more{flex:none;width:20px;height:26px;border:0;background:none;border-radius:3px;padding:0}
+.au-fx-dragging{opacity:.4}.au-fx-drop{box-shadow:0 -2px 0 #2f62d0}
+.au-fx-empty{color:#5d626d;font-size:11px;padding:4px 2px;list-style:none}
+.au-fx-error{color:#a12020;font-size:11px;margin:0 0 6px}
+.au-fx-add{width:100%;height:26px;border:1px solid #9aa0aa;border-radius:3px;background:#f6f6f8}
+.au-fx-add:hover:not(:disabled){background:#e4e8f2}
+.au-fx-status{min-height:18px;padding:3px 10px;font-size:11px;color:#3c4150;border-top:1px solid #c9ccd5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.au-fx-menu{position:fixed;z-index:10000;display:flex;background:#fbfbfc;color:#17181b;border:1px solid #8d92a3;box-shadow:0 6px 18px rgba(0,0,0,.28);font:12px Arial,Helvetica,sans-serif;padding:3px 0;flex-direction:column;min-width:150px;max-height:calc(100vh - 8px);box-sizing:border-box}
+.au-fx-menu.au-fx-add-menu{flex-direction:row;padding:0}
+.au-fx-menu button{display:flex;justify-content:space-between;gap:14px;width:100%;border:0;background:none;text-align:left;padding:5px 12px;font:inherit;color:inherit;white-space:nowrap;cursor:default}
+.au-fx-menu button:hover:not(:disabled),.au-fx-menu button.active{background:#3e6fd8;color:#fff}
+.au-fx-menu button:disabled{color:#9a9ea8}
+.au-fx-menu hr{border:0;border-top:1px solid #d5d7de;margin:3px 0}
+.au-fx-groups,.au-fx-items{display:flex;flex-direction:column;overflow:auto;padding:3px 0;flex:none}
+.au-fx-menu.au-fx-add-menu{overflow:hidden}.au-fx-groups button,.au-fx-items button{flex:none}
+.au-fx-items{border-left:1px solid #d5d7de;min-width:190px}.au-fx-items[hidden]{display:none}
+
+/* Recording take: grows on the record track, then settles into the saved clip. */
+.au-recording-clip{position:absolute;top:2px;bottom:3px;box-sizing:border-box;overflow:hidden;z-index:7;pointer-events:none;background:#e9c9c9;border:1px solid #b33a3a;border-right:2px solid #d21f1f}
+.au-recording-clip .au-clip-head{background:#c94a4a;color:#fff;border-color:#b33a3a;font-size:11px;height:18px;line-height:18px;padding:0 5px;white-space:nowrap;overflow:hidden}
+.au-recording-clip .au-clip-body{position:absolute;left:0;right:0;top:19px;bottom:0}
+.au-recording-wave{display:block;width:100%;height:100%}
+.au-recording-wave path{fill:none;stroke:#8a1f1f;stroke-width:1;vector-effect:non-scaling-stroke}
+.au-recording-clip[data-phase="saving"]{background:#d9d9de;border-color:#8a8fa3;border-right-width:1px}
+.au-recording-clip[data-phase="saving"] .au-clip-head{background:#8a8fa3}
+.au-recording-clip[data-phase="saving"] .au-recording-wave path{stroke:#4a5070}
+.au-recording-clip[data-phase="arming"]{opacity:.7}
+.audacity-mode #au-record.au-record-arming{animation:au-record-arming 1s steps(2,end) infinite}
+@keyframes au-record-arming{50%{opacity:.45}}
+
+/* Round 2: cascading menus, Tools / Edit toolbars, Zoom tool, upper-third trim handles. */
+.context-menu{padding:4px 0}
+.context-menu button{display:flex;align-items:center;justify-content:space-between;gap:28px;width:100%;white-space:nowrap;outline:none}
+.context-menu button small{margin-left:auto;text-align:right;min-width:14px}
+.context-menu button.au-menu-active:not(:disabled),.context-menu button.au-menu-open:not(:disabled){background:#3e6fd8;color:#fff}
+.context-menu button.au-menu-active:not(:disabled) small,.context-menu button.au-menu-open:not(:disabled) small{color:#e6ecfb}
+.context-menu button:disabled{color:#9a9ea8;opacity:1}
+.context-menu.au-submenu{position:fixed;overflow:auto}
+.context-menu.au-menu-root{overflow:visible}
+#au-menus button.au-menu-title-open{background:#3e6fd8;color:#fff}
+.au-tool-grid.au-tools-toolbar{grid-template-columns:repeat(3,26px);grid-auto-flow:row}
+.au-tool-grid.au-edit-toolbar{grid-template-columns:repeat(5,26px);grid-auto-flow:row}
+#audacity-workspace[data-tool="zoom"] .au-lane,#audacity-workspace[data-tool="zoom"] .au-clip,#audacity-workspace[data-tool="zoom"] .au-clip-head,#audacity-workspace[data-tool="zoom"] .au-trim-left,#audacity-workspace[data-tool="zoom"] .au-trim-right{cursor:zoom-in}
+.au-zoom-band{position:absolute;top:0;bottom:0;z-index:9;pointer-events:none;background:rgba(62,111,216,.22);border-left:1px dashed #1f3f8f;border-right:1px dashed #1f3f8f}
+.au-zoom-band[hidden]{display:none}
+/* Trim handles live on the upper third of the clip edges (below the title bar); the rest of the edge selects. */
+.audacity-mode .au-trim-left,.audacity-mode .au-trim-right{top:16px;bottom:auto;height:max(14px,calc((100% - 16px)/3));width:6px}

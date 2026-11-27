@@ -1,0 +1,45 @@
+/* Street Band — Logic Pro plug-in window chrome around the engine GUI mirror. */
+dialog.logic-plugin-window{padding:0!important;border:1px solid #0d0d0d!important;border-radius:10px!important;background:#2b2b2b!important;color:#dcdcdc!important;box-shadow:0 18px 50px #000a,0 0 0 1px #ffffff12 inset!important;overflow:hidden;font:12px var(--lg-font,-apple-system,BlinkMacSystemFont,"SF Pro Text",sans-serif)!important;min-width:420px}
+dialog.logic-plugin-window>header{height:26px!important;display:flex!important;align-items:center;justify-content:center;position:relative;padding:0 30px!important;background:linear-gradient(#3a3a3a,#313131)!important;border-bottom:1px solid #171717!important;color:#cfcfcf!important;font:600 12px var(--lg-font,-apple-system,sans-serif)!important}
+dialog.logic-plugin-window>header .logic-plugin-title{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+dialog.logic-plugin-window>header button{position:absolute;left:8px;top:6px;width:12px!important;height:12px!important;min-height:12px!important;padding:0!important;border-radius:50%!important;border:0!important;background:#ff5f57!important;color:transparent!important;font-size:9px!important;line-height:12px!important;box-shadow:none!important}
+dialog.logic-plugin-window>header button:hover{color:#5a0d0a!important}
+dialog.logic-plugin-window .dialog-content{padding:0!important;background:#2b2b2b!important}
+/* Logic replaces the FL tab strip with Controls / Editor. */
+dialog.logic-plugin-window .plugin-window-tabs{display:none!important}
+.logic-plugin-header{display:flex;align-items:center;justify-content:space-between;gap:8px;height:30px;padding:0 8px;background:#333;border-bottom:1px solid #1b1b1b}
+.logic-plugin-header-left,.logic-plugin-header-right{display:flex;align-items:center;gap:4px;min-width:0}
+.logic-plugin-header button,.logic-plugin-subheader button{all:unset;box-sizing:border-box;height:20px;padding:0 8px;border-radius:4px;background:#454545;color:#e2e2e2;font:500 11px/20px var(--lg-font,-apple-system,sans-serif);white-space:nowrap;cursor:pointer;box-shadow:inset 0 1px 0 #ffffff14,0 1px 0 #0006}
+.logic-plugin-header button:hover:not(:disabled),.logic-plugin-subheader button:hover:not(:disabled){background:#525252}
+.logic-plugin-header button:disabled{color:#7a7a7a;background:#3a3a3a;cursor:default;box-shadow:none}
+.logic-plugin-header button:focus-visible,.logic-plugin-subheader button:focus-visible{outline:2px solid #3d8bf7}
+.logic-plugin-header .logic-plugin-power{width:22px;padding:0;text-align:center;color:#8a8a8a}
+.logic-plugin-header .logic-plugin-power.on{color:#3d8bf7}
+.logic-plugin-header .logic-plugin-link{width:24px;padding:0;text-align:center;color:#9a9a9a}
+.logic-plugin-header .logic-plugin-link.on{color:#f0f0f0;background:#7a4fc4}
+.logic-plugin-header .logic-plugin-setting{max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.logic-plugin-header .logic-plugin-prev,.logic-plugin-header .logic-plugin-next{width:20px;padding:0;text-align:center;font-size:9px}
+.logic-plugin-subheader{display:flex;align-items:center;justify-content:space-between;gap:8px;height:26px;padding:0 10px;background:#262626;border-bottom:1px solid #171717}
+.logic-plugin-name{font:600 11px var(--lg-font,-apple-system,sans-serif);color:#cfcfcf;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.logic-plugin-modes{display:flex;border-radius:5px;overflow:hidden;box-shadow:0 0 0 1px #151515}
+.logic-plugin-modes button{border-radius:0!important;background:#3d3d3d!important;box-shadow:none!important;height:18px!important;line-height:18px!important}
+.logic-plugin-modes button.selected{background:#6a6a6a!important;color:#fff!important}
+/* View %: the panel is sized, not transformed; the GUI mirror maps input from its on-screen rectangle. */
+dialog.logic-plugin-window .plugin-gui-panel,dialog.logic-plugin-window .plugin-eq-panel{width:calc(560px * var(--logic-plugin-view,1));max-width:calc(100vw - 40px)}
+dialog.logic-plugin-window .plugin-gui-panel,dialog.logic-plugin-window .plugin-parameter-panel,dialog.logic-plugin-window .plugin-eq-panel{padding:8px!important;background:#1f1f1f}
+dialog.logic-plugin-window .native-plugin-viewport{border-radius:3px;background:#111}
+/* Controls: Logic's generic parameter view (label left, slider right). */
+dialog.logic-plugin-window .plugin-parameter-page{display:flex;flex-direction:column;gap:2px;max-height:min(60vh,520px);overflow:auto}
+dialog.logic-plugin-window .plugin-parameter-page label[data-parameter-row]{display:grid;grid-template-columns:minmax(120px,40%) 1fr;align-items:center;gap:10px;padding:3px 6px;border-radius:3px;color:#d2d2d2;font:11px var(--lg-font,-apple-system,sans-serif)}
+dialog.logic-plugin-window .plugin-parameter-page label[data-parameter-row]:nth-child(odd){background:#262626}
+dialog.logic-plugin-window .plugin-parameter-page input[type=range]{accent-color:#3d8bf7}
+dialog.logic-plugin-window .plugin-parameter-toolbar,dialog.logic-plugin-window .plugin-slots{font-size:10px}
+dialog.logic-eq-window .mixer-eq-section{padding:8px;background:#1f1f1f}
+
+/* Editor view hugs the plug-in like a Logic plug-in window (no empty stage around a small GUI). */
+dialog.logic-plugin-window[data-plugin-tab="gui"]{width:fit-content!important;max-width:95vw!important}
+dialog.logic-plugin-window[data-plugin-tab="gui"] .plugin-gui-panel{width:fit-content;min-width:min(520px,calc(100vw - 40px));box-sizing:border-box}
+dialog.logic-plugin-window[data-plugin-tab="gui"] .native-plugin-viewport{width:fit-content;min-width:100%;box-sizing:border-box;margin-bottom:0;max-height:78vh;display:flex;flex-direction:column;align-items:center}
+dialog.logic-plugin-window .plugin-original-gui:disabled{display:none!important}
+dialog.logic-plugin-window .plugin-gui-status{font:10px var(--lg-font,-apple-system,sans-serif);color:#8a8a8a;align-self:flex-start}
+dialog.logic-plugin-window[data-plugin-tab="gui"] .native-plugin-viewport :is(img,canvas){zoom:var(--logic-plugin-view,1);max-width:none}

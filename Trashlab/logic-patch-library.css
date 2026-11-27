@@ -1,0 +1,29 @@
+/* Logic Library (Y): patches for the selected software-instrument track (logic-patch-library.js).
+   Shown in the left Library pane in place of the shared cloud browser content. */
+#logic-patch-library{display:none}
+body.logic-show-library #logic-patch-library{display:flex;flex-direction:column;flex:1 1 auto;min-height:0;background:#262626;color:#d6d6d6;font:12px -apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Arial,sans-serif}
+body.logic-show-library aside.browser>:not(.panel-heading):not(#logic-patch-library){display:none!important}
+#logic-patch-library .lpl-head{display:flex;flex-direction:column;gap:2px;padding:8px 10px 6px;border-bottom:1px solid #1a1a1a}
+#logic-patch-library .lpl-track{font-weight:600;color:#e6e6e6;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#logic-patch-library .lpl-current{color:#9a9a9a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#logic-patch-library .lpl-search{margin:6px 10px}
+#logic-patch-library .lpl-search input{width:100%;box-sizing:border-box;height:22px;padding:0 8px;border:1px solid #3c3c3c;border-radius:6px;background:#1c1c1c;color:#ddd;font:inherit;outline:0}
+#logic-patch-library .lpl-search input:focus-visible{border-color:#4a86e8}
+#logic-patch-library .lpl-columns{display:grid;grid-template-columns:minmax(0,45%) minmax(0,1fr);flex:1 1 auto;min-height:0;border-top:1px solid #1a1a1a}
+#logic-patch-library .lpl-categories,#logic-patch-library .lpl-patches{overflow:auto;min-height:0}
+#logic-patch-library .lpl-categories{border-right:1px solid #1a1a1a}
+#logic-patch-library button{display:flex;align-items:center;justify-content:space-between;gap:6px;width:100%;min-height:20px;padding:2px 8px;border:0;border-radius:0;background:transparent;color:inherit;font:inherit;text-align:left;cursor:default}
+#logic-patch-library button:nth-child(even){background:#2a2a2a}
+#logic-patch-library button:hover:not(:disabled){background:#333}
+#logic-patch-library button.selected,#logic-patch-library button.current{background:#2d62d1;color:#fff}
+#logic-patch-library button:focus-visible{outline:2px solid #4a86e8;outline-offset:-2px}
+#logic-patch-library button:disabled{opacity:.55}
+#logic-patch-library button.loading{opacity:1;background:#3a3a3a}
+#logic-patch-library .lpl-category span{color:#8e8e8e}
+#logic-patch-library .lpl-patch{flex-direction:column;align-items:flex-start;gap:0}
+#logic-patch-library .lpl-patch-name{max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#logic-patch-library .lpl-patch small{max-width:100%;color:#8e8e8e;font-size:10.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#logic-patch-library .lpl-patch.current small{color:#dce6fb}
+#logic-patch-library .lpl-empty{margin:0;padding:10px;color:#8e8e8e;line-height:1.4}
+#logic-patch-library .lpl-error{color:#e8a0a0}
+#logic-patch-library .lpl-status{margin:0;padding:6px 10px;border-top:1px solid #1a1a1a;color:#b5b5b5}

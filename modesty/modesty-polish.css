@@ -1,0 +1,417 @@
+/* Modesty polish layer (linked last). Native-looking menus, dialogs and effect windows, toolbar depth,
+ * pressed / hover states, short transitions and toolbar wrapping for narrow windows.
+ * Selectors start with body.audacity-mode so they also win over the stylesheets that are injected later
+ * (plugin-editor.css, mixer-tools.css, audacity-display-preferences.css). No layout the timeline measures is changed. */
+body.audacity-mode{
+ --mo-ui:-apple-system,BlinkMacSystemFont,"Helvetica Neue","Segoe UI",Arial,sans-serif;
+ --mo-accent:#3e6fd8;--mo-accent-hi:#5a8cf0;--mo-accent-lo:#2f5cc0;
+ --mo-window:#ececec;--mo-title-hi:#ebe9eb;--mo-title-lo:#d5d3d5;--mo-title-edge:#b1afb1;
+ --mo-ink:#262626;--mo-ink-2:#5b5b5f;--mo-ink-3:rgba(0,0,0,.3);
+ --mo-edge:#b4b4b4;--mo-field-edge:#bdbdbd;
+ --mo-ease:cubic-bezier(.2,.7,.3,1);--mo-fast:90ms;--mo-med:140ms;
+ --mo-pop-shadow:0 0 0 .5px rgba(0,0,0,.28),0 10px 28px rgba(0,0,0,.26),0 2px 6px rgba(0,0,0,.12);
+ --mo-window-shadow:0 0 0 .5px rgba(0,0,0,.35),0 24px 68px rgba(0,0,0,.38),0 4px 14px rgba(0,0,0,.18);
+}
+
+/* ───────── Menu bar ───────── */
+body.audacity-mode #au-menus{height:25px;align-items:center;padding:0 6px;gap:1px;background:linear-gradient(#f2f2f2,#e8e8e8);border-bottom:1px solid #cfcfcf;font-family:var(--mo-ui);user-select:none;-webkit-user-select:none;overflow:hidden}
+body.audacity-mode #au-menus button{height:21px;min-height:21px;padding:0 9px;font:13px var(--mo-ui);border:0;border-radius:4px;background:transparent;color:#1d1d1f;white-space:nowrap;cursor:default;transition:background-color var(--mo-fast) linear}
+body.audacity-mode #au-menus button:hover{background:rgba(0,0,0,.08);border:0}
+body.audacity-mode #au-menus button:active{background:rgba(0,0,0,.14)}
+body.audacity-mode #au-menus button.au-menu-title-open,body.audacity-mode #au-menus button.au-menu-title-open:hover{background:var(--mo-accent);color:#fff;transition:none}
+body.audacity-mode #au-menus button:focus-visible{outline:2px solid rgba(62,111,216,.7);outline-offset:-2px}
+
+/* Submenus are position:fixed children of the root menu: the root must not get a filter / transform (containing block). */
+/* ───────── Menus: menu bar drop-downs, track / clip / timeline menus, context menus, submenus ───────── */
+body.audacity-mode .context-menu{min-width:208px;padding:5px;background:#f4f4f4;color:#1d1d1f;border:0;border-radius:6px;box-shadow:var(--mo-pop-shadow);font:13px var(--mo-ui);user-select:none;-webkit-user-select:none;cursor:default;scrollbar-width:thin;overflow-y:auto}
+body.audacity-mode .context-menu.au-menu-root{overflow:visible}
+body.audacity-mode .context-menu.au-submenu{overflow-y:auto}
+body.audacity-mode .context-menu button{position:relative;display:flex;align-items:center;justify-content:flex-start;gap:0;width:100%;height:22px;min-height:22px;padding:0 9px 0 22px;border:0;border-radius:4px;background:transparent;box-shadow:none;color:inherit;font:13px/22px var(--mo-ui);text-align:left;white-space:nowrap;cursor:default;outline:none}
+body.audacity-mode .context-menu button:hover{background:transparent;border:0;color:inherit}
+body.audacity-mode .context-menu .au-menu-label{flex:1 1 auto;overflow:hidden;text-overflow:ellipsis}
+body.audacity-mode .context-menu button small{flex:none;margin-left:34px;min-width:0;font:13px/22px var(--mo-ui);color:rgba(0,0,0,.46);letter-spacing:.4px;text-align:right}
+body.audacity-mode .context-menu button small:empty{margin-left:12px}
+body.audacity-mode .context-menu button.au-menu-active:not(:disabled),body.audacity-mode .context-menu button.au-menu-open:not(:disabled){background:var(--mo-accent);color:#fff}
+body.audacity-mode .context-menu button.au-menu-active:not(:disabled) small,body.audacity-mode .context-menu button.au-menu-open:not(:disabled) small{color:rgba(255,255,255,.86)}
+body.audacity-mode .context-menu button:disabled{color:var(--mo-ink-3);opacity:1}
+body.audacity-mode .context-menu button:disabled small{color:rgba(0,0,0,.22)}
+body.audacity-mode .context-menu hr{height:1px;margin:5px 9px;border:0;background:rgba(0,0,0,.11)}
+/* Submenu rows: the ▸ glyph becomes a drawn chevron. */
+body.audacity-mode .context-menu button[aria-haspopup] small{font-size:0;letter-spacing:0;width:8px;height:22px;position:relative;color:rgba(0,0,0,.55)}
+body.audacity-mode .context-menu button[aria-haspopup] small::after{content:"";position:absolute;right:2px;top:7px;width:5px;height:5px;border-top:1.6px solid currentColor;border-right:1.6px solid currentColor;transform:rotate(45deg);border-radius:.5px}
+body.audacity-mode .context-menu button[aria-haspopup]:disabled small{color:rgba(0,0,0,.22)}
+/* Checked rows: the mark sits in the left gutter, as in the native menus. */
+body.audacity-mode .context-menu button[data-checked] small{position:absolute;left:0;top:0;width:22px;margin:0;font-size:0;letter-spacing:0;color:inherit}
+body.audacity-mode .context-menu button[data-checked] small::after{content:"";position:absolute;left:8px;top:5px;width:4px;height:9px;border-right:1.8px solid currentColor;border-bottom:1.8px solid currentColor;transform:rotate(40deg)}
+body.audacity-mode .context-menu button[data-checked].au-menu-active:not(:disabled) small{color:#fff}
+/* Closing fades out (opening is immediate), like the native menus. */
+body.audacity-mode #context-menu{transition:opacity var(--mo-med) ease-out,visibility 0s linear 0s;opacity:1;visibility:visible}
+body.audacity-mode #context-menu.hidden{display:block!important;opacity:0;visibility:hidden;pointer-events:none;transition:opacity var(--mo-med) ease-out,visibility 0s linear var(--mo-med)}
+body.audacity-mode #context-menu.hidden *{pointer-events:none}
+
+/* Realtime-effects pop-ups use the same menu chrome. */
+body.audacity-mode .au-fx-menu{padding:5px;background:rgba(246,246,246,.97);color:#1d1d1f;border:0;border-radius:6px;box-shadow:var(--mo-pop-shadow);font:13px var(--mo-ui);min-width:170px;user-select:none;-webkit-user-select:none}
+body.audacity-mode .au-fx-menu.au-fx-add-menu{padding:0}
+body.audacity-mode .au-fx-menu button{height:22px;min-height:22px;padding:0 12px;border:0;border-radius:4px;background:transparent;font:13px/22px var(--mo-ui);color:inherit}
+body.audacity-mode .au-fx-menu button:hover:not(:disabled),body.audacity-mode .au-fx-menu button.active{background:var(--mo-accent);color:#fff;border:0}
+body.audacity-mode .au-fx-menu button:disabled{color:var(--mo-ink-3);opacity:1}
+body.audacity-mode .au-fx-menu hr{height:1px;margin:5px 9px;border:0;background:rgba(0,0,0,.11)}
+body.audacity-mode .au-fx-groups,body.audacity-mode .au-fx-items{padding:5px}
+body.audacity-mode .au-fx-items{border-left:1px solid rgba(0,0,0,.11)}
+
+/* ───────── Dialog windows ───────── */
+body.audacity-mode .studio-dialog{padding:0;border:0;border-radius:10px;background:var(--mo-window);color:var(--mo-ink);box-shadow:var(--mo-window-shadow);font:13px var(--mo-ui);overflow:hidden;max-height:calc(100vh - 24px);display:none;flex-direction:column}
+body.audacity-mode .studio-dialog[open]{display:flex;animation:mo-window-in var(--mo-med) var(--mo-ease)}
+body.audacity-mode .studio-dialog::backdrop{background:rgba(20,22,30,.22);-webkit-backdrop-filter:none;backdrop-filter:none;animation:mo-fade-in var(--mo-med) ease-out}
+@keyframes mo-window-in{from{opacity:0;transform:translateY(6px) scale(.975)}to{opacity:1;transform:none}}
+@keyframes mo-fade-in{from{opacity:0}to{opacity:1}}
+body.audacity-mode .studio-dialog>header{position:relative;flex:none;display:flex;align-items:center;justify-content:center;height:28px;min-height:28px;padding:0 66px;background:linear-gradient(var(--mo-title-hi),var(--mo-title-lo));border-bottom:1px solid var(--mo-title-edge);box-shadow:inset 0 1px 0 rgba(255,255,255,.75);color:#3a3a3c;font:600 13px/28px var(--mo-ui);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;user-select:none;-webkit-user-select:none}
+/* Window close control: the red title-bar button, with the two inactive buttons of a dialog window beside it. */
+body.audacity-mode .studio-dialog>header>button[aria-label^="Close"],body.audacity-mode .studio-dialog .mix-close,body.audacity-mode .studio-dialog .plugin-editor-close{position:absolute;left:9px;top:8px;width:12px;height:12px;min-width:0;min-height:0;margin:0;padding:0;border:0;border-radius:50%;background:radial-gradient(circle at 50% 35%,#ff7b72,#fc5b52 70%);box-shadow:inset 0 0 0 .5px #dd3f38,20px 0 0 -.5px #d0cfd0,20px 0 0 0 #bdbcbd,40px 0 0 -.5px #d0cfd0,40px 0 0 0 #bdbcbd;font-size:0;line-height:0;color:transparent;cursor:default;overflow:visible;transition:filter var(--mo-fast) linear}
+body.audacity-mode .studio-dialog>header>button[aria-label^="Close"]::before,body.audacity-mode .studio-dialog .mix-close::before,body.audacity-mode .studio-dialog .plugin-editor-close::before{content:"";position:absolute;inset:3px;background:linear-gradient(45deg,transparent 43%,#7d1410 43%,#7d1410 57%,transparent 57%),linear-gradient(-45deg,transparent 43%,#7d1410 43%,#7d1410 57%,transparent 57%);opacity:0;transition:opacity var(--mo-fast) linear}
+body.audacity-mode .studio-dialog>header:hover>button[aria-label^="Close"]::before,body.audacity-mode .studio-dialog header:hover .mix-close::before,body.audacity-mode .studio-dialog header:hover .plugin-editor-close::before,body.audacity-mode .studio-dialog header button:focus-visible::before{opacity:1}
+body.audacity-mode .studio-dialog>header>button[aria-label^="Close"]:hover,body.audacity-mode .studio-dialog .mix-close:hover,body.audacity-mode .studio-dialog .plugin-editor-close:hover{background:radial-gradient(circle at 50% 35%,#ff7b72,#fc5b52 70%);border:0}
+body.audacity-mode .studio-dialog>header>button[aria-label^="Close"]:active,body.audacity-mode .studio-dialog .mix-close:active,body.audacity-mode .studio-dialog .plugin-editor-close:active{filter:brightness(.82)}
+body.audacity-mode .studio-dialog>header>button[aria-label^="Close"]:focus-visible,body.audacity-mode .studio-dialog .mix-close:focus-visible,body.audacity-mode .studio-dialog .plugin-editor-close:focus-visible{outline:2px solid rgba(62,111,216,.75);outline-offset:1px}
+
+body.audacity-mode .studio-dialog .dialog-content{flex:1 1 auto;min-height:0;overflow:auto;padding:16px 20px 18px;color:var(--mo-ink);font:13px/1.45 var(--mo-ui)}
+body.audacity-mode .studio-dialog .dialog-content p{margin:0 0 10px;font-size:13px;line-height:1.45;color:var(--mo-ink)}
+body.audacity-mode .studio-dialog .dialog-content p:last-child{margin-bottom:0}
+body.audacity-mode .studio-dialog .dialog-content label{font-size:12px;color:#333336}
+body.audacity-mode .studio-dialog .dialog-content pre{font:11px/1.45 ui-monospace,Menlo,monospace;background:#fff;border:1px solid var(--mo-field-edge);border-radius:3px;padding:8px;color:#1d1d1f}
+body.audacity-mode .studio-dialog .dialog-content a{color:#2a62c9}
+
+/* Push buttons. */
+body.audacity-mode .studio-dialog .dialog-content button,body.audacity-mode .studio-dialog footer button{min-height:22px;height:auto;padding:2px 14px;margin:6px 6px 0 0;border:0;border-radius:5px;background:linear-gradient(#fff,#f6f6f6);box-shadow:0 0 0 .5px rgba(0,0,0,.26),0 1px 1.5px rgba(0,0,0,.18);color:#1d1d1f;font:13px/18px var(--mo-ui);cursor:default;transition:background-color var(--mo-fast) linear,box-shadow var(--mo-fast) linear,filter var(--mo-fast) linear}
+body.audacity-mode .studio-dialog .dialog-content button:hover:not(:disabled),body.audacity-mode .studio-dialog footer button:hover:not(:disabled){background:linear-gradient(#fff,#efefef);border:0;color:#1d1d1f}
+body.audacity-mode .studio-dialog .dialog-content button:active:not(:disabled),body.audacity-mode .studio-dialog footer button:active:not(:disabled){background:linear-gradient(#e9e9e9,#dedede);box-shadow:0 0 0 .5px rgba(0,0,0,.3),inset 0 1px 2px rgba(0,0,0,.14)}
+body.audacity-mode .studio-dialog .dialog-content button:disabled,body.audacity-mode .studio-dialog footer button:disabled{opacity:.5}
+body.audacity-mode .studio-dialog .dialog-content button:focus-visible,body.audacity-mode .studio-dialog footer button:focus-visible{outline:3px solid rgba(62,111,216,.5);outline-offset:1px}
+body.audacity-mode .studio-dialog .dialog-content .primary,body.audacity-mode .studio-dialog footer .primary,body.audacity-mode .studio-dialog .dialog-content .primary:hover:not(:disabled),body.audacity-mode .studio-dialog footer .primary:hover:not(:disabled){background:linear-gradient(var(--mo-accent-hi),var(--mo-accent));box-shadow:0 0 0 .5px var(--mo-accent-lo),0 1px 1.5px rgba(20,50,120,.4),inset 0 1px 0 rgba(255,255,255,.22);color:#fff;border:0}
+body.audacity-mode .studio-dialog .dialog-content .primary:hover:not(:disabled),body.audacity-mode .studio-dialog footer .primary:hover:not(:disabled){filter:brightness(1.06)}
+body.audacity-mode .studio-dialog .dialog-content .primary:active:not(:disabled),body.audacity-mode .studio-dialog footer .primary:active:not(:disabled){background:linear-gradient(var(--mo-accent),var(--mo-accent-lo));filter:none}
+body.audacity-mode .studio-dialog .dialog-content .primary:disabled,body.audacity-mode .studio-dialog footer .primary:disabled{background:linear-gradient(#b9c8e6,#a9badc);box-shadow:0 0 0 .5px #98aacd;opacity:1;color:#f3f6fc}
+body.audacity-mode .studio-dialog footer{gap:8px}
+body.audacity-mode .studio-dialog footer button{margin:0;min-width:72px}
+/* Prompt forms (name, value): fields full width, buttons right aligned with the default button last. */
+body.audacity-mode .studio-dialog .dialog-content>form:has(>button){display:flex;flex-wrap:wrap;justify-content:flex-end;align-items:center;gap:8px}
+body.audacity-mode .studio-dialog .dialog-content>form:has(>button)>:not(button){flex:0 0 100%;margin:0}
+body.audacity-mode .studio-dialog .dialog-content>form:has(>button)>button{margin:8px 0 0;min-width:72px}
+body.audacity-mode .studio-dialog .dialog-content>form:has(>button)>button.primary{order:2}
+
+/* Fields. */
+body.audacity-mode .studio-dialog input:not([type=range]):not([type=checkbox]):not([type=radio]):not([type=file]),body.audacity-mode .studio-dialog textarea{min-height:22px;padding:2px 6px;border:1px solid var(--mo-field-edge);border-top-color:#a9a9a9;border-radius:3px;background:#fff;box-shadow:inset 0 1px 1.5px rgba(0,0,0,.08);color:#1d1d1f;font:13px var(--mo-ui);transition:box-shadow var(--mo-fast) linear,border-color var(--mo-fast) linear}
+body.audacity-mode .studio-dialog input:not([type=range]):not([type=checkbox]):not([type=radio]):focus-visible,body.audacity-mode .studio-dialog textarea:focus-visible,body.audacity-mode .studio-dialog select:focus-visible{outline:0;border-color:#6f97e6;box-shadow:0 0 0 3px rgba(62,111,216,.42)}
+body.audacity-mode .studio-dialog input:disabled,body.audacity-mode .studio-dialog select:disabled{opacity:.5}
+/* Pop-up buttons: white field with the blue stepper cap. */
+body.audacity-mode .studio-dialog select{-webkit-appearance:none;appearance:none;min-height:22px;height:22px;padding:0 26px 0 8px;border:0;border-radius:5px;background-color:#fff;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='22'%3E%3Cdefs%3E%3ClinearGradient id='g' x2='0' y2='1'%3E%3Cstop stop-color='%235a8cf0'/%3E%3Cstop offset='1' stop-color='%233e6fd8'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect x='0' y='3' width='16' height='16' rx='4' fill='url(%23g)'/%3E%3Cpath d='M5 9.2 8 6.3l3 2.9M5 12.8l3 2.9 3-2.9' fill='none' stroke='%23fff' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 3px center;box-shadow:0 0 0 .5px rgba(0,0,0,.26),0 1px 1.5px rgba(0,0,0,.18);color:#1d1d1f;font:13px/22px var(--mo-ui);cursor:default}
+body.audacity-mode .studio-dialog select[multiple],body.audacity-mode .studio-dialog select[size]:not([size="1"]){height:auto;background-image:none;padding:2px;border-radius:3px}
+body.audacity-mode .studio-dialog input[type=checkbox],body.audacity-mode .studio-dialog input[type=radio]{accent-color:var(--mo-accent);width:14px;height:14px;margin:0 6px 0 0;vertical-align:-2px}
+body.audacity-mode .studio-dialog input[type=range]{accent-color:var(--mo-accent)}
+body.audacity-mode .studio-dialog progress{accent-color:var(--mo-accent);height:6px;border-radius:3px}
+body.audacity-mode .studio-dialog fieldset{border:1px solid rgba(0,0,0,.1);border-radius:6px;background:rgba(0,0,0,.035);box-shadow:inset 0 1px 2px rgba(0,0,0,.03)}
+body.audacity-mode .studio-dialog legend{font:12px var(--mo-ui);color:#4a4a4e;background:transparent}
+body.audacity-mode .studio-dialog audio{height:30px}
+
+/* Keyboard-shortcut sheet. */
+body.audacity-mode .studio-dialog .shortcuts{grid-template-columns:minmax(0,1fr) auto;gap:0;font:12px var(--mo-ui);border:1px solid rgba(0,0,0,.12);border-radius:5px;background:#fff;overflow:hidden}
+body.audacity-mode .studio-dialog .shortcuts>*{padding:4px 10px;border-bottom:1px solid rgba(0,0,0,.07);min-height:24px;display:flex;align-items:center}
+body.audacity-mode .studio-dialog .shortcuts>:nth-child(4n+1),body.audacity-mode .studio-dialog .shortcuts>:nth-child(4n+2){background:#f5f6f8}
+body.audacity-mode .studio-dialog .shortcuts kbd{justify-content:flex-end;color:#3a3a3c;background:transparent;border-radius:0;font:12px var(--mo-ui);letter-spacing:.5px;white-space:nowrap}
+
+/* Preferences: source-list tree on the left, grouped panel on the right, Help / Cancel / OK footer. */
+body.audacity-mode .studio-dialog.au-display-preferences-dialog{background:var(--mo-window);font:13px var(--mo-ui);color:var(--mo-ink)}
+body.audacity-mode .au-display-preferences-dialog .au-display-preferences-scope{font-size:11px;color:var(--mo-ink-2)}
+body.audacity-mode .au-display-preferences-tree{border:1px solid var(--mo-field-edge);border-radius:4px;background:#fff;padding:4px;box-shadow:inset 0 1px 2px rgba(0,0,0,.06)}
+body.audacity-mode .au-display-preferences-dialog .au-display-preferences-tree button{min-height:22px;height:22px;padding:0 8px;margin:0;border-radius:4px;background:transparent;box-shadow:none;font:13px/22px var(--mo-ui);color:#1d1d1f}
+body.audacity-mode .au-display-preferences-dialog .au-display-preferences-tree button:hover{background:rgba(0,0,0,.05)}
+body.audacity-mode .au-display-preferences-dialog .au-display-preferences-tree button[aria-selected=true]{background:var(--mo-accent);color:#fff;box-shadow:none}
+body.audacity-mode .au-display-preferences-panel h2{font:600 13px var(--mo-ui);margin:2px 0 10px}
+body.audacity-mode .au-display-preferences-dialog .au-display-preferences-panel label{font:13px var(--mo-ui);color:var(--mo-ink)}
+body.audacity-mode .au-display-preferences-dialog .au-display-preferences-panel select{padding:0 26px 0 8px;border:0;font:13px/22px var(--mo-ui)}
+body.audacity-mode .au-display-preferences-dialog footer{border-top:1px solid rgba(0,0,0,.12);padding-top:12px;margin-top:4px}
+body.audacity-mode .au-display-preferences-dialog footer button{min-height:22px;padding:2px 14px;font:13px/18px var(--mo-ui)}
+body.audacity-mode .au-display-preferences-dialog footer .au-display-preferences-help{margin-right:auto}
+
+/* Effect dialogs (Amplify, Normalize, catalog effects): controls, status line, Preview on the left, Cancel / Apply on the right. */
+body.audacity-mode .au-effect-form,body.audacity-mode .au-region-effect-form{gap:10px}
+body.audacity-mode .studio-dialog .au-effect-form label,body.audacity-mode .studio-dialog .au-region-effect-form label{margin:0;font-size:13px;color:var(--mo-ink)}
+body.audacity-mode .au-effect-form label:has(>input[type=checkbox]),body.audacity-mode .au-region-effect-form label:has(>input[type=checkbox]){justify-content:flex-start;gap:0}
+body.audacity-mode .au-effect-form input[type=number]{width:8em}
+body.audacity-mode .au-effect-form footer,body.audacity-mode .au-region-effect-form footer,body.audacity-mode .au-export-form footer,body.audacity-mode .au-tempo-form footer,body.audacity-mode .au-project-save-footer,body.audacity-mode .au-loop-time-form footer,body.audacity-mode .au-zoom-presets footer{margin-top:6px;padding-top:12px;border-top:1px solid rgba(0,0,0,.12);align-items:center}
+body.audacity-mode .au-effect-form footer .au-effect-preview,body.audacity-mode .au-region-effect-form footer .au-region-preview{margin-right:auto}
+body.audacity-mode .au-effect-form .au-effect-state,body.audacity-mode .au-region-state{font-size:11px;color:var(--mo-ink-2)}
+body.audacity-mode .au-export-form footer .primary,body.audacity-mode .au-tempo-form footer .primary,body.audacity-mode .au-project-save-footer .primary{background:linear-gradient(var(--mo-accent-hi),var(--mo-accent));border:0;color:#fff}
+body.audacity-mode .au-export-form .au-export-audio{background:rgba(0,0,0,.035)}
+body.audacity-mode .studio-dialog .dialog-content :is(.au-tempo-hint,.au-tempo-status,.au-export-state,.au-export-selection,.au-export-download-error,.au-project-save-state,.au-project-save-receipt,.au-loop-time-status){font-size:11px;line-height:1.45;color:var(--mo-ink-2)}
+body.audacity-mode .studio-dialog .dialog-content .au-project-save-state.au-save-error,body.audacity-mode .studio-dialog .dialog-content .au-export-download-error{color:#b3261e}
+body.audacity-mode .au-loop-time-row .au-time-input,body.audacity-mode .studio-dialog .au-time-input{background:#b5b9c0!important;color:#001cab!important;border:2px solid #cfcfcf!important;border-radius:0!important;box-shadow:inset 0 1px 2px rgba(0,0,0,.25)!important;font:20px ui-monospace,Menlo,monospace!important}
+
+/* ───────── Toast (status notice) ───────── */
+body.audacity-mode #toast{bottom:92px;max-width:min(520px,calc(100vw - 32px));padding:9px 14px;background:rgba(246,246,246,.96);-webkit-backdrop-filter:blur(20px) saturate(1.5);backdrop-filter:blur(20px) saturate(1.5);border:0;border-radius:9px;box-shadow:var(--mo-pop-shadow);color:#1d1d1f;font:13px/1.35 var(--mo-ui);transform:translate(-50%,8px);transition:opacity var(--mo-med) ease-out,transform var(--mo-med) var(--mo-ease)}
+body.audacity-mode #toast.show{transform:translate(-50%,0)}
+
+/* ───────── Toolbars: dock area, grabbers, bevelled buttons ───────── */
+body.audacity-mode .au-titlebar{background:linear-gradient(var(--mo-title-hi),var(--mo-title-lo));border-bottom:1px solid var(--mo-title-edge);box-shadow:inset 0 1px 0 rgba(255,255,255,.75);font-family:var(--mo-ui)}
+body.audacity-mode .au-titlebar strong{font:600 13px var(--mo-ui);color:#3a3a3c}
+body.audacity-mode .au-app-name{color:#4a4a4e}
+body.audacity-mode .au-header{border-bottom:1px solid #9d9d9d}
+body.audacity-mode .au-toolbar{flex-wrap:wrap;overflow:visible;row-gap:4px;column-gap:6px;min-height:50px;padding:4px 8px 4px 4px;background:linear-gradient(#ececec,#e3e3e3);box-shadow:inset 0 1px 0 #fafafa}
+/* The grabber is drawn on the toolbar it belongs to, so a wrapped toolbar keeps its handle. */
+body.audacity-mode .au-toolbar>.au-grip{display:none}
+body.audacity-mode .au-toolbar>:is(.au-transport,.au-tool-grid,#au-audio-setup,.au-meters){position:relative;margin-left:13px}
+body.audacity-mode .au-toolbar>:is(.au-transport,.au-tool-grid,#au-audio-setup,.au-meters)::before{content:"";position:absolute;left:-12px;top:50%;width:6px;height:calc(100% - 4px);min-height:30px;max-height:44px;transform:translateY(-50%);border-radius:2px;background:radial-gradient(circle at 1.5px 1.5px,#8f8f8f 1px,transparent 1.4px) 0 1px/3px 4px,linear-gradient(90deg,rgba(255,255,255,.7),rgba(0,0,0,.04));box-shadow:inset 0 0 0 .5px rgba(0,0,0,.12);cursor:grab;pointer-events:none}
+body.audacity-mode .au-toolbar svg{pointer-events:none}
+
+body.audacity-mode .au-transport button{background:linear-gradient(#fefefe,#e9e9e9 55%,#dcdcdc);border:1px solid #9c9c9c;border-radius:5px;box-shadow:inset 0 1px 0 #fff,inset 0 -1px 0 rgba(0,0,0,.05),0 1px 1px rgba(0,0,0,.12);transition:background-color var(--mo-fast) linear,box-shadow var(--mo-fast) linear,border-color var(--mo-fast) linear,transform var(--mo-fast) linear}
+body.audacity-mode .au-transport button:hover:not(:disabled){background:linear-gradient(#fff,#f1f1f1 55%,#e4e4e4);border-color:#7f7f7f}
+body.audacity-mode .au-transport button:active:not(:disabled),body.audacity-mode .au-transport button.active{background:linear-gradient(#c9c9c9,#d9d9d9);border-color:#777;box-shadow:inset 0 2px 3px rgba(0,0,0,.28)}
+body.audacity-mode .au-transport button:active:not(:disabled) svg{transform:translateY(1px)}
+body.audacity-mode .au-transport #au-record.active{background:linear-gradient(#e2a39d,#efbcb7);border-color:#9d4840}
+body.audacity-mode .au-transport #au-loop.active{background:linear-gradient(#aebfdf,#c6d3ec);border-color:#6079ad}
+body.audacity-mode .au-transport button:disabled{opacity:.5;box-shadow:none}
+
+body.audacity-mode .au-tool-grid{gap:1px;padding:1px}
+body.audacity-mode .au-tool-grid button{background:linear-gradient(#fdfdfd,#e7e7e7);border:1px solid #a6a6a6;border-radius:3px;box-shadow:inset 0 1px 0 #fff,0 .5px .5px rgba(0,0,0,.1);transition:background-color var(--mo-fast) linear,box-shadow var(--mo-fast) linear,border-color var(--mo-fast) linear}
+body.audacity-mode .au-tool-grid button:hover:not(:disabled){background:linear-gradient(#fff,#efefef);border-color:#838383}
+body.audacity-mode .au-tool-grid button:active:not(:disabled){background:linear-gradient(#cfcfcf,#dedede);box-shadow:inset 0 1px 3px rgba(0,0,0,.3)}
+body.audacity-mode .au-tool-grid button.active{background:linear-gradient(#9a9a9a,#b9b9b9);border-color:#6d6d6d;box-shadow:inset 0 1px 3px rgba(0,0,0,.35)}
+body.audacity-mode .au-tool-grid button:disabled{opacity:.42;box-shadow:none}
+
+body.audacity-mode .au-wide{background:linear-gradient(#fefefe,#eaeaea 60%,#dfdfdf);border:1px solid #a6a6a6;border-radius:4px;box-shadow:inset 0 1px 0 #fff,0 1px 1px rgba(0,0,0,.1);font-family:var(--mo-ui);transition:background-color var(--mo-fast) linear,box-shadow var(--mo-fast) linear,border-color var(--mo-fast) linear}
+body.audacity-mode .au-wide:hover{background:linear-gradient(#fff,#f1f1f1 60%,#e6e6e6);border-color:#838383}
+body.audacity-mode .au-wide:active{background:linear-gradient(#cfcfcf,#dedede);box-shadow:inset 0 2px 3px rgba(0,0,0,.26)}
+
+/* Meter toolbars. */
+body.audacity-mode .au-meters{gap:2px}
+body.audacity-mode .au-meters>div{height:22px}
+body.audacity-mode .au-meter-scale{height:21px;border:1px solid #9d9d9d;border-radius:2px;background-color:#f6f6f6;box-shadow:inset 0 1px 2px rgba(0,0,0,.16)}
+body.audacity-mode .au-meter-fill{opacity:.85;background:linear-gradient(90deg,#3fa457 0%,#55b35a 62%,#c9c046 80%,#e2a23c 91%,#d2493d 100%);box-shadow:inset 0 1px 0 rgba(255,255,255,.35),inset 0 -1px 0 rgba(0,0,0,.15)}
+body.audacity-mode .au-meters svg{color:#3c3c3c}
+body.audacity-mode input.au-meter-level,body.audacity-mode .au-track-panel input[type=range]{-webkit-appearance:none;appearance:none;background:transparent!important}
+body.audacity-mode input.au-meter-level::-webkit-slider-runnable-track,body.audacity-mode .au-track-panel input[type=range]::-webkit-slider-runnable-track{height:4px;border-radius:2px;background:linear-gradient(#a9a9a9,#c6c6c6);box-shadow:inset 0 1px 1px rgba(0,0,0,.3),0 1px 0 rgba(255,255,255,.7)}
+body.audacity-mode input.au-meter-level::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:13px;height:13px;margin-top:-4.5px;border-radius:50%;border:1px solid #777;background:linear-gradient(#fff,#d9d9d9);box-shadow:0 1px 1.5px rgba(0,0,0,.3),inset 0 1px 0 #fff}
+body.audacity-mode .au-track-panel input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:9px;height:14px;margin-top:-5px;border-radius:2px 2px 4px 4px;border:1px solid #5f6672;background:linear-gradient(#fdfdfd,#c9cfda);box-shadow:0 1px 1px rgba(0,0,0,.3),inset 0 1px 0 #fff}
+body.audacity-mode input.au-meter-level::-moz-range-track,body.audacity-mode .au-track-panel input[type=range]::-moz-range-track{height:4px;border-radius:2px;background:linear-gradient(#a9a9a9,#c6c6c6)}
+body.audacity-mode input.au-meter-level::-moz-range-thumb{width:12px;height:12px;border-radius:50%;border:1px solid #777;background:linear-gradient(#fff,#d9d9d9)}
+body.audacity-mode .au-track-panel input[type=range]::-moz-range-thumb{width:8px;height:13px;border-radius:2px 2px 4px 4px;border:1px solid #5f6672;background:linear-gradient(#fdfdfd,#c9cfda)}
+body.audacity-mode input.au-meter-level:hover:not(:disabled)::-webkit-slider-thumb,body.audacity-mode .au-track-panel input[type=range]:hover:not(:disabled)::-webkit-slider-thumb{border-color:#3e5fa8}
+body.audacity-mode input.au-meter-level:active:not(:disabled)::-webkit-slider-thumb,body.audacity-mode .au-track-panel input[type=range]:active:not(:disabled)::-webkit-slider-thumb{background:linear-gradient(#dfe6f5,#b4c1dc)}
+body.audacity-mode input.au-meter-level:disabled{opacity:.5}
+body.audacity-mode input.au-meter-level:focus-visible,body.audacity-mode .au-track-panel input[type=range]:focus-visible{outline:2px solid rgba(62,111,216,.7);outline-offset:1px;border-radius:3px}
+
+/* ───────── Ruler, track control panel, clips ───────── */
+body.audacity-mode #au-ruler{background:linear-gradient(#f0f0f0,#e2e2e2);box-shadow:inset 0 1px 0 #fbfbfb;border-bottom:1px solid #8c8c8c}
+/* The corner cell above the track control panels is its own opaque cell, above the time ruler's content.
+   #au-timeline is already pinned to the viewport's left edge (position:sticky), so the cell must NOT be sticky
+   itself: a nested sticky offset is added a second time and the cell (with the timeline options button) slid
+   across the ruler by the horizontal scroll distance. */
+body.audacity-mode .au-ruler-gutter{position:relative;left:auto;background:linear-gradient(#f0f0f0,#e2e2e2);box-shadow:inset 0 1px 0 #fbfbfb;z-index:12;align-self:stretch;box-sizing:border-box}
+body.audacity-mode .au-ruler-time{overflow:hidden;contain:paint}
+body.audacity-mode .au-ruler-time{background-color:transparent}
+body.audacity-mode .au-ruler-gutter button{box-shadow:inset 0 1px 0 #fff,0 .5px .5px rgba(0,0,0,.12);transition:background-color var(--mo-fast) linear,box-shadow var(--mo-fast) linear}
+body.audacity-mode .au-ruler-gutter button:active{background:linear-gradient(#cfcfcf,#dedede);box-shadow:inset 0 1px 3px rgba(0,0,0,.3)}
+body.audacity-mode .au-track{box-shadow:0 1px 3px rgba(0,0,0,.28)}
+body.audacity-mode .au-track-panel{background:linear-gradient(90deg,#ececec,#e2e2e2);box-shadow:inset 1px 1px 0 #f8f8f8}
+body.audacity-mode .au-selected-track .au-track-panel{background:linear-gradient(90deg,#d9d9d9,#cdcdcd);box-shadow:inset 1px 1px 0 #e6e6e6}
+body.audacity-mode .au-amplitude{background:linear-gradient(90deg,#e9e9e9,#dedede)}
+body.audacity-mode .au-track-title [data-action],body.audacity-mode .au-track-title strong,body.audacity-mode .au-track-ms button,body.audacity-mode .au-track-effects,body.audacity-mode .au-track-panel::after{background:linear-gradient(#cdd5e2,#b6c0d1);box-shadow:inset 1px 1px 0 rgba(255,255,255,.6),inset -1px -1px 0 rgba(0,0,0,.12)}
+body.audacity-mode .au-track-title [data-action],body.audacity-mode .au-track-ms button,body.audacity-mode .au-track-effects{transition:background-color var(--mo-fast) linear,box-shadow var(--mo-fast) linear}
+body.audacity-mode .au-track-title [data-action]:hover,body.audacity-mode .au-track-ms button:hover:not(.active),body.audacity-mode .au-track-effects:hover{background:linear-gradient(#d9e0ec,#c3ccdb);border-color:#8790a0}
+body.audacity-mode .au-track-title [data-action]:active,body.audacity-mode .au-track-ms button:active,body.audacity-mode .au-track-effects:active{background:linear-gradient(#a2aec4,#b3bdd0);box-shadow:inset 1px 1px 2px rgba(0,0,0,.35)}
+body.audacity-mode .au-track-ms button.active{background:linear-gradient(#8591ab,#99a5bd);box-shadow:inset 1px 1px 2px rgba(0,0,0,.4);color:#000}
+body.audacity-mode .au-clip{box-shadow:inset 0 0 0 .5px rgba(255,255,255,.25)}
+body.audacity-mode .au-clip-head{background:linear-gradient(#e3e3e3,#d3d3d3);transition:background-color var(--mo-fast) linear}
+body.audacity-mode .au-clip-head:hover{background:linear-gradient(#efefef,#e0e0e0)}
+body.audacity-mode .au-clip.au-selected-clip .au-clip-head{background:linear-gradient(#fff,#f1f1f1)}
+body.audacity-mode .au-clip[style*="--au-custom-clip-color"] .au-clip-head{background:var(--au-custom-clip-color)}
+body.audacity-mode .au-clip-head button{border-radius:2px;border:0}
+body.audacity-mode .au-clip-head button:hover{background:rgba(0,0,0,.12)!important}
+body.audacity-mode .au-empty{font-family:var(--mo-ui);color:#dfe1ea}
+body.audacity-mode .au-empty p{color:#bfc3d4}
+body.audacity-mode .au-empty button{min-height:24px;padding:3px 16px;border:0;border-radius:5px;background:linear-gradient(#fff,#f1f1f1);box-shadow:0 0 0 .5px rgba(0,0,0,.4),0 1px 2px rgba(0,0,0,.3);font:13px var(--mo-ui);transition:filter var(--mo-fast) linear}
+body.audacity-mode .au-empty button:hover{filter:brightness(1.03)}
+body.audacity-mode .au-empty button:active{background:linear-gradient(#e2e2e2,#d6d6d6)}
+
+/* ───────── Bottom toolbars and status bar ───────── */
+body.audacity-mode .au-bottom{background:linear-gradient(#ececec,#e3e3e3);box-shadow:inset 0 1px 0 #fafafa;border-top:1px solid #a9a9a9;font-family:var(--mo-ui)}
+body.audacity-mode .au-position,body.audacity-mode .au-time-field{box-shadow:inset 0 1px 3px rgba(0,0,0,.3);border-color:#d2d2d2 #dcdcdc #e8e8e8}
+body.audacity-mode .au-musical input,body.audacity-mode .au-snap select,body.audacity-mode .au-signature{border:1px solid var(--mo-field-edge);border-top-color:#a9a9a9;border-radius:3px;box-shadow:inset 0 1px 1.5px rgba(0,0,0,.08);background-color:#fff}
+body.audacity-mode .au-snap input[type=checkbox]{accent-color:var(--mo-accent)}
+body.audacity-mode .au-selection-mode{border-radius:4px;transition:background-color var(--mo-fast) linear}
+body.audacity-mode .au-selection-mode:hover{background:rgba(0,0,0,.08);border-color:transparent}
+body.audacity-mode .au-time-field>.au-time-format{transition:filter var(--mo-fast) linear}
+body.audacity-mode .au-time-field>.au-time-format:hover{filter:brightness(1.08);border:0}
+body.audacity-mode .status-bar{background:linear-gradient(#ebe9ec,#e1dfe2);box-shadow:inset 0 1px 0 #f7f7f7;border-top:1px solid #b9b9b9;font-family:var(--mo-ui)}
+body.audacity-mode .status-bar>span+span{padding-left:10px;border-left:1px solid #c9c9c9;box-shadow:inset 1px 0 0 #f7f7f7}
+body.audacity-mode .status-bar button{border-radius:3px;transition:background-color var(--mo-fast) linear}
+body.audacity-mode .status-bar button:hover{background:rgba(0,0,0,.08);border-color:transparent}
+
+/* ───────── Realtime effects side panel ───────── */
+body.audacity-mode .au-effects-panel{background:linear-gradient(90deg,#ebebeb,#e4e4e4);border-right:1px solid #8c8c8c;font:12px var(--mo-ui);box-shadow:inset -1px 0 0 #f6f6f6}
+body.audacity-mode .au-fx-head{height:28px;background:linear-gradient(var(--mo-title-hi),var(--mo-title-lo));border-bottom:1px solid var(--mo-title-edge);box-shadow:inset 0 1px 0 rgba(255,255,255,.75)}
+body.audacity-mode .au-fx-head strong{font:600 12px var(--mo-ui);color:#3a3a3c}
+body.audacity-mode .au-fx-close,body.audacity-mode .au-fx-more{background:transparent;border:0;transition:background-color var(--mo-fast) linear}
+body.audacity-mode .au-fx-close:hover,body.audacity-mode .au-fx-more:hover{background:rgba(0,0,0,.1)}
+body.audacity-mode .au-fx-close:active,body.audacity-mode .au-fx-more:active{background:rgba(0,0,0,.18)}
+body.audacity-mode .au-fx-name{background:linear-gradient(#cdd5e2,#b6c0d1);border:1px solid #8f97a5;box-shadow:inset 0 1px 0 rgba(255,255,255,.6);transition:background-color var(--mo-fast) linear,box-shadow var(--mo-fast) linear}
+body.audacity-mode button.au-fx-name:hover{background:linear-gradient(#d9e0ec,#c3ccdb)}
+body.audacity-mode button.au-fx-name:active{background:linear-gradient(#a2aec4,#b3bdd0);box-shadow:inset 0 1px 2px rgba(0,0,0,.35)}
+body.audacity-mode .au-effects-panel .au-fx-power{background:linear-gradient(var(--mo-accent-hi),var(--mo-accent));border-color:var(--mo-accent-lo);box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 1px 1px rgba(0,0,0,.15);transition:background-color var(--mo-fast) linear,box-shadow var(--mo-fast) linear}
+body.audacity-mode .au-effects-panel .au-fx-power[aria-pressed="false"]{background:linear-gradient(#fdfdfd,#e7e7e7);border-color:#a6a6a6}
+body.audacity-mode .au-effects-panel .au-fx-power:active:not(:disabled){box-shadow:inset 0 1px 3px rgba(0,0,0,.4)}
+body.audacity-mode .au-fx-add{background:linear-gradient(#fefefe,#eaeaea);border:1px solid #a6a6a6;border-radius:4px;box-shadow:inset 0 1px 0 #fff,0 1px 1px rgba(0,0,0,.08);transition:background-color var(--mo-fast) linear,box-shadow var(--mo-fast) linear}
+body.audacity-mode .au-fx-add:hover:not(:disabled){background:linear-gradient(#fff,#f1f1f1);border-color:#838383}
+body.audacity-mode .au-fx-add:active:not(:disabled){background:linear-gradient(#cfcfcf,#dedede);box-shadow:inset 0 1px 3px rgba(0,0,0,.28)}
+body.audacity-mode .au-fx-status{background:linear-gradient(#ebe9ec,#e1dfe2);border-top:1px solid #b9b9b9}
+
+/* ───────── Plug-in editor window ───────── */
+body.audacity-mode .plugin-editor-window.studio-dialog{border:0;border-radius:10px;background:var(--mo-window);color:var(--mo-ink);box-shadow:var(--mo-window-shadow);font:12px var(--mo-ui)}
+body.audacity-mode .plugin-editor-window.studio-dialog::backdrop{background:rgba(20,22,30,.22)}
+body.audacity-mode .plugin-editor-window.studio-dialog>header{justify-content:flex-start;gap:8px;height:30px;min-height:30px;padding:0 8px 0 68px;background:linear-gradient(var(--mo-title-hi),var(--mo-title-lo));border-bottom:1px solid var(--mo-title-edge);color:#3a3a3c;font:12px/30px var(--mo-ui);cursor:move}
+body.audacity-mode .plugin-editor-window.studio-dialog>header strong{font:600 13px var(--mo-ui);color:#3a3a3c;overflow:hidden;text-overflow:ellipsis}
+body.audacity-mode .plugin-editor-window .plugin-editor-close{top:9px}
+body.audacity-mode .plugin-editor-slot{font:10px var(--mo-ui);letter-spacing:.6px;color:#77777c}
+body.audacity-mode .plugin-editor-dot{width:8px;height:8px;background:#b3b3b6;box-shadow:inset 0 0 0 .5px rgba(0,0,0,.25);transition:background-color var(--mo-med) linear}
+body.audacity-mode .plugin-editor-window[data-editor-state=ready] .plugin-editor-dot{background:#4fb55f}
+body.audacity-mode .plugin-editor-window[data-editor-state=error] .plugin-editor-dot,body.audacity-mode .plugin-editor-window[data-editor-state=release-failed] .plugin-editor-dot{background:#d9534a}
+body.audacity-mode .plugin-editor-zoom{font:11px var(--mo-ui);color:#4a4a4e}
+body.audacity-mode .plugin-editor-window button:not(.plugin-editor-close){min-height:20px;height:20px;padding:0 10px;border:0;border-radius:5px;background:linear-gradient(#fff,#f4f4f4);box-shadow:0 0 0 .5px rgba(0,0,0,.26),0 1px 1.5px rgba(0,0,0,.16);color:#1d1d1f;font:12px/20px var(--mo-ui);cursor:default;transition:background-color var(--mo-fast) linear,box-shadow var(--mo-fast) linear}
+body.audacity-mode .plugin-editor-window button:not(.plugin-editor-close):hover:not(:disabled){background:linear-gradient(#fff,#ececec);color:#1d1d1f;border:0}
+body.audacity-mode .plugin-editor-window button:not(.plugin-editor-close):active:not(:disabled){background:linear-gradient(#e6e6e6,#dcdcdc);box-shadow:0 0 0 .5px rgba(0,0,0,.3),inset 0 1px 2px rgba(0,0,0,.16)}
+body.audacity-mode .plugin-editor-window button[aria-pressed=true]:not(.plugin-editor-close){background:linear-gradient(var(--mo-accent-hi),var(--mo-accent));box-shadow:0 0 0 .5px var(--mo-accent-lo),inset 0 1px 0 rgba(255,255,255,.2);color:#fff}
+body.audacity-mode .plugin-editor-window button:disabled{opacity:.45}
+body.audacity-mode .plugin-editor-window select{height:20px;min-height:20px;padding:0 24px 0 7px;background-color:#fff;background-size:14px 20px;color:#1d1d1f;font:12px/20px var(--mo-ui)}
+body.audacity-mode .plugin-editor-window input[type=search],body.audacity-mode .plugin-editor-window input[type=number]{background:#fff;color:#1d1d1f;border:1px solid var(--mo-field-edge);border-radius:3px;font:12px var(--mo-ui)}
+body.audacity-mode .plugin-editor-viewport{background:#2a2c36;box-shadow:inset 0 2px 5px rgba(0,0,0,.4)}
+body.audacity-mode .plugin-editor-status{color:#d4d7e2}
+body.audacity-mode .plugin-editor-loading{background:repeating-linear-gradient(135deg,#2b2d38 0 12px,#30323e 12px 24px)}
+body.audacity-mode .plugin-editor-spinner{border-color:#585c70;border-top-color:#9fb6ee}
+body.audacity-mode .plugin-editor-controls{background:var(--mo-window);border-left:1px solid var(--mo-title-edge);color:var(--mo-ink)}
+body.audacity-mode .plugin-parameter-panel header{background:transparent;border-bottom:1px solid rgba(0,0,0,.12);box-shadow:none;height:auto;padding:7px 8px;justify-content:flex-start;cursor:default}
+body.audacity-mode .plugin-parameter-status,body.audacity-mode .plugin-parameter small,body.audacity-mode .plugin-parameter-progress,body.audacity-mode .plugin-parameter-empty{color:var(--mo-ink-2);font-size:11px}
+body.audacity-mode .plugin-parameter-status.error,body.audacity-mode .plugin-editor-footer.error{color:#b3261e}
+body.audacity-mode .plugin-parameter input[type=range]{accent-color:var(--mo-accent)}
+body.audacity-mode .plugin-editor-footer{min-height:22px;padding:4px 10px;background:linear-gradient(#ebe9ec,#e1dfe2);border-top:1px solid #b9b9b9;color:#3c3c3e;font:11px var(--mo-ui)}
+
+/* Native EQ: light graph with the response curve, band rows as a control list. */
+body.audacity-mode .plugin-editor-window.plugin-editor-native-eq{width:min(780px,96vw)}
+body.audacity-mode .plugin-editor-eq{flex:1 1 auto;min-width:0;padding:12px 14px 14px;background:var(--mo-window);overflow:auto}
+body.audacity-mode .native-eq-editor .native-eq-toolbar{min-height:26px;margin:0 0 8px;padding:0;background:transparent;border:0;color:var(--mo-ink);font:12px var(--mo-ui)}
+body.audacity-mode .native-eq-editor .native-eq-toolbar strong{font:600 12px var(--mo-ui);color:#3a3a3c}
+body.audacity-mode .native-eq-editor .native-eq-toolbar .native-eq-status{font-size:11px;color:var(--mo-ink-2)}
+body.audacity-mode .native-eq-editor .native-eq-toolbar .native-eq-status.error{color:#b3261e}
+body.audacity-mode .native-eq-editor .native-eq-toolbar button{height:20px;line-height:20px;padding:0 10px;border:0;border-radius:5px;background:linear-gradient(#fff,#f4f4f4);box-shadow:0 0 0 .5px rgba(0,0,0,.26),0 1px 1.5px rgba(0,0,0,.16);color:#1d1d1f;font:12px/20px var(--mo-ui);cursor:default}
+body.audacity-mode .native-eq-editor .native-eq-toolbar button:hover:not(:disabled){background:linear-gradient(#fff,#ececec);color:#1d1d1f}
+body.audacity-mode .native-eq-editor .native-eq-toolbar button:active:not(:disabled){background:linear-gradient(#e6e6e6,#dcdcdc)}
+body.audacity-mode .native-eq-curve{height:170px;background:#fff;border:1px solid #9d9d9d;border-radius:2px;box-shadow:inset 0 1px 3px rgba(0,0,0,.14);margin:0 0 10px}
+body.audacity-mode .native-eq-curve line.grid{stroke:#dcdde4}
+body.audacity-mode .native-eq-curve line.zero{stroke:#8f93a6}
+body.audacity-mode .native-eq-curve text{fill:#55586a;font:8px var(--mo-ui)}
+body.audacity-mode .native-eq-curve path.curve{stroke:#323cbf;stroke-width:2;stroke-linejoin:round;filter:drop-shadow(0 1px 1px rgba(50,60,191,.25))}
+body.audacity-mode .native-eq-editor .native-eq-curve circle[data-handle]{fill:#fff;stroke:#323cbf;stroke-width:1.6;transition:fill var(--mo-fast) linear}
+body.audacity-mode .native-eq-editor .native-eq-curve circle[data-handle]:hover{fill:#c9d4f6}
+body.audacity-mode .native-eq-bands{gap:0;border:1px solid rgba(0,0,0,.14);border-radius:5px;background:#fff;overflow:hidden}
+body.audacity-mode .native-eq-editor .native-eq-band{padding:5px 10px;background:#fff;border:0;border-bottom:1px solid rgba(0,0,0,.08);border-radius:0;transition:opacity var(--mo-med) linear}
+body.audacity-mode .native-eq-editor .native-eq-band:nth-child(even){background:#f5f6f8}
+body.audacity-mode .native-eq-editor .native-eq-band:last-child{border-bottom:0}
+body.audacity-mode .native-eq-band.disabled{opacity:.55}
+body.audacity-mode .native-eq-band label{font:11px var(--mo-ui);color:#3c3c3e}
+body.audacity-mode .native-eq-band input[type=range]{accent-color:var(--mo-accent)}
+body.audacity-mode .native-eq-band input[type=checkbox]{accent-color:var(--mo-accent)}
+body.audacity-mode .native-eq-editor .native-eq-band input[type=number]{font:11px var(--mo-ui)!important;padding:1px 4px!important;min-height:20px}
+body.audacity-mode .native-eq-editor .native-eq-band select{height:20px;min-height:20px;font:11px/20px var(--mo-ui);padding:0 22px 0 6px;background-size:14px 20px}
+body.audacity-mode .native-eq-type,body.audacity-mode .native-eq-empty{color:var(--mo-ink-2);font-size:11px}
+
+/* ───────── Mixer plug-in tools dialog ───────── */
+body.audacity-mode .mixer-tools.studio-dialog{border:0;border-radius:10px;background:var(--mo-window);color:var(--mo-ink);box-shadow:var(--mo-window-shadow);font:12px var(--mo-ui)}
+body.audacity-mode .mixer-tools.studio-dialog::backdrop{background:rgba(20,22,30,.22)}
+body.audacity-mode .mixer-tools.studio-dialog>header{justify-content:center;gap:8px;height:28px;padding:0 66px}
+body.audacity-mode .mixer-tools header strong{font:600 13px var(--mo-ui);color:#3a3a3c}
+body.audacity-mode .mix-indicator{background:#4fb55f;box-shadow:inset 0 0 0 .5px rgba(0,0,0,.25)}
+body.audacity-mode .mix-toolbar{background:linear-gradient(#ececec,#e3e3e3);border-bottom:1px solid #b9b9b9;color:var(--mo-ink)}
+body.audacity-mode .mix-cloud-label{color:#77777c;font:10px var(--mo-ui);letter-spacing:.6px}
+body.audacity-mode .mixer-tools button:not(.mix-close,.mix-led,.mix-slot-name,.mix-remove,.mix-empty-slot,.mix-slot-order button){min-height:22px;padding:2px 10px;border:0;border-radius:5px;background:linear-gradient(#fff,#f4f4f4);box-shadow:0 0 0 .5px rgba(0,0,0,.26),0 1px 1.5px rgba(0,0,0,.16);color:#1d1d1f;font:12px var(--mo-ui);cursor:default;transition:background-color var(--mo-fast) linear,box-shadow var(--mo-fast) linear}
+body.audacity-mode .mixer-tools button:not(.mix-close,.mix-led,.mix-slot-name,.mix-remove,.mix-empty-slot,.mix-slot-order button):hover:not(:disabled){background:linear-gradient(#fff,#ececec);color:#1d1d1f}
+body.audacity-mode .mixer-tools button:not(.mix-close,.mix-led,.mix-slot-name,.mix-remove,.mix-empty-slot,.mix-slot-order button):active:not(:disabled){background:linear-gradient(#e6e6e6,#dcdcdc);box-shadow:0 0 0 .5px rgba(0,0,0,.3),inset 0 1px 2px rgba(0,0,0,.16)}
+body.audacity-mode .mixer-tools .primary:not(.mix-close,.mix-led){background:linear-gradient(var(--mo-accent-hi),var(--mo-accent));box-shadow:0 0 0 .5px var(--mo-accent-lo),inset 0 1px 0 rgba(255,255,255,.22);color:#fff}
+body.audacity-mode .mixer-tools select,body.audacity-mode .mixer-tools input:not([type=range]):not([type=checkbox]){background-color:#fff;color:#1d1d1f;font:12px var(--mo-ui);min-height:22px}
+body.audacity-mode .mixer-tools input:not([type=range]):not([type=checkbox]){border:1px solid var(--mo-field-edge);padding:2px 6px}
+body.audacity-mode .mix-slots{background:#f4f4f5;border-right:1px solid #b9b9b9}
+body.audacity-mode .mix-slot-heading{color:#77777c;font:10px var(--mo-ui);letter-spacing:.6px}
+body.audacity-mode .mix-slot-heading small{color:#4a4a4e}
+body.audacity-mode .mix-slot{background:linear-gradient(#cdd5e2,#b6c0d1);border:1px solid #8f97a5;border-radius:3px;box-shadow:inset 0 1px 0 rgba(255,255,255,.6)}
+body.audacity-mode .mix-slot.selected{background:linear-gradient(var(--mo-accent-hi),var(--mo-accent));border-color:var(--mo-accent-lo);color:#fff}
+body.audacity-mode .mixer-tools .mix-slot :is(.mix-slot-name,.mix-remove,.mix-slot-order button){background:transparent;box-shadow:none;color:inherit;border:0}
+body.audacity-mode .mix-slot-name small{color:inherit;opacity:.65}
+body.audacity-mode .mixer-tools .mix-led{width:8px;min-height:8px;height:8px;padding:0;border:0;border-radius:50%;background:#4fb55f;box-shadow:0 0 0 1.5px rgba(255,255,255,.7),0 0 0 2px rgba(0,0,0,.25)}
+body.audacity-mode .mixer-tools .mix-led.off{background:#9a9a9e}
+body.audacity-mode .mixer-tools .mix-empty-slot{background:#fff;border:1px dashed #b4b4b8;border-radius:3px;box-shadow:none;color:#77777c;font:12px var(--mo-ui)}
+body.audacity-mode .mixer-tools .mix-slot-name{font:12px var(--mo-ui)}
+body.audacity-mode .mixer-tools .mix-slot-order button{min-height:12px;height:12px;padding:0 4px;font-size:8px;line-height:10px;opacity:.7}
+body.audacity-mode .mixer-tools .mix-remove{padding:0 7px;font-size:14px;opacity:.7}
+body.audacity-mode .mixer-tools .mix-slot :is(.mix-remove,.mix-slot-order button):hover{opacity:1;background:rgba(0,0,0,.1)}
+body.audacity-mode .mix-details{background:var(--mo-window)}
+body.audacity-mode .mix-tabs{gap:0;padding:8px 10px;background:transparent;border-bottom:1px solid rgba(0,0,0,.12);justify-content:center}
+body.audacity-mode .mixer-tools .mix-tabs button{min-height:22px;padding:2px 12px;border-radius:0;background:linear-gradient(#fff,#f4f4f4);box-shadow:0 0 0 .5px rgba(0,0,0,.26),0 1px 1.5px rgba(0,0,0,.12);color:#1d1d1f;font:12px var(--mo-ui)}
+body.audacity-mode .mixer-tools .mix-tabs button:first-child{border-radius:5px 0 0 5px}
+body.audacity-mode .mixer-tools .mix-tabs button:last-child{border-radius:0 5px 5px 0}
+body.audacity-mode .mixer-tools .mix-tabs button.selected{background:linear-gradient(var(--mo-accent-hi),var(--mo-accent));box-shadow:0 0 0 .5px var(--mo-accent-lo),inset 0 1px 0 rgba(255,255,255,.2);color:#fff}
+body.audacity-mode .mix-content{color:var(--mo-ink)}
+body.audacity-mode .mix-content h3{font:600 13px var(--mo-ui);color:#3a3a3c}
+body.audacity-mode .mix-content label,body.audacity-mode .mix-parameter span,body.audacity-mode .mix-catalog-item span{font-size:12px;color:var(--mo-ink)}
+body.audacity-mode .mix-parameter{border-bottom:1px solid rgba(0,0,0,.08);padding:7px 0}
+body.audacity-mode .mix-parameter small,body.audacity-mode .mix-catalog-item small,body.audacity-mode .mix-note,body.audacity-mode .mix-empty,body.audacity-mode .mix-plugin-meta,body.audacity-mode .mix-bus-list small,body.audacity-mode .mix-preset-list small{font-size:11px;color:var(--mo-ink-2)}
+body.audacity-mode .mix-parameter input[type=range]{accent-color:var(--mo-accent)}
+body.audacity-mode .mix-parameter .mix-param-value{font:12px var(--mo-ui)!important;padding:1px 4px!important}
+body.audacity-mode .mixer-tools .mix-catalog-item{height:auto;padding:6px 10px;border-radius:4px;text-align:left}
+body.audacity-mode .mix-catalog-item b{color:#3e5fa8;font-size:9px}
+body.audacity-mode .mix-preset-preview,body.audacity-mode .mix-snapshot,body.audacity-mode .mix-bus-list>div{background:#fff;border:1px solid rgba(0,0,0,.12);border-radius:5px;color:var(--mo-ink)}
+body.audacity-mode .mix-preset-preview strong,body.audacity-mode .mix-preset-preview p{color:var(--mo-ink)}
+body.audacity-mode .mix-status{min-height:22px;padding:4px 12px;background:linear-gradient(#ebe9ec,#e1dfe2);border-top:1px solid #b9b9b9;color:#3c3c3e;font:11px/1.4 var(--mo-ui)}
+body.audacity-mode .mix-status.error{color:#b3261e;border-top-color:#b9b9b9}
+
+/* ───────── Library side bar ───────── */
+body.audacity-mode.au-show-library .browser{background:linear-gradient(90deg,#ebebeb,#e4e4e4);color:var(--mo-ink);border-right:1px solid #8c8c8c;font-family:var(--mo-ui)}
+body.audacity-mode.au-show-library .browser .panel-heading{background:linear-gradient(var(--mo-title-hi),var(--mo-title-lo));border-bottom:1px solid var(--mo-title-edge);color:#3a3a3c;font:600 12px var(--mo-ui)}
+body.audacity-mode.au-show-library .browser-tabs,body.audacity-mode.au-show-library .browser-search,body.audacity-mode.au-show-library .browser-footer{background:transparent;color:var(--mo-ink-2);border-color:#c4c4c4}
+body.audacity-mode.au-show-library .browser-search input{background:#fff;color:#1d1d1f;border:1px solid var(--mo-field-edge);border-radius:11px;padding:2px 10px;min-height:22px;font:12px var(--mo-ui)}
+body.audacity-mode.au-show-library .browser button{background:transparent;color:#3a3a3c;border:0;transition:background-color var(--mo-fast) linear}
+body.audacity-mode.au-show-library .browser button:hover{background:rgba(0,0,0,.08);color:#1d1d1f}
+body.audacity-mode.au-show-library .browser button.selected,body.audacity-mode.au-show-library .browser button.active{background:rgba(62,111,216,.16);color:#234a9e;box-shadow:inset 0 -2px var(--mo-accent)}
+body.audacity-mode .cloud-library-browser{color:var(--mo-ink);font:12px var(--mo-ui)}
+body.audacity-mode .library-heading{background:#dcdcde;border-color:#c4c4c4}
+body.audacity-mode .library-heading button,body.audacity-mode .library-count,body.audacity-mode .library-filter-panel,body.audacity-mode .library-sound-row small,body.audacity-mode .library-asset-row small{color:var(--mo-ink-2)}
+body.audacity-mode .library-tabs{border-bottom-color:#c4c4c4}
+body.audacity-mode .library-tabs button{color:var(--mo-ink-2)}
+body.audacity-mode .library-sound-row,body.audacity-mode .library-asset-row{border-bottom-color:rgba(0,0,0,.07);transition:background-color var(--mo-fast) linear}
+body.audacity-mode .library-sound-row:hover,body.audacity-mode .library-asset-row:hover{background:rgba(62,111,216,.12)}
+body.audacity-mode .library-shell .library-preview-button,body.audacity-mode .library-shell .library-add{color:#3e5fa8}
+body.audacity-mode .library-filters input{background:#fff;color:#1d1d1f;border:1px solid var(--mo-field-edge)}
+
+/* ───────── Narrow windows: toolbars wrap like docked toolbars ───────── */
+body.audacity-mode .au-titlebar>*{min-width:0}
+body.audacity-mode .au-bottom{flex-wrap:wrap;height:auto;min-height:62px;overflow:visible;align-items:stretch}
+@media(max-width:1180px){
+ body.audacity-mode .au-meters{flex:1 1 300px;max-width:none}
+ body.audacity-mode .au-bottom-info{display:none}
+}
+@media(max-width:940px){
+ body.audacity-mode #au-menus{padding:0 3px;gap:0}
+ body.audacity-mode #au-menus button{padding:0 6px}
+ body.audacity-mode .au-native-position,body.audacity-mode .au-position{font-size:22px}
+ body.audacity-mode .studio-dialog{max-width:calc(100vw - 24px)}
+}
+@media(max-width:700px){
+ body.audacity-mode #au-menus{overflow-x:auto;scrollbar-width:none}
+ body.audacity-mode #au-menus::-webkit-scrollbar{display:none}
+ body.audacity-mode #au-menus button{font-size:12px;padding:0 5px}
+ body.audacity-mode .au-toolbar{column-gap:4px}
+}
+
+/* ───────── Reduced motion ───────── */
+@media(prefers-reduced-motion:reduce){
+ body.audacity-mode *,body.audacity-mode *::before,body.audacity-mode *::after{transition-duration:0s!important;transition-delay:0s!important}
+ body.audacity-mode .studio-dialog[open],body.audacity-mode .studio-dialog::backdrop{animation:none}
+ body.audacity-mode .au-meter-fill{transition:none!important}
+}

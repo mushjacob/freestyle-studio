@@ -1,0 +1,12 @@
+{
+  "id": "/",
+  "name": "Modesty",
+  "short_name": "Modesty",
+  "description": "Audio editing with the Freestyle cloud DAW",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#323646",
+  "theme_color": "#e8e9ed",
+  "icons": [{"src": "/modesty-icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable"}]
+}

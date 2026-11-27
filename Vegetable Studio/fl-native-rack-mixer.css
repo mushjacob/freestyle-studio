@@ -1,0 +1,456 @@
+/* Native FL Studio 2026 reference pass: Channel Rack and Wide Mixer.
+   Geometry and colors only. Controls retain their existing bindings and values. */
+
+#rack > .panel-heading {
+  height: 28px;
+  min-height: 28px;
+  padding: 0 8px;
+  background: #39484f;
+  border-bottom: 1px solid #304047;
+  color: #bdc8cd;
+}
+#rack > .panel-heading > span {font-size: 13px; letter-spacing: .1px;}
+#rack > .panel-heading > select {
+  height: 22px;
+  min-height: 22px;
+  width: 80px;
+  padding: 1px 7px;
+  border: 1px solid #2c3c44;
+  border-radius: 2px;
+  background: linear-gradient(#28363e, #1f2e36);
+  color: #b8c5cd;
+}
+#rack > .panel-heading .panel-actions {gap: 2px;}
+#rack > .panel-heading .panel-actions button {height: 22px; min-height: 22px;}
+
+#rack #rack-channels {
+  padding: 19px 10px 19px 13.5px;
+  background: #5d696f;
+}
+#rack .rack-channel {
+  display: flex;
+  align-items: center;
+  height: 27px;
+  min-height: 27px;
+  gap: 0;
+  margin: 0 0 3px;
+  padding: 0;
+}
+#rack .rack-channel:last-child {margin-bottom: 0;}
+
+/* A button's global min-height must not turn an unused channel LED into a pill. */
+#rack .rack-channel > .channel-enable {
+  display: block;
+  flex: 0 0 9px;
+  width: 9px;
+  min-width: 9px;
+  max-width: 9px;
+  height: 9px;
+  min-height: 9px;
+  max-height: 9px;
+  padding: 0;
+  margin: 0 6.5px 0 0;
+  align-self: center;
+  border: 1px solid #427522;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 28%, #d9ffb5 0 8%, #b9f379 30%, #89c94b 68%, #5a8733 100%);
+  box-shadow: 0 0 0 1px #33464b, 0 1px 1px #22343b;
+}
+#rack .rack-channel > .channel-enable.off {
+  background: radial-gradient(circle at 35% 28%, #8c9994, #566762 66%, #43544e);
+  border-color: #40574a;
+}
+#rack .rack-channel > .channel-enable:disabled {opacity: .65;}
+
+#rack .rack-channel > .small-knob {
+  width: 14px !important;
+  min-width: 14px;
+  height: 14px !important;
+  min-height: 14px !important;
+  padding: 0 !important;
+  border: 1px solid #35454e !important;
+  border-radius: 50% !important;
+  background: radial-gradient(circle at 38% 24%, #71808a, #53636d 48%, #354650 88%) !important;
+  box-shadow: inset 0 1px 1px #a8b4b84d, 0 1px 1px #2c3e46;
+}
+#rack .rack-channel > .small-knob::after {
+  top: 2px;
+  left: 6px;
+  width: 1px;
+  height: 4px;
+  background: #c6d1d5;
+  transform-origin: 50% 5px;
+}
+#rack .rack-channel > .pan {margin: 0 1px 0 0;}
+#rack .rack-channel > .volume {margin: 0 6px 0 0;}
+#rack .rack-channel > .small-knob:disabled {opacity: .65;}
+
+#rack .rack-channel > .channel-number {
+  flex: 0 0 32.5px;
+  width: 32.5px;
+  height: 24px;
+  min-height: 24px;
+  padding: 0 3px;
+  margin: 0 10px 0 0;
+  border: 1px solid #41535d;
+  border-radius: 3px;
+  background: linear-gradient(#65757d, #5b6b73);
+  box-shadow: inset 0 1px #9caaae2e, 0 1px #3d4e56;
+  color: #acbec6;
+  font-family: "Vegetable FL Condensed", Arial, sans-serif;
+  font-size: 13px;
+}
+#rack .rack-channel > .channel-name {
+  flex: 0 0 80px;
+  width: 80px;
+  height: 25px;
+  min-height: 25px;
+  padding: 1px 5px;
+  margin: 0 7.5px 0 0;
+  border: 1px solid #3c505b;
+  border-bottom: 2px solid #354b55;
+  border-radius: 2px;
+  background: linear-gradient(#63757e, #566c78);
+  box-shadow: inset 0 1px #a8b5b833;
+  color: #c0cdd2;
+  font-family: "Vegetable FL Condensed", Arial, sans-serif;
+  font-size: 12px;
+  line-height: 19px;
+  font-weight: 400;
+  text-align: center;
+}
+#rack .rack-missing > .channel-name {opacity: .75;}
+#rack .rack-channel > .channel-selected {
+  flex: 0 0 7px;
+  width: 7px;
+  min-width: 7px;
+  height: 24px;
+  min-height: 24px;
+  padding: 0;
+  margin: 0 10.5px 0 0;
+  border: 1px solid #334a54;
+  border-radius: 1px;
+  background: #50636b;
+  box-shadow: inset 0 1px #91a0a733;
+}
+#rack .rack-channel > .channel-selected[aria-pressed="true"] {
+  border-color: #b0f45c;
+  background: #485e55;
+  box-shadow: inset 0 0 0 1px #789f43;
+}
+
+#rack .steps {
+  display: grid;
+  flex: 0 0 248px;
+  width: 248px;
+  min-width: 248px;
+  height: 20px;
+  grid-template-columns: repeat(16, 12px);
+  gap: 3.7px;
+  align-items: center;
+}
+#rack .step {
+  width: 12px;
+  height: 19px;
+  min-height: 19px;
+  padding: 0;
+  border: 1px solid #344954;
+  border-radius: 2px;
+  background: linear-gradient(#73828a 0%, #818f95 12%, #516670 22%, #50636d 80%, #344b58 100%);
+  box-shadow: inset 1px 0 #a5b4bb38, 0 1px #30434d;
+}
+#rack .step:nth-child(8n+5),
+#rack .step:nth-child(8n+6),
+#rack .step:nth-child(8n+7),
+#rack .step:nth-child(8n+8) {
+  background: linear-gradient(#93848b 0%, #a18e94 12%, #6b626d 22%, #756974 80%, #504651 100%);
+  border-color: #4a414b;
+}
+#rack .step.on {
+  border-color: #b59b7c;
+  background: linear-gradient(#f5d5b3 0%, #ffe5c2 12%, #c5a482 23%, #cba782 80%, #927758 100%);
+  box-shadow: inset 1px 0 #ffeccd88, 0 1px #32454c;
+}
+#rack .step:nth-child(8n+5).on,
+#rack .step:nth-child(8n+6).on,
+#rack .step:nth-child(8n+7).on,
+#rack .step:nth-child(8n+8).on {
+  border-color: #ad8580;
+  background: linear-gradient(#efb8ae 0%, #ffcdc3 12%, #bb8c87 23%, #c48f87 80%, #87605c 100%);
+}
+#rack .note-preview {
+  flex: 0 0 248px;
+  width: 248px;
+  height: 21px;
+  border-color: #3b5055;
+  background: #465b5c;
+}
+#rack .rack-use-score {
+  flex: 0 0 248px;
+  width: 248px;
+  height: 20px;
+  min-height: 20px;
+  margin: 0;
+  padding: 0 6px;
+  border: 1px solid #4d6069;
+  border-radius: 1px;
+  background: #566971;
+  box-shadow: inset 0 1px #84949c26;
+  color: #9fadb3;
+  font-size: 10px;
+}
+#rack .rack-bottom {
+  height: 28px;
+  min-height: 28px;
+  padding: 0 8px;
+  background: #3c4e58;
+  border-top: 1px solid #4c6069;
+  color: #a7b7c0;
+}
+#rack .rack-bottom > #add-channel {margin-left: 128px; width: 26px; padding: 0;}
+#rack .rack-bottom #step-page {height: 21px; min-height: 21px; font-size: 10px;}
+#rack .rack-bottom > span {font-size: 9px; letter-spacing: .5px;}
+
+#mixer > .panel-heading {
+  background: #3c4c55;
+  color: #b6c3ca;
+  border-bottom: 1px solid #2c3d45;
+}
+#mixer > .panel-heading > span:first-child {order:1;margin-left:auto;}
+#mixer > .panel-heading > .mixer-view {order:0;margin-left:130px;flex:0 0 auto;}
+#mixer > .panel-heading > .panel-actions {order:2;margin-left:10px;}
+@media (max-width:800px) {#mixer > .panel-heading > .mixer-view {margin-left:20px;}}
+#mixer .mixer-body {background: #2b3941;}
+#mixer .mixer-strips {padding-left: 5px; gap: 0; background: #2b3941;}
+#mixer .mixer-strip {
+  display: grid;
+  grid-template-columns: 17px 1fr;
+  grid-template-rows: 17px 109px 16px 40px 194px 18px 18px;
+  align-content: start;
+  isolation: isolate;
+  align-items: center;
+  justify-items: center;
+  flex: 0 0 43px;
+  min-width: 43px;
+  width: 43px;
+  padding: 0 3px 6px;
+  border-right: 1px solid #24353f;
+  background: linear-gradient(90deg, #39474f 0%, #36434b 44%, #314049 100%);
+  box-shadow: inset 1px 0 #60727a20, inset -1px 0 #1d303956;
+}
+#mixer .mixer-strip.master {flex-basis: 43px; min-width: 43px; width: 43px; margin-right: 5px; border-right: 1px solid #24353f;}
+#mixer .mixer-strip.selected {background: linear-gradient(90deg, #415058, #384952);}
+#mixer .mixer-strip::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 142px;
+  left: 3px;
+  right: 3px;
+  height: 252px;
+  border: 1px solid #22343d;
+  border-radius: 19px 19px 3px 3px;
+  background: linear-gradient(90deg, #24353e, #29373e 22%, #29373e 72%, #23343d);
+  box-shadow: inset 1px 1px 2px #1428329e, inset -1px 0 #0d253166, 0 1px #82959c2b;
+  pointer-events: none;
+}
+#mixer .mixer-strip.master .strip-number {color: #b9cc9e;}
+#mixer .mixer-strip.selected .strip-number {color: #d0dfbd; border-bottom-color: #90b866;}
+
+#mixer .strip-number {
+  grid-row: 1;
+  grid-column: 1 / -1;
+  width: calc(100% + 6px);
+  height: 17px;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(#6a7880, #627078);
+  box-shadow: inset 0 1px #a6b0b229;
+  border-bottom: 1px solid #314650;
+  color: #aebfc8;
+  font-family: "Vegetable FL Condensed", Arial, sans-serif;
+  font-size: 12px;
+  line-height: 17px;
+}
+#mixer .strip-name {
+  grid-row: 2;
+  grid-column: 1;
+  width: 17px;
+  height: 102px;
+  padding: 0;
+  margin: 0;
+  align-self: end;
+  color: #9fb0ba;
+  font-family: "Vegetable FL Condensed", Arial, sans-serif;
+  font-size: 11px;
+  line-height: 17px;
+}
+#mixer .mixer-strip.selected .strip-name {color: #c1cbd0;}
+#mixer .meter-and-fader {display: contents;}
+#mixer .mixer-strip .meter {
+  grid-row: 2;
+  grid-column: 2;
+  width: 13px;
+  height: 97px;
+  align-self: center;
+  border: 1px solid #1e323d;
+  border-radius: 1px;
+  background: linear-gradient(90deg, #1e3038, #25343c 24%, #25343c 75%, #1d3039);
+  box-shadow: inset 1px 0 #122832c9, inset -1px 0 #63777e26, inset 0 1px 2px #10232eaa, 0 1px #8292981a;
+}
+#mixer .mixer-strip.selected .meter {border-color: #9bdd50; box-shadow: inset 0 0 0 1px #536e3a;}
+#mixer .meter-fill {background: repeating-linear-gradient(to top, #91cf54 0, #91cf54 3px, #416336 3px, #416336 4px);}
+#mixer .mixer-strip .strip-light {
+  grid-row: 3;
+  grid-column: 1 / -1;
+  width: 9px;
+  height: 9px;
+  border: 1px solid #548031;
+  background: radial-gradient(circle at 32% 25%, #e0ffbd, #a7e75e 48%, #73a83b 90%);
+  box-shadow: 0 0 0 1px #263d45, 0 1px 1px #152c36;
+}
+#mixer .mixer-strip .mixer-pan {
+  grid-row: 4;
+  grid-column: 1 / -1;
+  width: 27px !important;
+  height: 27px !important;
+  min-height: 27px !important;
+  border: 1px solid #203641 !important;
+  background: radial-gradient(circle at 38% 23%, #6c7b84 0%, #50636f 34%, #394f5b 65%, #253b48 88%) !important;
+  box-shadow: 0 0 0 3px #21333d, 0 1px 0 4px #70838a24, inset 0 0 0 2px #53697466, inset 0 1px 1px #aebfc55e, 0 2px 2px #142933;
+  margin: 0;
+}
+#mixer .mixer-strip .mixer-pan::after {left: 12px; top: 4px; height: 7px; transform-origin: 50% 9px;}
+#mixer .mixer-strip .fader-track {
+  grid-row: 5;
+  grid-column: 1 / -1;
+  width: 17px;
+  height: 156px;
+  min-height: 156px;
+  align-self: start;
+  justify-self: end;
+  margin: 38px 2px 0 0;
+  background: linear-gradient(90deg, transparent 6px, #132a35 6px, #132a35 9px, #5b717a36 9px, #5b717a36 10px, transparent 10px);
+}
+#mixer .fader-track input {width: 17px; padding: 0; border: 0; border-radius: 0; background: none;}
+#mixer .fader-scale {
+  position: absolute;
+  top: 12.5px;
+  bottom: 12.5px;
+  left: -17px;
+  width: 13px;
+  pointer-events: none;
+  user-select: none;
+}
+#mixer .fader-tick {position: absolute; right: 0; width: 4px; height: 1px; background: #6b7d8575;}
+#mixer .fader-tick.major {width: 6px; background: #8090989c;}
+#mixer .fader-tick.unity {background: #bec9c9;}
+#mixer .fader-tick-label {position: absolute; top: -4px; right: 8px; color: #91a1a8; font: 6px/8px Arial,sans-serif; text-align: right; white-space: nowrap;}
+#mixer .master .fader-scale {left: -12px; width: 8px;}
+#mixer .master .fader-tick-label {right: 7px; font-size: 6px;}
+
+#mixer .fader-track input::-webkit-slider-thumb {
+  width: 15px;
+  height: 25px;
+  border: 1px solid #263d4b;
+  border-radius: 4px;
+  background: linear-gradient(#c5ccd7 0%, #b5becb 13%, #929cac 34%, #657487 43%, #d0d6df 48%, #d5dbe3 54%, #9ba8b8 63%, #64768a 86%, #40576a 100%);
+  box-shadow: 0 2px 2px #102632cc, inset 1px 0 #e2e8f055, inset 0 1px #f2f4f7b3;
+}
+#mixer .selected .fader-track input::-webkit-slider-thumb {
+  border-color: #4d772b;
+  background: linear-gradient(#d4f68a 0%, #bcea65 13%, #a1d74b 34%, #709d2b 43%, #d8fa91 48%, #dcfba2 54%, #a7d653 63%, #73a32d 86%, #426e20 100%);
+  box-shadow: 0 2px 2px #152b30cc, inset 1px 0 #edffc455, inset 0 1px #f2ffd0b3;
+}
+#mixer .mixer-strip .strip-db {
+  grid-row: 6;
+  grid-column: 1 / -1;
+  margin: 0;
+  color: #879fae;
+  font-family: "Vegetable FL Condensed", Arial, sans-serif;
+  font-size: 9px;
+  line-height: 16px;
+}
+#mixer .mixer-strip .strip-controls {display: contents;}
+#mixer .mixer-strip .strip-controls .mute {grid-row: 7; grid-column: 1; justify-self: start;}
+#mixer .mixer-strip .strip-controls .solo {grid-row: 7; grid-column: 2; justify-self: end;}
+#mixer .mixer-strip .strip-controls button {
+  position: relative;
+  width: 14px;
+  height: 14px;
+  min-height: 14px;
+  padding: 0;
+  border: 1px solid #263d48;
+  border-radius: 1px;
+  background: #354b57;
+  color: #8ba2af;
+  font-size: 8px;
+  line-height: 12px;
+}
+#mixer .mixer-strip .strip-controls button.on {background: #4b5d58; color: #c9df9b; border-color: #728c57;}
+
+#mixer .effect-rack {width: 220px; padding: 5px 6px; border-left: 3px solid #253a46; background: #53636c;}
+#mixer .effects-title {height: 24px; margin: 0 1px 5px; color: #b8c7cf; font-size: 12px;}
+#mixer .effects-title span {color: #91a5b0; font-size: 9px;}
+#mixer .effect-slot {
+  height: 21px;
+  min-height: 21px;
+  margin: 0;
+  padding: 1px 5px;
+  border: 0;
+  border-top: 1px solid #64747d;
+  border-bottom: 1px solid #465963;
+  border-radius: 0;
+  background: #536570;
+  color: #bcc8ce;
+  font-size: 12px;
+  box-shadow: none;
+}
+#mixer .effect-slot::before {order: 3; font-size: 9px; margin-left: auto; color: #acde70;}
+#mixer .effect-slot:disabled {opacity: .7; font-style: italic;}
+#mixer .effect-slot small {font-size: 9px; color: #8d9fa9;}
+#mixer .effects-label {color: #98abb7; font-size: 9px;}
+#mixer .output-select {height: 23px; min-height: 23px; border-color: #344b59; background: #425965; color: #b3c6d1; font-size: 11px;}
+
+/* Empty slots open the same real catalog as the effect options control. */
+#mixer .effect-slot {display:flex;align-items:center;width:100%;text-align:left;gap:5px}
+#mixer .effect-slot::before {content:none}
+#mixer .effect-slot-arrow {font-size:10px;color:#c6d1d6;flex:0 0 7px}
+#mixer .effect-slot-name {overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1}
+#mixer .empty-effect-slot .effect-slot-name {font-style:italic;color:#a4b2b9}
+#mixer .effect-slot-led {width:8px;height:8px;border:1px solid #304b34;border-radius:50%;background:radial-gradient(circle at 35% 30%,#d3ff99,#88cc40 65%,#456829);box-shadow:0 0 0 1px #2e4047;flex:0 0 8px}
+#mixer .effect-slot.bypassed .effect-slot-led {background:#4a5b53;border-color:#374b40}
+#mixer #cloud-more-fx {width:100%;height:23px;min-height:23px;margin-top:5px;font-size:10px;background:#4d606a;border-color:#3c515e;color:#adbfc7}
+#mixer .eq-graph {height:100px;margin-top:10px;background-color:#52626b;border-color:#43555f;background-image:linear-gradient(#71818b33 1px,transparent 1px),linear-gradient(90deg,#71818b33 1px,transparent 1px);background-size:25% 25%}
+#mixer .mixer-state[data-state="idle"] {display:none}
+/* Unused sources retain their accessible add action without a full-row prompt. */
+#rack .rack-use-score {font-size:0;color:transparent;background:#4b605f;border-color:#405654}
+#rack .rack-use-score:hover,#rack .rack-use-score:focus-visible {background:#536c62;border-color:#8ea575}
+#rack .rack-use-score::after {content:"＋";font-size:12px;color:#9fb797;opacity:0}
+#rack .rack-use-score:hover::after,#rack .rack-use-score:focus-visible::after {opacity:1}
+/* The calibrated fader retains direct dB entry across the full cloud gain range. */
+#mixer .mixer-strip button.strip-db {height:16px;min-height:16px;width:100%;padding:0;border:0;border-radius:0;background:transparent;box-shadow:none;color:#879fae;font-size:9px;line-height:16px}
+#mixer .mixer-strip button.strip-db:hover {color:#c1d2dc}
+#mixer .mixer-strip button.strip-db:focus-visible {outline:1px solid #b1d579;outline-offset:-1px}
+#mixer .mixer-strip button.strip-db:disabled {cursor:default;opacity:1}
+.mixer-level-form input {display:block;width:100%;margin-top:5px}
+.mixer-level-form .mixer-level-status {min-height:18px;color:#d7b087}
+/* Page navigation stays reachable even for instruments with thousands of controls. */
+.plugin-parameter-dialog .plugin-parameter-toolbar {display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin:6px 0}
+.plugin-parameter-dialog .plugin-parameter-count {flex:1 0 100%;margin:3px 0;font-size:11px}
+.plugin-parameter-dialog .plugin-parameter-toolbar button {font-size:11px;min-height:25px}
+.plugin-parameter-dialog .plugin-parameter-page {max-height:55vh;overflow:auto;overscroll-behavior:contain;padding-right:7px;scrollbar-gutter:stable}
+.plugin-parameter-dialog .plugin-parameter-status {margin:2px 0;min-height:0}
+.plugin-parameter-dialog .plugin-parameter-page label {font-size:11px;margin:7px 0 2px}
+#mixer .mixer-state[data-state="confirmed"],#mixer .mixer-state[data-state="confirmed_by_inspection"] {display:none}
+
+/* Native Rack heading: filter precedes the existing title and window actions. */
+#rack > .panel-heading {position:relative; gap:8px;}
+#rack > .panel-heading > #channel-filter {order:1;flex:0 0 80px;margin-left:99px;margin-right:18px;}
+#rack > .panel-heading > span {order:2;flex:0 0 101px;width:101px;margin-left:0;text-indent:-20px;overflow:hidden;}
+#rack > .panel-heading > .panel-actions {order:3;margin-left:auto;}
+/* FL meter ballistics are animated per frame (mixer-meter-ballistics.js); a CSS
+   transition would only add lag. The peak-hold line sits on top of the fill. */
+#mixer .meter-fill {transition: none;}
+#mixer .meter .meter-peak {position: absolute; left: 0; right: 0; height: 2px; margin-bottom: -1px; background: #c8f08a; pointer-events: none;}
+#mixer .meter .meter-peak.clip {background: #ff5a4a;}

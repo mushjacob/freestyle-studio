@@ -1,0 +1,4 @@
+/* Inside Freestyle: Share · Save · Chat · Mozart live in the Freestyle cluster
+   left of the cloud button (top-right of Live's menu bar, same spot in every
+   alternate view; <meta name="freestyle-chrome-anchor" content="#cloud">). */
+html.fs-embedded header.abl-control-bar .logic-titlebar .session-status { visibility: hidden; }

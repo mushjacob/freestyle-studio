@@ -1,0 +1,2 @@
+# REST-ticket-backed native snapshots and pushed transport clock.
+websocket-client>=1.8,<2

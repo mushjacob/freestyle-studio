@@ -1,0 +1,404 @@
+/* FL 2026 Mixer geometry from the native/browser comparison.
+   Only visual layout changes: existing pan/fader hit areas and values remain. */
+#mixer > .panel-heading {
+ height:26px;
+ min-height:26px;
+ flex-basis:26px;
+}
+#mixer .mixer-strips {
+ /* A manually shortened Mixer must scroll rather than clip its real controls. */
+ overflow-y:auto;
+}
+
+#mixer .mixer-strip {
+ /* The former 38 px fader margin duplicated the native pan/rail separation. */
+ grid-template-rows:17px 101px 14px 32px 158px 18px 18px;
+}
+#mixer .strip-name {
+ height:97px;
+ font-family:"Vegetable FL Narrow","Arial Narrow",Arial,sans-serif;
+ font-size:12px;
+ font-weight:400;
+ letter-spacing:0;
+}
+#mixer .strip-number {
+ font-family:"Vegetable FL Narrow","Arial Narrow",Arial,sans-serif;
+ font-size:13px;
+ font-weight:400;
+}
+#mixer .mixer-strip .meter {height:97px;}
+
+#mixer .mixer-strip::before {
+ top:132px;
+ left:7px;
+ right:7px;
+ height:208px;
+ border-radius:15px 15px 3px 3px;
+ background:linear-gradient(90deg,#23343d,#29373e 24%,#29373e 76%,#21333d);
+ box-shadow:inset 1px 1px 2px #1428328c,inset -1px 0 #0d253155,0 1px #82959c24;
+}
+#mixer .mixer-strip .mixer-pan {
+ /* Keep its 27 px interactive button; remove the former 4 px outer halo. */
+ width:27px !important;
+ height:27px !important;
+ min-height:27px !important;
+ border:1px solid #20333e !important;
+ background:radial-gradient(circle at 38% 24%,#687b85,#4b626f 37%,#354e5c 70%,#233b49 92%) !important;
+ box-shadow:inset 0 1px 1px #aebfc555,inset 0 0 0 1px #687e8659,0 1px 1px #14293366;
+}
+#mixer .mixer-strip .mixer-pan::after {
+ top:4px;
+ left:12px;
+ height:7px;
+ transform-origin:50% 9px;
+}
+
+#mixer .mixer-strip .fader-track {
+ height:156px;
+ min-height:156px;
+ margin:2px 2px 0 0;
+}
+#mixer .mixer-strip.selected .fader-track {
+ background:linear-gradient(90deg,transparent 6px,#142a33 6px,#142a33 9px,#9ac76899 9px,#9ac76899 10px,transparent 10px);
+}
+#mixer .master .fader-scale {left:-15px;width:11px;}
+#mixer .master .fader-tick-label {right:8px;font-size:6.5px;line-height:8px;color:#9eafb4;}
+#mixer .master.selected .fader-tick.unity {background:#c3df9c;}
+
+/* The native enable LED is the existing Mute action, rather than a duplicate
+   status lamp plus a second permanent lettered row below the fader. */
+#mixer .mixer-strip .strip-controls .strip-light {display:none;}
+#mixer .mixer-strip .strip-controls button.mute {
+ grid-row:3;
+ grid-column:1 / -1;
+ justify-self:center;
+ width:18px;
+ height:14px;
+ min-height:14px;
+ margin:0;
+ padding:0;
+ border:0;
+ border-radius:0;
+ background:transparent;
+ box-shadow:none;
+ color:transparent;
+ font-size:0;
+}
+#mixer .mixer-strip .strip-controls button.mute::after {
+ content:"";
+ position:absolute;
+ top:2.5px;
+ left:4.5px;
+ width:9px;
+ height:9px;
+ box-sizing:border-box;
+ border:1px solid #40554d;
+ border-radius:50%;
+ background:radial-gradient(circle at 35% 28%,#87958c,#53665b 70%);
+ box-shadow:0 0 0 1px #243b43,0 1px 1px #142b35;
+ pointer-events:none;
+}
+#mixer .mixer-strip .strip-controls button.mute[aria-pressed="false"]::after {
+ border-color:#548031;
+ background:radial-gradient(circle at 32% 25%,#e0ffbd,#a7e75e 48%,#73a83b 90%);
+}
+#mixer .mixer-strip .strip-controls button.mute[aria-pressed="true"]::after {
+ border-color:#344d40;
+ background:radial-gradient(circle at 35% 28%,#60745b,#3e5142 70%);
+}
+
+/* Keep precise entry and Solo in the real tab order, revealing their current
+   values on strip inspection; active Solo always remains visibly identified. */
+#mixer .mixer-strip button.strip-db,
+#mixer .mixer-strip button.strip-db:disabled,
+#mixer .mixer-strip .strip-controls button.solo {opacity:0;}
+#mixer .mixer-strip:is(.selected,:hover,:focus-within) button.strip-db,
+#mixer .mixer-strip:is(.selected,:hover,:focus-within) button.strip-db:disabled,
+#mixer .mixer-strip:is(.selected,:hover,:focus-within) .strip-controls button.solo,
+#mixer .mixer-strip .strip-controls button.solo.on {opacity:1;}
+#mixer .mixer-strip:is(.selected,:hover,:focus-within) .strip-controls button.solo:disabled,
+#mixer .mixer-strip .strip-controls button.solo.on:disabled {opacity:.45;}
+
+/* The real FX options action belongs in the title, above the ten native rows. */
+#mixer .effects-title {gap:6px;}
+#mixer .effects-title > .effect-lane-name {
+ min-width:0;
+ overflow:hidden;
+ text-overflow:ellipsis;
+ white-space:nowrap;
+ color:inherit;
+ font:inherit;
+}
+#mixer .effects-title > #cloud-more-fx {
+ flex:0 0 38px;
+ width:38px;
+ min-width:38px;
+ height:20px;
+ min-height:20px;
+ margin:0;
+ padding:0 3px;
+ border:0;
+ border-radius:1px;
+ background:transparent;
+ box-shadow:none;
+ color:#b5c3cc;
+ font:12px/20px "Vegetable FL Narrow","Arial Narrow",Arial,sans-serif;
+}
+#mixer .effects-title > #cloud-more-fx:hover {background:#65757e;color:#e0e8e9;}
+#mixer .effect-slot {height:20.5px;min-height:20.5px;}
+
+/* Retain the complete real controls on shorter displays as the Mixer compacts. */
+@media (max-height:800px) {
+ #mixer .mixer-strip {grid-template-rows:17px 91px 14px 32px 134px 18px 18px;}
+ #mixer .strip-name,#mixer .mixer-strip .meter {height:87px;}
+ #mixer .mixer-strip::before {top:122px;height:184px;}
+ #mixer .mixer-strip .fader-track {height:132px;min-height:132px;}
+}
+/* FX slot names open parameters; the separate native lamp toggles real bypass. */
+#mixer .effect-slot-loaded {padding:0 2px 0 5px;gap:1px;}
+#mixer .effect-slot-loaded > .effect-open {
+ display:flex;align-items:center;gap:5px;flex:1;min-width:0;
+ height:100%;min-height:0;margin:0;padding:0;border:0;border-radius:0;
+ color:inherit;background:transparent;box-shadow:none;text-align:left;font:inherit;
+}
+#mixer .effect-slot-loaded > .effect-open:hover {color:#e4ebef;}
+#mixer .effect-slot-loaded > button.effect-slot-led {
+ position:relative;flex:0 0 16px;width:16px;height:18px;min-height:18px;
+ margin:0;padding:0;border:0;border-radius:0;background:transparent;
+ box-shadow:none;outline-offset:-1px;
+}
+#mixer .effect-slot-loaded > button.effect-slot-led::after {
+ content:"";position:absolute;left:4px;top:5px;width:8px;height:8px;
+ box-sizing:border-box;border:1px solid #304b34;border-radius:50%;
+ background:radial-gradient(circle at 35% 30%,#d3ff99,#88cc40 65%,#456829);
+ box-shadow:0 0 0 1px #2e4047;pointer-events:none;
+}
+#mixer .effect-slot-loaded > button.effect-slot-led[aria-pressed="false"]::after,
+#mixer .effect-slot-loaded > button.effect-slot-led.unknown::after {background:#4a5b53;border-color:#374b40;}
+#mixer .effect-slot-loaded > button.effect-slot-led.needs-inspection::after {background:#b3995f;border-color:#695333;}
+#mixer .effect-slot-loaded[aria-busy="true"] > .effect-slot-led {cursor:progress;}
+#mixer .effect-slot-loaded > button:focus-visible {outline:1px solid #aac7d2;}
+
+#mixer .effect-read-status {margin:2px 3px 5px;color:#a6b7bf;font:10px/14px "Vegetable FL UI",Arial,sans-serif;}
+#mixer .effect-read-status button {padding:0 3px;min-height:16px;height:16px;font:inherit;}
+
+/* Save/receipt status floats over the strips instead of taking a row above them:
+   showing "Applying…" during an in-flight save used to push every strip down by a
+   line, so rapid M presses landed above the moved 14px LED and were lost. Clicks
+   pass through the overlay; only its own action button (Save gain) takes input. */
+#mixer .mixer-state {position:absolute;left:6px;bottom:6px;z-index:6;max-width:60%;margin:0;pointer-events:none;background:#1d2a31e6;border:1px solid #33444d;border-radius:2px;box-shadow:0 1px 3px #0008;}
+#mixer .mixer-state button {pointer-events:auto;}
+/* Transient phases of an optimistic M/S/fader save are not news in FL. */
+#mixer .mixer-state:is([data-state="preparing"],[data-state="applying"],[data-state="saving"],[data-state="confirming"],[data-state="pending"],[data-state="acknowledged"],[data-state="inspecting"]) {display:none;}
+
+/* FL solo: every other insert is silenced, so its enable LED goes dark (its own
+   mute value is unchanged and returns when solo is cleared). */
+#mixer .mixer-strip.solo-silenced .strip-controls button.mute[aria-pressed="false"]::after {
+ border-color:#344d40;
+ background:radial-gradient(circle at 35% 28%,#60745b,#3e5142 70%);
+}
+
+/* FL "missing plugin" slot: a saved-chain row with no live instance. */
+#mixer .effect-slot-missing { display: flex; align-items: center; gap: 4px; opacity: .85; color: #e8b46a; }
+#mixer .effect-slot-missing .effect-slot-name { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-style: italic; }
+#mixer .effect-slot-missing .effect-slot-remove { font: 10px Arial; padding: 0 5px; }
+
+/* ---- QA round 22: FL 2026 strip-bank parity (compared with native FL screenshots) ---- */
+/* Eighth row: FL's routing arrow / cable row under every insert. */
+#mixer .mixer-strip {grid-template-rows:17px 101px 14px 32px 158px 18px 18px 22px;min-width:42px;width:42px;}
+#mixer .mixer-strip.master {width:47px;min-width:47px;}
+@media (max-height:800px) {#mixer .mixer-strip {grid-template-rows:17px 91px 14px 32px 134px 18px 18px 20px;}}
+/* Condensed bold names, tighter tracking (FL's insert labels). */
+/* QA round 32 (sampled from FL 2026's own mixer window): names are a thin muted grey
+   (#7c8082) and only the selected insert's name is light (#c7c9ca); header cells are
+   #636c71 with dark digits, the selected insert's digit light. Long names keep FL's
+   single-line ellipsis inside the strip width. */
+#mixer .strip-name {font-weight:400;font-size:11.5px;letter-spacing:0;color:#7c8082;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+#mixer .mixer-strip.selected .strip-name {color:#c7c9ca;}
+/* Round 33: FL's header is one flat, dim band. Sampled, our cell colour already equals FL's
+   (#646b70 vs #636c71); the lighter look came from the inherited raised-tile shading (inset
+   top highlight + dark bottom border), so that is removed. */
+#mixer .strip-number {font-weight:400;font-size:12.5px;letter-spacing:0;background:#636c71;color:#22282c;box-shadow:none;border-bottom-color:transparent;}
+#mixer .mixer-strip.selected .strip-number {background:#5d666b;color:#d3dce1;border-bottom-color:transparent;}
+#mixer .mixer-strips > .mixer-peak .strip-number,
+#mixer .mixer-strip.master:not(.selected) .strip-number {background:#636c71;color:#22282c;}
+#mixer .mixer-strip.master.selected .strip-number {background:#5d666b;color:#d3dce1;}
+/* Round 34: FL's header is ONE continuous flat band on the row — no per-cell boxes, no
+   gaps at the strip separators, the master gap or the C column. The band is the row's
+   background (scrolls with the strips); every strip paints its body and its right
+   separator only below the 17 px header row; number cells are transparent and only the
+   selected insert's number is highlighted (light digit). A shade darker than the sampled
+   cell colour, to match FL's dimmer look in context. */
+#mixer .mixer-strips {background-image:linear-gradient(#5a6267,#5a6267);background-size:100% 17px;background-repeat:no-repeat;background-attachment:local;}
+#mixer .mixer-strip {border-right-color:transparent;box-shadow:none;background-origin:border-box;
+ background:linear-gradient(#24353f,#24353f) right 17px/1px calc(100% - 17px) no-repeat border-box,linear-gradient(90deg,#39474f 0%,#36434b 44%,#314049 100%) 0 17px/100% calc(100% - 17px) no-repeat border-box;}
+#mixer .mixer-strip.selected {background:linear-gradient(#24353f,#24353f) right 17px/1px calc(100% - 17px) no-repeat border-box,linear-gradient(90deg,#415058,#384952) 0 17px/100% calc(100% - 17px) no-repeat border-box;}
+/* Round 35: these two out-rank the C column's and the master strip's older full-height
+   background/border rules (which still painted the C cell and an M|1 line into the band). */
+#mixer #mixer-strips.mixer-strips > div.mixer-peak {background:linear-gradient(#22323a,#22323a) right 17px/1px calc(100% - 17px) no-repeat border-box,linear-gradient(#2f3f47,#2f3f47) 0 17px/100% calc(100% - 17px) no-repeat border-box;border-right-color:transparent;}
+#mixer #mixer-strips .mixer-strip.master {border-right-color:transparent;}
+/* Round 36: the selected strip's header digit (M or an insert) is the ONLY highlight, at a
+   specificity no band/master/peak header rule can out-rank; the cell stays transparent. */
+#mixer #mixer-strips .mixer-strip .strip-number {background:transparent;color:#22282c;}
+#mixer #mixer-strips .mixer-strip.selected .strip-number {background:transparent;color:#d3dce1;}
+#mixer .mixer-strip .strip-number,
+#mixer .mixer-strip.master:not(.selected) .strip-number,
+#mixer .mixer-strips > .mixer-peak .strip-number {background:transparent;box-shadow:none;border-bottom-color:transparent;color:#22282c;}
+#mixer .mixer-strip.selected .strip-number,
+#mixer .mixer-strip.master.selected .strip-number {background:transparent;color:#d3dce1;}
+/* Routing: ▼ on the selected insert, a lit ▲ on inserts that send to it, a dim ▲ elsewhere (display only). */
+#mixer .strip-route {grid-row:8;grid-column:1 / -1;width:100%;height:100%;display:flex;align-items:center;justify-content:center;font:11px/1 Arial,sans-serif;color:#7d8f97;pointer-events:none;user-select:none;}
+#mixer .strip-route[data-state="selected"] {color:#a6e15c;font-size:13px;}
+#mixer .strip-route[data-state="sends"] {color:#a6e15c;text-shadow:0 0 4px #a6e15c88;}
+#mixer .strip-route[data-state="none"] {color:transparent;}
+#mixer .strip-route[data-route-kind="master"]::before {content:"";width:14px;height:14px;border:2px solid #a6e15c;border-radius:50%;box-shadow:inset 0 0 0 2px #2b3941;}
+/* Unassigned inserts 1-16: drawn like FL's (FL shows them normally, just unassigned) but
+   every part is a plain shape — inert, aria-hidden, no control and no mixer target. */
+#mixer .mixer-strip.placeholder {cursor:default;}
+/* Same brightness as assigned inserts: the shared strip styles apply unchanged (the
+   disabled range shape must not look disabled, exactly like FL's unassigned inserts). */
+#mixer .mixer-strip.placeholder .fader-track input:disabled {opacity:1;filter:none;}
+/* The pan knob's exact look (same box, gradient, halo and centre pointer as .mixer-pan). */
+#mixer .mixer-strip .placeholder-knob {grid-row:4;grid-column:1 / -1;position:relative;width:27px !important;height:27px !important;min-height:27px !important;margin:0;align-self:center;border:1px solid #20333e !important;background:radial-gradient(circle at 38% 24%,#687b85,#4b626f 37%,#354e5c 70%,#233b49 92%) !important;box-shadow:inset 0 1px 1px #aebfc555,inset 0 0 0 1px #687e8659,0 1px 1px #14293366;cursor:default;}
+#mixer .mixer-strip .placeholder-knob::after {top:4px;left:12px;height:7px;transform-origin:50% 9px;}
+#mixer .mixer-strip.placeholder .placeholder-led {grid-row:3;grid-column:1 / -1;width:9px;height:9px;box-sizing:border-box;border:1px solid #548031;border-radius:50%;background:radial-gradient(circle at 32% 25%,#e0ffbd,#a7e75e 48%,#73a83b 90%);box-shadow:0 0 0 1px #243b43,0 1px 1px #142b35;}
+/* FL's big left "C" column: master peak meter with its dB scale (wide, full height). */
+/* QA round 25: FL draws ONE big meter box — the dB numbers sit inside it and the level
+   fills behind them across the whole width (the round-23/24 version split a 28 px scale
+   box from a separate 28 px bar, which still read as a thin column). The meter is the
+   grid cell itself, so its size can never fall back to a strip meter's 13 px. */
+#mixer .mixer-strips > .mixer-peak {flex:0 0 64px;width:64px;align-self:stretch;display:grid;grid-template-columns:1fr;grid-template-rows:17px 1fr;padding:0 4px 10px;margin-right:3px;border-right:1px solid #22323a;background:#2f3f47;}
+#mixer .mixer-strips > .mixer-peak .strip-number {grid-row:1;grid-column:1;}
+#mixer .mixer-strips > .mixer-peak .meter.mixer-peak-meter {grid-row:2;grid-column:1;position:relative;width:auto;height:auto;min-height:220px;align-self:stretch;justify-self:stretch;margin:6px 0 0;border:1px solid #16242a;border-radius:2px;background:#1c2a30;box-shadow:inset 0 0 0 1px #2d3e45,inset 0 2px 4px #0008;overflow:hidden;}
+#mixer .mixer-strips > .mixer-peak .meter.mixer-peak-meter .meter-fill {position:absolute;left:3px;right:3px;bottom:0;width:auto;background:repeating-linear-gradient(to top,transparent 0,transparent 3px,#0004 3px,#0004 4px),linear-gradient(to top,#5fae2d,#9bd543 55%,#d4e15a 78%,#f2b04a 90%,#e65a3b);}
+#mixer .mixer-strips > .mixer-peak .mixer-peak-scale {grid-row:2;grid-column:1;z-index:1;display:flex;flex-direction:column;justify-content:space-between;margin:6px 0 0;padding:4px 0;background:none;border:0;pointer-events:none;font:400 12px/1 "Vegetable FL Narrow","Arial Narrow",Arial,sans-serif;color:#8a9293;text-align:center;text-shadow:none;}
+/* Routing cables (real outputs) drawn over the strips' bottom row. */
+#mixer .mixer-strips {position:relative;}
+#mixer .mixer-strips > svg.mixer-cables {position:absolute;left:0;top:0;pointer-events:none;overflow:visible;z-index:3;}
+#mixer .mixer-strips > svg.mixer-cables path {fill:none;stroke:#a6e15c;stroke-width:2;stroke-linecap:round;filter:drop-shadow(0 0 2px #a6e15c66);}
+#mixer .strip-route[data-target]::before {content:"";width:14px;height:14px;border:2px solid #a6e15c;border-radius:50%;box-shadow:inset 0 0 0 2px #2b3941;}
+#mixer .strip-route[data-target] {font-size:0;}
+/* Right panel: Equalizer (integrated three-band track EQ on the lane EQ stage).
+   Geometry of everything inside the graph comes from mixer-eq-scale.js; the CSS only
+   sizes the box. Layout: graph | 3 gain faders over 2 rows of 3 knobs (frequency, bandwidth). */
+/* The slot list takes the room that is left and scrolls; the Equalizer, output and stereo
+   tools stay docked under it (short windows used to clip the Equalizer's knobs). */
+#mixer .effect-rack {display:flex;flex-direction:column;overflow:hidden auto;scrollbar-width:thin;scrollbar-color:#31424b transparent;}
+#mixer .effect-rack > * {flex:none;}
+#mixer .effect-rack > .effect-slots {flex:0 1 auto;min-height:66px;overflow:hidden auto;scrollbar-width:thin;scrollbar-color:#31424b transparent;}
+/* Measured on fl_mixer_panel_eq.png (2x): panel grey #5f686d; graph 145 x 104 with a hairline
+   #3e474c frame in the SAME grey (no recess gradient), one faint 1 px #565f64 line per band, a
+   hairline #3e474c centre line, one ~3 px #bfc8cd curve, readouts in near-black with a dimmer
+   unit, a #565f64 corner mark. Faders: 22 px apart, 4 px slot (#3e474c rim, #50595e well, 105 px),
+   orange #febd5d level from 0 dB to the cap, two #586166 tick rails between neighbours with
+   hairline ticks at 0 / ±9 / ±18 dB. Knobs 16 / 14 px under the faders, comb and ↔ glyphs,
+   "Equalizer" 13 px #30373d on the left. */
+#mixer .mixer-eq {--eqh:105px;--eqq:calc((var(--eqh) - 3px) / 4);display:grid;grid-template-columns:minmax(64px,1fr) 66px;grid-template-rows:var(--eqh) 10px 20px 20px auto;column-gap:3px;margin:0;padding:9px 3px 8px 4px;border-top:0;background:#5f686d;color:#30373d;}
+#mixer .mixer-eq-graph {grid-row:1;grid-column:1;align-self:center;position:relative;box-sizing:border-box;height:calc(var(--eqh) - 1px);min-width:0;border:.5px solid #3e474c;border-radius:0;background:#5f686d;box-shadow:none;overflow:hidden;}
+#mixer .mixer-eq-curve {position:absolute;inset:0;display:block;width:100%;height:100%;overflow:hidden;touch-action:none;cursor:pointer;}
+#mixer .mixer-eq.dragging .mixer-eq-curve {cursor:grabbing;}
+#mixer .mixer-eq-grid {fill:none;pointer-events:none;}
+#mixer .mixer-eq-grid.major {stroke:#565f64;stroke-width:1;}
+#mixer .mixer-eq-grid.zero {stroke:#3e474c;stroke-width:.5;}
+#mixer .mixer-eq-line {fill:none;stroke:#bfc8cd;stroke-width:2.75;stroke-linejoin:round;stroke-linecap:round;pointer-events:none;}
+#mixer .mixer-eq-corner {fill:#565f64;pointer-events:none;}
+#mixer .mixer-eq-readout {font:400 12px/1 "Vegetable FL Narrow","Arial Narrow",Arial,sans-serif;fill:#0b1219;pointer-events:none;user-select:none;}
+#mixer .mixer-eq-readout .mixer-eq-readout-unit {fill:#39424a;}
+/* The band points are press targets only: the reference draws no handles. */
+#mixer .mixer-eq-band {touch-action:none;outline:0;}
+#mixer .mixer-eq-hit {fill:transparent;stroke:none;pointer-events:all;}
+#mixer .mixer-eq-handle {fill:none;stroke:none;pointer-events:none;}
+
+#mixer .mixer-eq-faders {grid-row:1;grid-column:2;position:relative;display:grid;grid-template-columns:repeat(3,22px);height:var(--eqh);min-height:0;
+ /* tick rails between neighbouring faders: hairline ticks every quarter of the travel (25.5 px at
+    full height: 0 / ±9 / ±18 dB), #586166 rails in between */
+ --tick:repeating-linear-gradient(#3e474c 0 .5px,transparent .5px var(--eqq));
+ --rail:repeating-linear-gradient(transparent 0 1.25px,#586166 1.25px calc(var(--eqq) - 1.25px),transparent calc(var(--eqq) - 1.25px) var(--eqq));
+ background:var(--tick) 13.5px 1.25px/17px calc(var(--eqh) - 2px) no-repeat,var(--tick) 35.5px 1.25px/17px calc(var(--eqh) - 2px) no-repeat,
+  var(--rail) 15px 1.25px/4.5px calc(var(--eqh) - 3px) no-repeat,var(--rail) 24.5px 1.25px/4.5px calc(var(--eqh) - 3px) no-repeat,
+  var(--rail) 37px 1.25px/4.5px calc(var(--eqh) - 3px) no-repeat,var(--rail) 46.5px 1.25px/4.5px calc(var(--eqh) - 3px) no-repeat;}
+/* Cap centre: ±18 dB on the outer ticks (1.5 px from each end), 0 dB on the middle one. */
+#mixer .mixer-eq-fader {--c:calc(1.5px + (1 - var(--pos,.5)) * (var(--eqh) - 3px));--mid:calc(var(--eqh) / 2);position:relative;display:block;width:22px;height:var(--eqh);}
+#mixer .mixer-eq-slot {position:absolute;left:9px;top:0;bottom:0;width:4px;background:#50595e;box-shadow:inset 0 0 0 1px #3e474c;pointer-events:none;}
+#mixer .mixer-eq-level {position:absolute;left:10px;width:2px;top:min(var(--mid),var(--c));height:max(calc(var(--c) - var(--mid)),calc(var(--mid) - var(--c)));background:#febd5d;pointer-events:none;}
+/* Short windows: a shorter Equalizer, so the slots keep room (same layout, 84 px travel). */
+@media (max-height:800px) {#mixer .mixer-eq {--eqh:84px;padding-top:6px;}}
+/* Metal cap: grey body, light trapezoid top, dark grip slit, dark-to-light concave bottom. */
+#mixer .mixer-eq-cap {position:absolute;left:4px;top:calc(var(--c) - 9px);width:14px;height:18px;box-sizing:border-box;border:.5px solid #2b3135;border-radius:2.5px;
+ background:linear-gradient(#141617,#141617) 50% 8.25px/6px 1.25px no-repeat,linear-gradient(#83898e,#83898e) 50% 9.5px/6px .75px no-repeat,linear-gradient(90deg,#4f565b,#646b71 18%,#6b7278 50%,#646b71 82%,#4f565b);
+ box-shadow:0 1.5px 1.5px #0007,0 2.5px 3px #0003,inset 0 .5px #8a9196;pointer-events:none;transition:filter .1s ease-out;}
+#mixer .mixer-eq-cap::before {content:"";position:absolute;left:1px;right:1px;top:.5px;height:6.5px;border-radius:1.5px 1.5px 0 0;clip-path:polygon(0 0,100% 0,86% 100%,14% 100%);background:linear-gradient(#b6bdc2,#8e959b 25%,#a9b0b6 55%,#d6dde3 88%,#aab1b7);}
+#mixer .mixer-eq-cap::after {content:"";position:absolute;left:1.5px;right:1.5px;bottom:1px;height:5.5px;border-radius:1px 1px 2px 2px;background:linear-gradient(#2c3339,#3f464c 30%,#5e656b 65%,#939aa0);}
+#mixer .mixer-eq-knobs {grid-row:3 / 5;grid-column:2;position:relative;display:grid;grid-template-columns:repeat(3,22px);grid-template-rows:20px 20px;}
+#mixer .mixer-eq-glyph {position:absolute;color:#384045;pointer-events:none;}
+#mixer .mixer-eq-glyph-frequency {left:-14px;top:7.5px;width:6px;height:4.5px;}
+#mixer .mixer-eq-glyph-width {left:-17px;top:26.5px;width:10px;height:6px;}
+#mixer .mixer-eq-dial {position:relative;display:grid;place-items:center;width:22px;height:20px;}
+#mixer .mixer-eq-dial-face {position:relative;display:block;box-sizing:border-box;width:16px;height:16px;border-radius:50%;background:linear-gradient(#50575d,#3c4349);
+ box-shadow:0 0 0 .5px #353e44,inset 0 .5px #666d73,0 2.5px 0 -.25px #2a3034,0 3px 2.5px #00000038;pointer-events:none;transition:filter .1s ease-out;}
+/* Pointer: light bar from near the centre to near the rim; 270° sweep, 12 o'clock at mid value. */
+#mixer .mixer-eq-dial-face::after {content:"";position:absolute;left:50%;top:1.5px;width:1.5px;height:5.25px;margin-left:-.75px;border-radius:1px;background:#cfd8dd;transform-origin:50% 6.5px;transform:rotate(calc(-135deg + var(--pos,.5) * 270deg));}
+#mixer .mixer-eq-dial-width .mixer-eq-dial-face {width:14px;height:14px;}
+#mixer .mixer-eq-dial-width .mixer-eq-dial-face::after {top:1.5px;height:4.25px;transform-origin:50% 5.5px;}
+#mixer .mixer-eq-title {grid-row:3 / 5;grid-column:1;align-self:start;padding-left:1px;font:400 13px/20px "Vegetable FL UI",Arial,sans-serif;color:#30373d;letter-spacing:.1px;white-space:nowrap;pointer-events:none;user-select:none;}
+/* The real controls: invisible range inputs over the drawn caps and faces. */
+#mixer .mixer-eq .mixer-eq-gain,#mixer .mixer-eq .mixer-eq-knob {position:absolute;inset:0;z-index:1;width:100%;height:100%;min-height:0;margin:0;padding:0;border:0;opacity:0;-webkit-appearance:none;appearance:none;background:none;touch-action:none;cursor:ns-resize;}
+#mixer .mixer-eq-fader:hover .mixer-eq-cap,#mixer .mixer-eq-dial:hover .mixer-eq-dial-face {filter:brightness(1.1);}
+#mixer .mixer-eq-fader.dragging .mixer-eq-cap,#mixer .mixer-eq-dial.dragging .mixer-eq-dial-face,#mixer .mixer-eq-fader:active .mixer-eq-cap,#mixer .mixer-eq-dial:active .mixer-eq-dial-face {filter:brightness(1.2);}
+#mixer .mixer-eq-fader:has(:focus-visible) .mixer-eq-cap,#mixer .mixer-eq-dial:has(:focus-visible) .mixer-eq-dial-face {outline:1px solid #febd5d;outline-offset:1px;}
+#mixer .mixer-eq-status {grid-row:5;grid-column:1 / -1;margin:4px 0 0;font:10px/13px "Vegetable FL UI",Arial,sans-serif;color:#262d31;}
+#mixer .mixer-eq-status:empty {display:none;}
+/* No EQ stage for this mixer track (reason in the tooltip), or still reading it. */
+#mixer .mixer-eq.unavailable,#mixer .mixer-eq.loading {cursor:default;}
+#mixer .mixer-eq.unavailable .mixer-eq-curve,#mixer .mixer-eq.loading .mixer-eq-curve {cursor:default;}
+#mixer .mixer-eq.unavailable .mixer-eq-line {opacity:.45;}
+#mixer .mixer-eq.unavailable .mixer-eq-faders,#mixer .mixer-eq.unavailable .mixer-eq-knobs {opacity:.5;}
+#mixer .mixer-eq.loading .mixer-eq-faders,#mixer .mixer-eq.loading .mixer-eq-knobs {opacity:.75;}
+#mixer .mixer-eq .mixer-eq-gain:disabled,#mixer .mixer-eq .mixer-eq-knob:disabled {cursor:not-allowed;}
+@media (prefers-reduced-motion:reduce){#mixer .mixer-eq-cap,#mixer .mixer-eq-dial-face {transition:none;}}
+#mixer .mixer-io {display:flex;align-items:center;gap:6px;margin:6px 0 0;padding-top:6px;border-top:1px solid #3d4f58;}
+#mixer .mixer-io-icon {flex:0 0 18px;text-align:center;font:15px/1 Arial,sans-serif;color:#aab8be;}
+#mixer .mixer-io-picker {flex:1;display:flex;justify-content:space-between;align-items:center;height:22px;min-height:22px;margin:0;padding:0 6px;border:1px solid #25363e;border-radius:2px;background:#2e3e46;color:#d6dfe3;font:12px/20px "Vegetable FL Narrow","Arial Narrow",Arial,sans-serif;text-align:left;}
+#mixer .mixer-io-picker:disabled {opacity:.6;}
+
+/* FL renders with greyscale antialiasing; macOS subpixel smoothing makes strip names look heavier. */
+#mixer {-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
+
+/* X08 strip stereo tools (selected insert's properties): separation knob, phase invert, swap L-R. */
+#mixer .stereo-tools {margin-top:8px;padding:0 4px 4px;font-size:11px;color:#9eafb4;}
+#mixer .stereo-tools .stereo-tools-row {display:flex;align-items:center;gap:6px;margin:4px 0;}
+#mixer .stereo-tools .stereo-tools-row > span {flex:0 0 auto;min-width:78px;}
+#mixer .stereo-tools input[type="range"] {flex:1;min-width:0;}
+#mixer .stereo-tools output {flex:0 0 34px;text-align:right;color:#c7c9ca;}
+#mixer .stereo-tools .stereo-tools-buttons {gap:4px;}
+#mixer .stereo-tools button[data-stereo-toggle] {flex:1;min-width:0;padding:2px 4px;border:1px solid #20333e;border-radius:3px;background:#354e5c;color:#c7c9ca;font:inherit;cursor:pointer;}
+#mixer .stereo-tools button[data-stereo-toggle][aria-pressed="true"] {background:#6f9a52;border-color:#9ac768;color:#10200a;}
+#mixer .stereo-tools button[data-stereo-toggle]:disabled,#mixer .stereo-tools input:disabled {opacity:.45;cursor:default;}
+#mixer .stereo-tools .stereo-tools-note {margin:2px 0 4px;color:#9eafb4;font-style:italic;}
+
+/* Slot mix knob (X04): compact wet/dry control on each loaded effect slot. */
+#mixer .effect-slot-loaded > input.slot-mix-knob {flex:0 0 30px;width:30px;height:10px;margin:0 2px;accent-color:#9ac768;cursor:pointer;}
+#mixer .effect-slot-loaded > input.slot-mix-knob:disabled {opacity:.35;cursor:default;}
+#mixer .effect-slot-loaded > input.slot-mix-knob:focus-visible {outline:1px solid #aac7d2;}
+/* WP-30 mixer layouts (header "Wide" menu). Wide is the default look above; classes are set by mixer-strip-view.js. */
+#mixer.mixer-layout-compact .mixer-strip {min-width:34px;width:34px;flex-basis:34px;padding-left:2px;padding-right:2px;}
+#mixer.mixer-layout-compact .mixer-strip.master {min-width:38px;width:38px;flex-basis:38px;}
+#mixer.mixer-layout-compact .mixer-strip .meter {width:10px;}
+#mixer.mixer-layout-xl-meters .mixer-strip {min-width:52px;width:52px;flex-basis:52px;}
+#mixer.mixer-layout-xl-meters .mixer-strip.master {min-width:56px;width:56px;flex-basis:56px;}
+#mixer.mixer-layout-xl-meters .mixer-strip .meter {width:24px;}
+
+/* Mixer sends: FL's route arrow under every other insert (ninth row) with the send level knob and pre/post tap when routed. */
+#mixer .mixer-strip {grid-template-rows:17px 101px 14px 32px 158px 18px 18px 22px 46px;}
+@media (max-height:800px) {#mixer .mixer-strip {grid-template-rows:17px 91px 14px 32px 134px 18px 18px 20px 46px;}}
+#mixer .strip-send {grid-row:9;grid-column:1 / -1;width:100%;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:2px;min-width:0;}
+#mixer .strip-send[hidden] {display:none;}
+#mixer .strip-send button.send-route {width:22px;height:15px;padding:0;border:1px solid #20333e;border-radius:3px;background:#354e5c;color:#9eafb4;font:9px/1 Arial,sans-serif;cursor:pointer;}
+#mixer .strip-send button.send-route[aria-pressed="true"] {background:#6f9a52;border-color:#9ac768;color:#10200a;}
+#mixer .strip-send button.send-route:disabled {opacity:.4;cursor:default;}
+#mixer .strip-send input.send-level {width:36px;height:10px;margin:0;padding:0;accent-color:#a6e15c;}
+#mixer .strip-send button.send-tap {width:26px;height:10px;padding:0;border:1px solid #20333e;border-radius:2px;background:#2b3941;color:#9eafb4;font:8px/1 Arial,sans-serif;cursor:pointer;}
+#mixer .strip-send button.send-tap[aria-pressed="true"] {background:#a6e15c;color:#10200a;}
+#mixer .strip-send button.send-tap:disabled {opacity:.4;cursor:default;}
+#mixer .strip-send input.send-level[hidden],#mixer .strip-send output[hidden],#mixer .strip-send button.send-tap[hidden] {display:none;}
+#mixer .strip-send output.send-level-text {position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);}

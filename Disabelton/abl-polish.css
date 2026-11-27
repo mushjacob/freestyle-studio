@@ -1,0 +1,188 @@
+/* Disabelton — polish layer (linked last). Live 12 default (mid-grey) theme details:
+ * menu-bar tracking highlight, Live-drawn popup menus, dialogs and device windows,
+ * control states, short eased transitions, reduced-motion guard and narrow-window layout.
+ * Live is flat on purpose: depth here is exact greys, crisp 1px lines and correct states. */
+:root{
+ --abl-menu-bg:#c9c9c9;--abl-menu-line:#2f2f2f;--abl-menu-sep:#a2a2a2;--abl-menu-dim:#858585;
+ --abl-sel-row:#b0ddeb;--abl-sel-line:#7fb9cc;
+ --abl-ctl:#c3c3c3;--abl-ctl-hover:#d2d2d2;--abl-ctl-down:#a4a4a4;--abl-ctl-line:#6b6b6b;
+ --abl-orange-down:#e08e12;--abl-orange-line:#8a5a12;
+ --abl-ease:cubic-bezier(.2,.7,.3,1);--abl-fast:90ms;--abl-med:140ms;
+ --abl-pop-shadow:0 1px 0 #ffffff40 inset,0 6px 18px #00000059,0 1px 3px #00000040;
+}
+
+/* ---------- Menu bar ---------- */
+header.abl-control-bar nav#main-menu{display:flex;align-items:stretch;height:var(--abl-menubar);gap:0}
+header.abl-control-bar nav#main-menu button{height:var(--abl-menubar)!important;min-height:var(--abl-menubar)!important;padding:0 8px!important;line-height:var(--abl-menubar)!important;background:transparent;border:0!important;box-shadow:none!important;cursor:default;transition:none!important;white-space:nowrap}
+header.abl-control-bar nav#main-menu button:hover{background:#a6a6a6!important;color:#111!important}
+header.abl-control-bar nav#main-menu button.menu-open,header.abl-control-bar nav#main-menu button[aria-expanded="true"],header.abl-control-bar nav#main-menu button.menu-open:hover{background:#4f4f4f!important;color:#fff!important}
+header.abl-control-bar nav#main-menu button:focus-visible{outline:1px solid #2b6f86;outline-offset:-1px}
+header.abl-control-bar .logic-titlebar{border-bottom-color:#858585}
+header.abl-control-bar .logic-titlebar .hint-display{min-width:0;overflow:hidden}
+header.abl-control-bar .logic-titlebar .hint-display strong{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+header.abl-control-bar .logic-titlebar .cloud-button{transition:background-color var(--abl-fast) var(--abl-ease)}
+header.abl-control-bar .logic-titlebar .cloud-button:hover{background:var(--abl-ctl-hover)!important}
+header.abl-control-bar .logic-titlebar .cloud-button:active{background:var(--abl-ctl-down)!important}
+
+/* ---------- Popup menus (main menus, submenus, context menus, device/preset menus) ---------- */
+#context-menu.context-menu,.context-menu{background:var(--abl-menu-bg)!important;border:1px solid var(--abl-menu-line)!important;border-radius:0!important;box-shadow:var(--abl-pop-shadow)!important;padding:3px 0!important;min-width:200px;color:#111;user-select:none;-webkit-user-select:none}
+#context-menu.context-menu:not(.hidden){animation:abl-pop-in var(--abl-fast) var(--abl-ease)}
+.context-menu button{display:flex!important;align-items:center;justify-content:space-between;gap:28px!important;width:100%;box-sizing:border-box;height:19px!important;min-height:19px!important;padding:0 12px 0 22px!important;margin:0!important;border:0!important;background:transparent;font:11.5px/19px var(--abl-font)!important;letter-spacing:0;color:#111!important;text-align:left;white-space:nowrap;cursor:default;transition:none!important}
+.context-menu button small{margin-left:auto;padding-left:8px;color:#3d3d3d!important;font:11px/19px var(--abl-font)!important;font-variant-numeric:tabular-nums;letter-spacing:.2px;opacity:1!important}
+.context-menu button:hover:not(:disabled),.context-menu button:focus-visible,.context-menu button.menu-active:not(:disabled),.context-menu .menu-sub.open>button{background:var(--abl-sel-row)!important;color:#000!important;outline:0!important;box-shadow:inset 0 1px 0 var(--abl-sel-line),inset 0 -1px 0 var(--abl-sel-line)}
+.context-menu button:hover:not(:disabled) small,.context-menu button.menu-active:not(:disabled) small,.context-menu .menu-sub.open>button small{color:#000!important}
+.context-menu button:active:not(:disabled):not([aria-disabled="true"]){background:#9fd0e0!important}
+.context-menu button:disabled,.context-menu button[aria-disabled="true"],.context-menu button[aria-disabled="true"]:hover,.context-menu button[aria-disabled="true"]:focus-visible,.context-menu button[aria-disabled="true"].menu-active{background:transparent!important;color:var(--abl-menu-dim)!important;box-shadow:none!important;cursor:default}
+.context-menu button:disabled small,.context-menu button[aria-disabled="true"] small,.context-menu button[aria-disabled="true"]:hover small{color:#929292!important}
+.context-menu hr{height:0!important;border:0!important;border-top:1px solid var(--abl-menu-sep)!important;margin:3px 0!important;background:none!important}
+.context-menu hr+hr,.context-menu hr:first-child,.context-menu hr:last-child{display:none}
+/* Check mark: drawn, sits in the 22px gutter. */
+.context-menu .menu-check{position:absolute!important;left:7px!important;top:50%!important;width:9px!important;height:9px!important;margin-top:-5px;font-size:0!important;line-height:0;color:inherit!important}
+.context-menu button[aria-checked="true"] .menu-check::before{content:"";position:absolute;left:2.5px;top:-.5px;width:3px;height:7px;border:solid currentColor;border-width:0 1.6px 1.6px 0;transform:rotate(40deg)}
+/* Submenu arrow: a solid triangle at the right edge. */
+.context-menu .menu-arrow{flex:0 0 auto;width:0!important;height:0!important;margin-left:auto;padding:0!important;font-size:0!important;line-height:0!important;border-style:solid;border-width:3.5px 0 3.5px 5px;border-color:transparent transparent transparent currentColor;color:#222!important}
+.context-menu button[aria-disabled="true"] .menu-arrow{color:var(--abl-menu-dim)!important}
+.context-menu .menu-sub{position:relative}
+.context-menu .context-submenu{top:-4px!important;left:calc(100% - 2px)!important;z-index:2}
+.context-menu .menu-sub.open>.context-submenu{animation:abl-pop-in var(--abl-fast) var(--abl-ease)}
+.context-menu .menu-columns{display:flex;align-items:flex-start}
+.context-menu .menu-column{min-width:200px}
+.context-menu .menu-column+.menu-column{border-left:1px solid var(--abl-menu-sep)!important;align-self:stretch}
+.context-menu .abl-swatches{padding:5px 12px 5px 22px!important;gap:2px}
+.context-menu .abl-swatches button{display:block!important;padding:0!important;box-shadow:none!important;border:1px solid #3d3d3d!important;transition:transform var(--abl-fast) var(--abl-ease)!important}
+.context-menu .abl-swatches button:hover{outline:1px solid #000;transform:scale(1.15);z-index:1}
+.abl-device-menu-title{background:#a8a8a8!important;border-bottom:1px solid #7a7a7a!important;font:600 11px/18px var(--abl-font);padding:0 12px 0 22px;color:#111}
+@keyframes abl-pop-in{from{opacity:0;transform:translateY(-2px)}to{opacity:1;transform:none}}
+
+/* ---------- Dialogs ---------- */
+dialog.studio-dialog{background:#c3c3c3!important;border:1px solid #2f2f2f!important;border-radius:0!important;box-shadow:0 1px 0 #ffffff4d inset,0 14px 44px #00000073,0 2px 6px #0000004d!important;padding:0!important;max-width:calc(100vw - 24px);max-height:calc(100vh - 24px);overflow:auto}
+dialog.studio-dialog[open]{animation:abl-dialog-in var(--abl-med) var(--abl-ease)}
+dialog.studio-dialog::backdrop{background:#00000038!important;animation:abl-fade-in var(--abl-med) linear}
+dialog.studio-dialog>header{height:22px!important;min-height:22px;padding:0 4px 0 9px!important;display:flex;align-items:center;justify-content:space-between;gap:8px;background:#a1a1a1!important;border-bottom:1px solid #6f6f6f!important;box-shadow:inset 0 1px 0 #ffffff33;font:600 11.5px/22px var(--abl-font)!important;color:#111!important;letter-spacing:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;position:sticky;top:0;z-index:2}
+dialog.studio-dialog>header>button{flex:0 0 auto;width:16px!important;height:16px!important;min-width:16px!important;min-height:16px!important;padding:0!important;display:inline-flex!important;align-items:center;justify-content:center;border:1px solid transparent!important;background:transparent!important;color:#222!important;font:400 14px/1 var(--abl-font)!important;cursor:default}
+dialog.studio-dialog>header>button:hover{background:#c9c9c9!important;border-color:#6f6f6f!important;color:#000!important}
+dialog.studio-dialog>header>button:active{background:#8c8c8c!important}
+dialog.studio-dialog>header>button:focus-visible{outline:0!important;border-color:#6f6f6f!important}
+dialog.studio-dialog .dialog-content{padding:10px 12px 12px}
+dialog.studio-dialog label{font:11px var(--abl-font);color:#222!important}
+dialog.studio-dialog :is(input:not([type=checkbox]):not([type=radio]):not([type=range]),select,textarea){background:#dedede!important;border:1px solid #6f6f6f!important;border-radius:0!important;color:#111!important;font:11.5px var(--abl-font)!important;box-shadow:inset 0 1px 0 #00000014!important;transition:border-color var(--abl-fast) var(--abl-ease),background-color var(--abl-fast) var(--abl-ease)}
+dialog.studio-dialog :is(input:not([type=checkbox]):not([type=radio]):not([type=range]),select,textarea):hover:not(:disabled){background:#e6e6e6!important}
+dialog.studio-dialog :is(input:not([type=checkbox]):not([type=radio]):not([type=range]),select,textarea):focus{outline:0!important;border-color:#1f6e86!important;background:#f2f2f2!important;box-shadow:0 0 0 1px #4cc3ff!important}
+dialog.studio-dialog ::selection{background:var(--abl-sel-row);color:#000}
+dialog.studio-dialog :is(input[type=checkbox],input[type=radio]){accent-color:var(--abl-orange)}
+dialog.studio-dialog button{min-height:20px;padding:0 12px;border:1px solid var(--abl-ctl-line)!important;border-radius:0!important;background:var(--abl-ctl)!important;color:#111!important;font:11.5px var(--abl-font)!important;box-shadow:none!important;cursor:default;transition:background-color var(--abl-fast) var(--abl-ease),border-color var(--abl-fast) var(--abl-ease)}
+dialog.studio-dialog button:hover:not(:disabled){background:var(--abl-ctl-hover)!important}
+dialog.studio-dialog button:active:not(:disabled){background:var(--abl-ctl-down)!important}
+dialog.studio-dialog button:focus-visible{outline:1px solid #1f6e86!important;outline-offset:1px}
+dialog.studio-dialog button.primary,dialog.studio-dialog button[type=submit]{background:var(--abl-orange)!important;border-color:var(--abl-orange-line)!important;color:#111!important}
+dialog.studio-dialog button.primary:hover:not(:disabled),dialog.studio-dialog button[type=submit]:hover:not(:disabled){background:#ffb440!important}
+dialog.studio-dialog button.primary:active:not(:disabled),dialog.studio-dialog button[type=submit]:active:not(:disabled){background:var(--abl-orange-down)!important}
+dialog.studio-dialog button:disabled{background:#b6b6b6!important;border-color:#8f8f8f!important;color:#7a7a7a!important}
+dialog.studio-dialog>header>button:disabled{background:transparent!important;border-color:transparent!important}
+@keyframes abl-dialog-in{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+@keyframes abl-fade-in{from{opacity:0}to{opacity:1}}
+
+/* ---------- Device / plug-in windows ---------- */
+dialog.abl-plugin-window{border:1px solid #2f2f2f!important;box-shadow:0 14px 44px #00000073,0 2px 6px #0000004d!important;max-width:calc(100vw - 16px)}
+dialog.abl-plugin-window[open]{animation:abl-dialog-in var(--abl-med) var(--abl-ease)}
+dialog.abl-plugin-window>header{height:22px!important;background:#a1a1a1!important;border-bottom:1px solid #5f5f5f!important;box-shadow:inset 0 1px 0 #ffffff33;font:600 11.5px/22px var(--abl-font)}
+dialog.abl-plugin-window>header button{transition:background-color var(--abl-fast) var(--abl-ease)}
+.abl-plugin-header{border-bottom:1px solid #8a8a8a}
+/* The generic dialog button skin must not square off the round device activator. */
+dialog.studio-dialog.abl-plugin-window .abl-plugin-header .abl-plugin-activator{width:13px!important;height:13px!important;min-width:13px!important;min-height:13px!important;padding:0!important;flex:0 0 13px;border-radius:50%!important;border:1px solid #3a3a3a!important;background:#8e8e8e!important}
+dialog.studio-dialog.abl-plugin-window .abl-plugin-header .abl-plugin-activator.on{background:var(--abl-dev-orange,var(--abl-orange))!important}
+dialog.studio-dialog.abl-plugin-window .abl-plugin-header .abl-plugin-activator:disabled{background:repeating-linear-gradient(45deg,#8e8e8e 0 2px,#b0b0b0 2px 4px)!important;border-color:#6a6a6a!important}
+dialog.studio-dialog.abl-plugin-window button.on:not(.abl-plugin-activator),dialog.studio-dialog.abl-plugin-window button[aria-pressed="true"]:not(.abl-plugin-activator),dialog.studio-dialog.abl-plugin-window button[aria-checked="true"]{background:var(--abl-orange)!important;border-color:var(--abl-orange-line)!important}
+.abl-plugin-header button:not(.abl-plugin-activator):hover:not(:disabled){background:var(--abl-ctl-hover)}
+.abl-plugin-header button:not(.abl-plugin-activator):active:not(:disabled){background:var(--abl-ctl-down)}
+.abl-plugin-header .abl-plugin-activator,.abl-device-activator{box-shadow:inset 0 1px 0 #ffffff59;transition:background-color var(--abl-fast) var(--abl-ease),filter var(--abl-fast) var(--abl-ease);cursor:default}
+.abl-plugin-header .abl-plugin-activator:hover:not(:disabled),.abl-device-activator:hover:not(:disabled){filter:brightness(1.1)}
+.abl-plugin-header .abl-plugin-activator:active:not(:disabled),.abl-device-activator:active:not(:disabled){filter:brightness(.88)}
+
+/* Configure (parameter) view of a device window: Live greys, no dark-theme leftovers. */
+dialog.studio-dialog.plugin-parameter-dialog .plugin-parameter-count{color:#3d3d3d!important;font:10.5px var(--abl-font)}
+dialog.studio-dialog.plugin-parameter-dialog .plugin-parameter-toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+dialog.studio-dialog.plugin-parameter-dialog .plugin-parameter-status:not(:empty){margin:6px 0!important;padding:4px 8px!important;background:#b2b2b2!important;border:1px solid #8a8a8a;border-left:3px solid var(--abl-orange)!important;color:#111!important;font:11px/15px var(--abl-font)}
+dialog.studio-dialog.plugin-parameter-dialog .plugin-parameter-page{border-top:1px solid #8a8a8a!important;padding-top:4px}
+dialog.studio-dialog.plugin-parameter-dialog .plugin-parameter-page label{border-bottom:1px solid #adadad!important;color:#111!important}
+dialog.studio-dialog.plugin-parameter-dialog .plugin-parameter-page label:hover{background:#cdcdcd}
+dialog.studio-dialog.plugin-parameter-dialog .plugin-parameter-page input[type=range]{accent-color:var(--abl-blue)!important;background:transparent!important;border:0!important;box-shadow:none!important}
+dialog.studio-dialog.plugin-parameter-dialog .plugin-parameter-empty{color:#3d3d3d!important}
+/* EQ Eight filter-type list: a Live chooser list, not a stack of push buttons. */
+.abl-eq8-type-menu{background:var(--abl-menu-bg)!important;border:1px solid var(--abl-menu-line)!important;box-shadow:var(--abl-pop-shadow)!important;padding:2px 0!important;animation:abl-pop-in var(--abl-fast) var(--abl-ease)}
+dialog.studio-dialog .abl-eq8-type-menu .abl-eq8-type-option,.abl-eq8-type-menu .abl-eq8-type-option{display:flex;align-items:center;gap:6px;width:100%;box-sizing:border-box;height:18px!important;min-height:18px!important;padding:0 10px 0 6px!important;border:0!important;background:transparent!important;color:#111!important;font:11px/18px var(--abl-font)!important;text-align:left;white-space:nowrap;transition:none!important}
+dialog.studio-dialog .abl-eq8-type-menu .abl-eq8-type-option:hover:not(:disabled),dialog.studio-dialog .abl-eq8-type-menu .abl-eq8-type-option:focus-visible,.abl-eq8-type-menu .abl-eq8-type-option:hover:not(:disabled),.abl-eq8-type-menu .abl-eq8-type-option:focus-visible{background:var(--abl-sel-row)!important;outline:0!important}
+dialog.studio-dialog .abl-eq8-type-menu .abl-eq8-type-option[aria-selected="true"],.abl-eq8-type-menu .abl-eq8-type-option[aria-selected="true"]{background:var(--abl-orange)!important}
+dialog.studio-dialog .abl-eq8-type-menu .abl-eq8-type-option:disabled,.abl-eq8-type-menu .abl-eq8-type-option:disabled{background:transparent!important;color:var(--abl-menu-dim)!important}
+.abl-eq8-band,.abl-eq8-on,.abl-eq8-type{transition:background-color var(--abl-fast) var(--abl-ease),filter var(--abl-fast) var(--abl-ease);cursor:default}
+.abl-eq8-band:hover:not(:disabled),.abl-eq8-on:hover:not(:disabled),.abl-eq8-type:hover:not(:disabled){filter:brightness(1.07)}
+.abl-eq8-band:active:not(:disabled),.abl-eq8-on:active:not(:disabled),.abl-eq8-type:active:not(:disabled){filter:brightness(.88)}
+dialog.studio-dialog.abl-plugin-window .abl-eq8-band,dialog.studio-dialog.abl-plugin-window .abl-eq8-on{min-height:0;padding:0 5px}
+dialog.studio-dialog.abl-plugin-window .abl-eq8-band.selected{box-shadow:inset 0 0 0 1px #111!important}
+
+/* ---------- Device chain ---------- */
+.abl-device{transition:opacity var(--abl-med) var(--abl-ease)}
+.abl-device-title{box-shadow:inset 0 1px 0 #ffffff40}
+.abl-device-title button{transition:background-color var(--abl-fast) var(--abl-ease),color var(--abl-fast) var(--abl-ease)}
+.abl-device-preset:active:not(:disabled),.abl-device-step:active:not(:disabled),.abl-device-wrench:active:not(:disabled),.abl-device-fold:active:not(:disabled){background:#9d9d9d!important;color:#000}
+.abl-device-hand:disabled,.abl-device-preset:disabled,.abl-device-step:disabled{opacity:.45}
+.abl-device-icons{display:inline-flex;align-items:center;gap:2px}
+.abl-device-presets{display:inline-flex;align-items:center;gap:1px}
+
+/* ---------- Control bar and generic control states ---------- */
+header.abl-control-bar .abl-bar button{transition:background-color var(--abl-fast) var(--abl-ease),border-color var(--abl-fast) var(--abl-ease),color var(--abl-fast) var(--abl-ease);cursor:default}
+header.abl-control-bar .abl-bar button:active:not(:disabled):not(.lit):not([aria-pressed="true"]){background:var(--abl-ctl-down)!important}
+header.abl-control-bar .abl-bar button.lit:active:not(:disabled),header.abl-control-bar .abl-bar button[aria-pressed="true"]:active:not(:disabled){background:var(--abl-orange-down)!important}
+header.abl-control-bar .abl-bar button:focus-visible,.abl-status-bar button:focus-visible,#playlist .abl-track-controls button:focus-visible{outline:1px solid #1f6e86!important;outline-offset:1px}
+.abl-field{transition:background-color var(--abl-fast) var(--abl-ease),border-color var(--abl-fast) var(--abl-ease)}
+.abl-field:hover{background:#b4b4b4!important}
+.abl-field:focus-within{border-color:#1f6e86!important}
+.abl-status-bar button,#abl-arr-corner button,#playlist .abl-track-controls button{transition:background-color var(--abl-fast) var(--abl-ease),border-color var(--abl-fast) var(--abl-ease);cursor:default}
+.abl-status-bar button:hover:not(:disabled),#abl-arr-corner button:hover:not(:disabled){background:var(--abl-ctl-hover)!important}
+.abl-status-bar button:active:not(:disabled),#abl-arr-corner button:active:not(:disabled){background:var(--abl-ctl-down)!important}
+#playlist .abl-track-controls button:hover:not(:disabled){filter:brightness(1.07)}
+#playlist .abl-track-controls button:active:not(:disabled){filter:brightness(.88)}
+.abl-mixer .abl-mixer-strip .strip-controls button{transition:background-color var(--abl-fast) var(--abl-ease),filter var(--abl-fast) var(--abl-ease);cursor:default}
+.abl-mixer .abl-mixer-strip .strip-controls button:hover:not(:disabled){filter:brightness(1.07)}
+.abl-mixer .abl-mixer-strip .strip-controls button:active:not(:disabled){filter:brightness(.88)}
+.abl-clip-view button{transition:background-color var(--abl-fast) var(--abl-ease),border-color var(--abl-fast) var(--abl-ease),filter var(--abl-fast) var(--abl-ease);cursor:default}
+.abl-clip-view button:not(.abl-clip-swatch):hover:not(:disabled){filter:brightness(1.06)}
+.abl-clip-view button:not(.abl-clip-swatch):active:not(:disabled){filter:brightness(.86)}
+
+/* ---------- Session slots, browser rows ---------- */
+.abl-slot{transition:background-color var(--abl-fast) var(--abl-ease)}
+.abl-slot .abl-launch{transition:color var(--abl-fast) var(--abl-ease),transform var(--abl-fast) var(--abl-ease)}
+.abl-slot .abl-launch:active{transform:scale(.86)}
+.abl-session-stop-row button{transition:background-color var(--abl-fast) var(--abl-ease)}
+.abl-session-stop-row button:hover:not(:disabled){background:#222!important}
+aside.browser .abl-browser-side button{transition:background-color var(--abl-fast) var(--abl-ease);cursor:default}
+aside.browser .abl-browser-side button:active:not(.selected):not(:disabled){background:#a9a9a9!important}
+aside.browser .abl-browser-list button:active,aside.browser .abl-device-list .abl-device-row:active{background:var(--abl-sel-row)!important}
+aside.browser .abl-browser-content>.browser-search{transition:border-color var(--abl-fast) var(--abl-ease),background-color var(--abl-fast) var(--abl-ease)}
+aside.browser .abl-browser-content>.browser-search:focus-within{border-color:#1f6e86!important;background:#ececec!important}
+
+/* ---------- Toast (status note) ---------- */
+#toast{background:#262626f5!important;color:#ededed!important;border:1px solid #0d0d0d!important;border-radius:0!important;box-shadow:0 6px 18px #00000059!important;padding:6px 12px!important;font:11.5px/15px var(--abl-font)!important;max-width:min(560px,calc(100vw - 32px));transition:opacity var(--abl-med) var(--abl-ease),transform var(--abl-med) var(--abl-ease)!important}
+
+/* ---------- Narrow windows (down to ~800px) ---------- */
+@media(max-width:1180px){:root{--abl-browser-w:290px}body aside.browser #browser-tree .logic-keyword-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+@media(max-width:980px){
+ :root{--abl-browser-w:272px}
+ header.abl-control-bar .logic-titlebar .hint-display{display:none!important}
+ header.abl-control-bar .logic-titlebar{gap:4px}
+ header.abl-control-bar nav#main-menu{flex:1 1 auto;min-width:0}
+ header.abl-control-bar nav#main-menu button{padding:0 6px!important}
+ .abl-bar{gap:6px}
+}
+@media(max-width:860px){
+ :root{--abl-browser-w:264px}
+ aside.browser #browser-tree :is(.library-message,.library-count,p){overflow-wrap:break-word;word-break:normal}
+ .abl-status-bar #project-summary{display:none}
+ .context-menu .menu-column{min-width:170px}
+ dialog.studio-dialog:not(.abl-plugin-window):not(.plugin-parameter-dialog){width:min(510px,calc(100vw - 24px))!important}
+}
+
+@media(prefers-reduced-motion:reduce){
+ #context-menu.context-menu:not(.hidden),.context-menu .menu-sub.open>.context-submenu,dialog.studio-dialog[open],dialog.studio-dialog::backdrop,dialog.abl-plugin-window[open]{animation:none!important}
+ header.abl-control-bar *,.context-menu *,dialog.studio-dialog *,dialog.abl-plugin-window *,.abl-device,.abl-device *,.abl-mixer *,.abl-clip-view *,.abl-slot,.abl-slot *,aside.browser *,.abl-status-bar *,#playlist .abl-track-controls button,#toast,.abl-field{transition:none!important}
+}

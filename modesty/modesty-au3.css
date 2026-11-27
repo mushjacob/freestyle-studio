@@ -1,0 +1,185 @@
+/* Modesty: current-generation editor look (light theme), linked after modesty-polish.css.
+ * Colours and metrics are sampled from captures of the reference editor (3.x, macOS, Retina) at the same window size:
+ * toolbar #f8f8f9 with #dfdfe3 rules, flat #dddee3 buttons (#c2c3ce when down / selected tool), slate canvas #323544,
+ * ruler #e9e9eb with the selected span #bdcaf0, track info #f8f8f9 (#dde6fd when the track is selected) 151px wide,
+ * 32px amplitude scale, clip title #d0d6f2 over a #f1f3fe body with #6464cc samples, dark time readouts.
+ * Selectors start with `html body.audacity-mode` so they win over the earlier layers without !important.
+ * Track geometry comes from audacity-layout.js (TRACK_PANEL_WIDTH_PX / AMPLITUDE_RULER_WIDTH_PX); nothing here changes it. */
+html body.audacity-mode{
+ --a3-paper:#f8f8f9;--a3-rule:#dfdfe3;--a3-btn:#dddee3;--a3-btn-hover:#d3d4da;--a3-btn-down:#c2c3ce;--a3-ink:#17181b;
+ --a3-canvas:#323544;--a3-lane:#3e4050;--a3-lane-selected:#454859;--a3-ruler:#e9e9eb;--a3-ruler-selected:#bdcaf0;
+ --a3-info-selected:#dde6fd;--a3-info-button-selected:#c6d2df;--a3-focus:#9ba7f7;
+ --a3-clip-title:#c5cae4;--a3-clip-title-selected:#d0d6f2;--a3-clip:#dbdde7;--a3-wave:#5b5bba;--a3-rms:#7f7fd1;
+ --a3-readout:#323544;
+ --au-canvas:#323544;--au-info:#f8f8f9;--au-toolbar:#f8f8f9;--au-blank:#3e4050;--au-wave:#6464cc;--au-rms:#8c8ce6;--au-clip:#f1f3fe;--au-clip-title:#d0d6f2;
+ background:var(--a3-canvas)
+}
+html body.audacity-mode #desktop,html body.audacity-mode #au-scroll{background:var(--a3-canvas)}
+
+/* ───────── Menu bar: the open title gets the current system's soft rounded highlight (reference menu capture). ───────── */
+html body.audacity-mode #au-menus button.au-menu-title-open,html body.audacity-mode #au-menus button.au-menu-title-open:hover{background:rgba(0,0,0,.13);color:#1d1d1f;border-radius:5px}
+html body.audacity-mode .context-menu{border-radius:7px;background:rgba(240,240,242,.97)}
+
+/* ───────── Toolbar dock ───────── */
+html body.audacity-mode .au-header{background:var(--a3-paper);border-bottom:1px solid var(--a3-rule)}
+html body.audacity-mode .au-toolbar{min-height:63px;padding:1px 8px 1px 4px;column-gap:8px;row-gap:4px;background:var(--a3-paper);box-shadow:none;align-items:center}
+html body.audacity-mode .au-toolbar>:is(.au-transport,.au-tool-grid,#au-audio-setup,.au-meters){margin-left:14px}
+html body.audacity-mode .au-toolbar>:is(.au-transport,.au-tool-grid,#au-audio-setup,.au-meters)::before{left:-13px;width:5px;opacity:.75}
+/* Transport: 52px flat squares, 4px apart; Record and Loop sit 8px off their neighbours. */
+html body.audacity-mode .au-transport{gap:4px}
+html body.audacity-mode .au-transport button{width:52px;height:52px;padding:0;border:0;border-radius:4px;background:var(--a3-btn);box-shadow:none;color:#000;transition:background-color 90ms linear}
+html body.audacity-mode .au-transport button:hover:not(:disabled){background:var(--a3-btn-hover);border:0}
+html body.audacity-mode .au-transport button:active:not(:disabled),html body.audacity-mode .au-transport button.active{background:var(--a3-btn-down);box-shadow:none}
+html body.audacity-mode .au-transport #au-record{margin:0 4px}
+html body.audacity-mode .au-transport #au-record.active{background:#e3c4c3}
+html body.audacity-mode .au-transport #au-loop{margin-left:0}
+html body.audacity-mode .au-transport #au-loop.active{background:var(--a3-btn-down)}
+html body.audacity-mode .au-transport svg{width:22px;height:22px}
+html body.audacity-mode .au-transport .au-green{color:#5a866e}
+html body.audacity-mode .au-transport .au-red{color:#893834}
+/* Tools and Edit toolbars: 25px squares, 2px apart, selected tool sunk. */
+html body.audacity-mode .au-tool-grid{grid-template-columns:repeat(var(--a3-tool-cols,5),25px);grid-template-rows:25px 25px;gap:2px;padding:0}
+html body.audacity-mode .au-tools-toolbar{--a3-tool-cols:3}
+html body.audacity-mode .au-tool-grid button{width:25px;height:25px;min-height:25px;padding:0;border:0;border-radius:3px;background:var(--a3-btn);box-shadow:none;display:grid;place-items:center;transition:background-color 90ms linear}
+html body.audacity-mode .au-tool-grid button:hover:not(:disabled){background:var(--a3-btn-hover);border:0}
+html body.audacity-mode .au-tool-grid button:active:not(:disabled),html body.audacity-mode .au-tool-grid button.active{background:var(--a3-btn-down);box-shadow:none;border:0}
+html body.audacity-mode .au-tool-grid button:disabled{opacity:1;color:#b9bbc2}
+html body.audacity-mode .au-tool-grid button:disabled svg{opacity:.38}
+html body.audacity-mode .au-tool-grid svg{width:18px;height:18px}
+/* Audio Setup / cloud button: 86x52 with the icon over the label. */
+html body.audacity-mode .au-wide{width:86px;height:52px;padding:4px 2px 5px;border:0;border-radius:4px;background:var(--a3-btn);box-shadow:none;display:flex;flex-direction:column;align-items:center;justify-content:space-between;font:13px/16px var(--mo-ui);color:var(--a3-ink);transition:background-color 90ms linear}
+html body.audacity-mode .au-wide:hover{background:var(--a3-btn-hover);border:0}
+html body.audacity-mode .au-wide:active{background:var(--a3-btn-down);box-shadow:none}
+html body.audacity-mode .au-wide span{font-size:13px;line-height:16px;white-space:nowrap}
+html body.audacity-mode #au-cloud{margin-left:8px;position:relative}
+html body.audacity-mode #au-cloud::before{content:"";position:absolute;left:-13px;top:50%;width:5px;height:calc(100% - 4px);max-height:44px;transform:translateY(-50%);opacity:.75;background:radial-gradient(circle at 1.5px 1.5px,#8f8f8f 1px,transparent 1.2px) 0 0/5px 5px}
+/* Meters: two 29px rows, white bar with the dB scale inside and the level knob riding on it. */
+html body.audacity-mode .au-meters{gap:3px;min-width:260px;max-width:420px}
+html body.audacity-mode .au-meters>div{position:relative;height:29px;gap:3px}
+html body.audacity-mode .au-meters svg{color:#141519;width:20px;height:20px}
+html body.audacity-mode .au-meter-scale{height:27px;border:1px solid var(--a3-rule);border-radius:0;background:#f9f9f9;box-shadow:none;margin-right:2px}
+html body.audacity-mode .au-meter-scale>.au-meter-labels{z-index:1}
+html body.audacity-mode .au-meter-tick{top:3px;bottom:auto;height:4px;background:#141519}
+html body.audacity-mode .au-meter-tick>span{top:6px;bottom:auto;color:#141519;font:11px/11px var(--mo-ui)}
+html body.audacity-mode .au-meter-fill{top:2px;bottom:2px;height:auto;opacity:.75;background:linear-gradient(90deg,#4f9f60 0%,#62b36d 70%,#d4c34a 86%,#e29a3d 94%,#cf4a3c 100%);box-shadow:none}
+html body.audacity-mode .au-meters>div>input.au-meter-level{position:absolute;left:35px;right:2px;top:0;width:auto;height:100%;margin:0;z-index:2;cursor:pointer}
+html body.audacity-mode .au-meters>div>input.au-meter-level::-webkit-slider-runnable-track{height:100%;background:transparent;box-shadow:none}
+html body.audacity-mode .au-meters>div>input.au-meter-level::-webkit-slider-thumb{width:16px;height:16px;margin-top:5px;border:1.5px solid #141519;border-radius:50%;background:#fff;box-shadow:none}
+html body.audacity-mode .au-meters>div>input.au-meter-level::-moz-range-track{background:transparent}
+html body.audacity-mode .au-meters>div>input.au-meter-level::-moz-range-thumb{width:13px;height:13px;border:1.5px solid #141519;border-radius:50%;background:#fff}
+html body.audacity-mode .au-meters>div>input.au-meter-level:hover:not(:disabled)::-webkit-slider-thumb{border-color:#3e5fa8}
+html body.audacity-mode .au-meters>div>input.au-meter-level:disabled{opacity:.55;cursor:default}
+
+/* ───────── Timeline ruler ───────── */
+html body.audacity-mode #au-ruler{background:var(--a3-ruler);box-shadow:none;border-bottom:1px solid #000}
+html body.audacity-mode .au-ruler-gutter{background:var(--a3-ruler);box-shadow:none;border-right:0;display:flex;align-items:center;padding:0 0 0 13px}
+html body.audacity-mode .au-ruler-gutter #au-timeline-options{width:24px;height:24px;min-height:24px;padding:0;border:0;border-radius:4px;box-shadow:none;font-size:0;color:transparent;background:var(--a3-btn) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cg fill='none' stroke='%233c3c3e' stroke-width='1.2'%3E%3Cpath d='M6.9 1.5h2.2l.4 1.8 1.2.5 1.6-1 1.5 1.5-1 1.6.5 1.2 1.8.4v2.2l-1.8.4-.5 1.2 1 1.6-1.5 1.5-1.6-1-1.2.5-.4 1.8H6.9l-.4-1.8-1.2-.5-1.6 1-1.5-1.5 1-1.6-.5-1.2-1.8-.4V6.9l1.8-.4.5-1.2-1-1.6 1.5-1.5 1.6 1 1.2-.5z'/%3E%3Ccircle cx='8' cy='8' r='2.2'/%3E%3C/g%3E%3C/svg%3E") center/16px 16px no-repeat;transition:background-color 90ms linear}
+html body.audacity-mode .au-ruler-gutter #au-timeline-options:hover{background-color:var(--a3-btn-hover);border:0}
+html body.audacity-mode .au-ruler-gutter #au-timeline-options:active{background-color:var(--a3-btn-down)}
+html body.audacity-mode .au-ruler-gutter #au-timeline-options::before,html body.audacity-mode .au-ruler-gutter #au-timeline-options::after{content:none}
+/* The ruler paints, back to front: selected span, minor ticks (size/phase set by renderRulerLabels), labels. */
+html body.audacity-mode .au-ruler-time{position:relative;background-color:var(--a3-ruler);background-image:none}
+html body.audacity-mode .au-ruler-time::before{content:"";position:absolute;top:0;bottom:0;left:var(--au-ruler-sel-x,0);width:var(--au-ruler-sel-w,0);background:var(--a3-ruler-selected);pointer-events:none}
+html body.audacity-mode .au-ruler-time::after{content:"";position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(to right,#25272f 0,#25272f 1px,transparent 1px);background-repeat:repeat-x;background-size:inherit;background-position:inherit}
+html body.audacity-mode .au-ruler-labels{z-index:2}
+/* Labels are centred on their tick; the one at the left edge slides right so it stays readable (as the reference
+ * draws "0.0" at the very start). --au-tick-x is the label's x, written by renderRulerLabels. */
+html body.audacity-mode .au-ruler-tick{top:3px;bottom:auto;height:auto;padding:0 2px;border-left:0;transform:translateX(clamp(-50%,calc(-1 * var(--au-tick-x,100px)),0px));font:700 12px/16px var(--mo-ui);color:#25272f}
+
+/* ───────── Tracks ───────── */
+html body.audacity-mode .au-track{background:var(--a3-lane);border:1px solid #3e3e3f;box-shadow:none}
+html body.audacity-mode .au-track.au-focused-track{outline:3px solid var(--a3-focus);outline-offset:0;box-shadow:0 0 0 4px #808aca}
+html body.audacity-mode .au-lane{background:var(--a3-lane)}
+html body.audacity-mode .au-selected-track .au-lane{background:var(--a3-lane-selected)}
+html body.audacity-mode .au-zero-line{background:#5d6075}
+/* Track control panel: header row (close, name, collapse, menu), Mute/Solo, Effects, gain and pan. */
+html body.audacity-mode .au-track-panel{padding:0 4px 4px;background:var(--a3-paper);box-shadow:inset 0 0 0 .5px #bababb;border-right:1px solid #3e3e3f;color:var(--a3-ink);font:12px var(--mo-ui)}
+html body.audacity-mode .au-selected-track .au-track-panel{background:var(--a3-info-selected);box-shadow:inset 0 0 0 .5px #bababb}
+html body.audacity-mode .au-track-panel::after{content:none}
+html body.audacity-mode .au-track-format{display:none}
+html body.audacity-mode .au-track-title{display:flex;align-items:center;height:21px;gap:1px;margin:0 0 1px}
+html body.audacity-mode .au-track-title [data-action]{position:static;flex:none;width:18px;height:18px;min-height:18px;padding:0;border:0;border-radius:3px;background:transparent;box-shadow:none;color:#3c3c3e;font:14px/18px var(--mo-ui);display:grid;place-items:center}
+html body.audacity-mode .au-track-title [data-action]:hover{background:var(--a3-btn-hover);border:0}
+html body.audacity-mode .au-track-title [data-action]:active{background:var(--a3-btn-down);box-shadow:none}
+html body.audacity-mode .au-track-title [data-action]::after{content:none}
+html body.audacity-mode .au-track-title [data-action=remove]{font-size:15px;font-weight:300}
+html body.audacity-mode .au-track-title [data-action=collapse]{margin-left:auto;font-size:13px}
+html body.audacity-mode .au-track-title [data-action=menu]{font-size:13px;letter-spacing:-1px}
+html body.audacity-mode .au-track-title strong{flex:1 1 auto;min-width:0;height:18px;padding:0 3px;border:0;background:transparent;box-shadow:none;font:12px/18px var(--mo-ui);color:var(--a3-ink);text-align:left;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+html body.audacity-mode .au-track-ms{display:flex;gap:4px;margin:0 0 4px}
+html body.audacity-mode .au-track-ms button,html body.audacity-mode .au-track-effects{flex:1;height:18px;min-height:18px;padding:0;border:0;border-radius:3px;background:var(--a3-btn);box-shadow:none;color:var(--a3-ink);font:12px/18px var(--mo-ui);transition:background-color 90ms linear}
+html body.audacity-mode .au-track-effects{display:block;width:100%;height:22px;min-height:22px;line-height:22px;margin:0 0 2px}
+html body.audacity-mode .au-selected-track :is(.au-track-ms button,.au-track-effects){background:var(--a3-info-button-selected)}
+html body.audacity-mode :is(.au-track-ms button,.au-track-effects):hover:not(:disabled){background:var(--a3-btn-hover);border:0}
+html body.audacity-mode :is(.au-track-ms button,.au-track-effects):active:not(:disabled){background:var(--a3-btn-down);box-shadow:none}
+html body.audacity-mode .au-track-ms button.active,html body.audacity-mode .au-selected-track .au-track-ms button.active{background:#9ea7c6;color:#000;box-shadow:inset 0 1px 2px rgba(0,0,0,.25)}
+html body.audacity-mode .au-gain-label{display:flex;justify-content:space-between;margin:6px 6px -3px;font:9px/9px var(--mo-ui);color:#3c3c3e}
+/* Gain / pan: a thin dotted rail and a hollow round knob. */
+html body.audacity-mode .au-track-panel input[type=range]{width:calc(100% - 8px);height:18px;margin:0 4px}
+html body.audacity-mode .au-track-panel input[type=range]::-webkit-slider-runnable-track{height:6px;border-radius:0;box-shadow:none;background:linear-gradient(#aeb9c8,#aeb9c8) 0 2px/100% 1px no-repeat,repeating-linear-gradient(90deg,#9ea9b8 0 1px,transparent 1px 12.5px) 0 4px/100% 2px no-repeat}
+html body.audacity-mode .au-track-panel input[type=range]::-webkit-slider-thumb{width:12px;height:12px;margin-top:-3px;border:1.2px solid #2f3035;border-radius:50%;background:#fff;box-shadow:none}
+html body.audacity-mode .au-track-panel input[type=range]::-moz-range-track{height:1px;background:#aeb9c8}
+html body.audacity-mode .au-track-panel input[type=range]::-moz-range-thumb{width:10px;height:10px;border:1.2px solid #2f3035;border-radius:50%;background:#fff}
+html body.audacity-mode .au-track-panel input[type=range]:active:not(:disabled)::-webkit-slider-thumb{background:#e6ebfb}
+/* Amplitude scale. */
+html body.audacity-mode .au-amplitude{background:var(--a3-paper);border-right:1px solid #000}
+html body.audacity-mode .au-selected-track .au-amplitude{background:var(--a3-info-selected)}
+html body.audacity-mode .au-amplitude-tick{background:#17181b}
+html body.audacity-mode .au-amplitude-tick>span{font:400 11px/11px var(--mo-ui);color:var(--a3-ink)}
+html body.audacity-mode .au-amplitude-major>span{font-weight:700}
+html body.audacity-mode .au-channel-divider{background:#3e3e3f}
+/* Clips: lavender title bar, near-white body, blue-violet samples. */
+html body.audacity-mode .au-clip{background:var(--a3-clip);border:1px solid #202128;border-radius:3px 3px 0 0;box-shadow:none}
+html body.audacity-mode .au-clip-head{background:var(--a3-clip-title);color:var(--a3-ink);border-bottom:0;font:12px/16px var(--mo-ui)}
+html body.audacity-mode .au-clip-head:hover{background:#d8ddf4}
+html body.audacity-mode .au-clip.au-selected-clip{border-color:#000}
+html body.audacity-mode :is(.au-clip.au-selected-clip,.au-selected-track .au-clip) .au-clip-head{background:var(--a3-clip-title-selected)}
+html body.audacity-mode .au-clip-head button{color:#3c3c3e;background:transparent}
+html body.audacity-mode .au-clip-body svg{fill:var(--a3-wave);stroke:var(--a3-wave)}
+html body.audacity-mode .au-source-waveform path{stroke:var(--a3-wave)}
+html body.audacity-mode .au-source-waveform .au-waveform-rms{stroke:var(--a3-rms);opacity:1}
+/* Time selection: a light colour-dodge that lifts the clip body to #f1f3fe and the samples to #6464cc (the sampled
+ * selected-span colours) and the empty lane to #454859, without hiding the waveform. */
+html body.audacity-mode .au-time-selection{background:#181818;mix-blend-mode:color-dodge}
+html body.audacity-mode .au-clip[style*="--au-custom-clip-color"]{background:color-mix(in srgb,var(--au-custom-clip-color) 18%,#fff)}
+html body.audacity-mode .au-clip[style*="--au-custom-clip-color"] .au-clip-head{background:var(--au-custom-clip-color)}
+
+/* ───────── Bottom toolbars and status bar ───────── */
+html body.audacity-mode .au-bottom{background:var(--a3-paper);border-top:1px solid var(--a3-rule);box-shadow:none}
+html body.audacity-mode :is(.au-musical,.au-selection,.au-bottom-info,.au-snap){border-color:var(--a3-rule)}
+html body.audacity-mode .au-bottom label{font:13px var(--mo-ui);color:var(--a3-ink)}
+html body.audacity-mode .au-bottom :is(input#au-tempo,.au-signature,select#au-snap-grid){height:24px;border:1px solid #d6d6d8;border-radius:3px;background:#fff;box-shadow:none;font:15px var(--mo-ui);color:var(--a3-ink)}
+html body.audacity-mode select#au-snap-grid:disabled{color:#a5a5aa;background:#fbfbfb}
+html body.audacity-mode .au-position,html body.audacity-mode .au-native-position{background:var(--a3-readout);color:#fff;border:0;border-radius:0;box-shadow:none;font:300 32px/1 var(--mo-ui);letter-spacing:3px;padding:6px 8px}
+html body.audacity-mode .au-time-field{background:var(--a3-readout);border:0;border-radius:0;box-shadow:none;height:22px}
+html body.audacity-mode .au-time-field>.au-time-input,html body.audacity-mode .au-time-field>.au-time-format{background:var(--a3-readout);color:#fff;font:14px var(--mo-ui);letter-spacing:1.5px}
+html body.audacity-mode .au-bottom select#au-snap-grid{font-size:13px;padding:0 4px}
+html body.audacity-mode .au-time-field>.au-time-format{color:#fff;letter-spacing:0}
+html body.audacity-mode .au-selection-mode{width:28px;height:28px;min-height:28px;padding:0;border:0;border-radius:4px;font-size:0;color:transparent;background:var(--a3-btn) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cg fill='none' stroke='%233c3c3e' stroke-width='1.2'%3E%3Cpath d='M6.9 1.5h2.2l.4 1.8 1.2.5 1.6-1 1.5 1.5-1 1.6.5 1.2 1.8.4v2.2l-1.8.4-.5 1.2 1 1.6-1.5 1.5-1.6-1-1.2.5-.4 1.8H6.9l-.4-1.8-1.2-.5-1.6 1-1.5-1.5 1-1.6-.5-1.2-1.8-.4V6.9l1.8-.4.5-1.2-1-1.6 1.5-1.5 1.6 1 1.2-.5z'/%3E%3Ccircle cx='8' cy='8' r='2.2'/%3E%3C/g%3E%3C/svg%3E") center/16px 16px no-repeat}
+html body.audacity-mode .au-selection-mode:hover{background-color:var(--a3-btn-hover);border:0}
+html body.audacity-mode .status-bar{height:23px;background:#e8e6ea;box-shadow:none;border-top:1px solid #bab9bb;color:#5b5b5f}
+html body.audacity-mode .status-bar>#status-message{color:#393939;font:12px var(--mo-ui)}
+/* Scroll rails. */
+html body.audacity-mode #au-scroll::-webkit-scrollbar{background:#ebeceb}
+html body.audacity-mode #au-scroll::-webkit-scrollbar-track{background:#ebeceb;box-shadow:none}
+html body.audacity-mode #au-scroll::-webkit-scrollbar-thumb{background-color:#7d7d7d}
+html body.audacity-mode #au-scroll::-webkit-scrollbar-corner{background:#ebeceb}
+
+/* ───────── Dialog windows (effect / generator dialogs) ───────── */
+html body.audacity-mode .studio-dialog{background:#ebecec}
+html body.audacity-mode .studio-dialog>header{background:#f2f1f0;border-bottom:1px solid #dcdbdb;box-shadow:none;color:#494848;font-weight:700}
+/* The focused window's three lights are coloured; only the red one is a working control. */
+html body.audacity-mode .studio-dialog>header>button[aria-label^="Close"],html body.audacity-mode .studio-dialog .mix-close,html body.audacity-mode .studio-dialog .plugin-editor-close{background:#ec6b5e;box-shadow:inset 0 0 0 .5px #d3584c,20px 0 0 0 #f4be4f,20px 0 0 .5px #d6a243,40px 0 0 0 #61c554,40px 0 0 .5px #52a843}
+html body.audacity-mode .studio-dialog>header>button[aria-label^="Close"]:hover,html body.audacity-mode .studio-dialog .mix-close:hover,html body.audacity-mode .studio-dialog .plugin-editor-close:hover{background:#ec6b5e}
+html body.audacity-mode .studio-dialog:has(:is(.au-effect-form,.au-region-effect-form)) .dialog-content{padding:10px 10px 10px}
+html body.audacity-mode :is(.au-effect-form,.au-region-effect-form){gap:8px}
+html body.audacity-mode .au-effect-form .au-effect-state:empty{display:none}
+html body.audacity-mode :is(.au-effect-form,.au-region-effect-form) footer{margin-top:4px;padding-top:2px;border-top:0}
+html body.audacity-mode .studio-dialog .dialog-content button,html body.audacity-mode .studio-dialog footer button{border-radius:6px;background:#fff;box-shadow:0 0 0 .5px rgba(0,0,0,.2),0 .5px 1.5px rgba(0,0,0,.2)}
+html body.audacity-mode .studio-dialog .dialog-content button:hover:not(:disabled),html body.audacity-mode .studio-dialog footer button:hover:not(:disabled){background:#fff}
+html body.audacity-mode .studio-dialog .dialog-content button:active:not(:disabled),html body.audacity-mode .studio-dialog footer button:active:not(:disabled){background:#e4e4e4}
+html body.audacity-mode .studio-dialog .dialog-content .primary,html body.audacity-mode .studio-dialog footer .primary,html body.audacity-mode .studio-dialog .dialog-content .primary:hover:not(:disabled),html body.audacity-mode .studio-dialog footer .primary:hover:not(:disabled){background:linear-gradient(#3d8efa,#2f7cf6);box-shadow:0 0 0 .5px #2a6fd9,0 .5px 1.5px rgba(20,60,140,.35);color:#fff}
+html body.audacity-mode .studio-dialog input:not([type=range]):not([type=checkbox]):not([type=radio]):not([type=file]){border:1px solid #d6d6d6;border-radius:0;box-shadow:none}
+html body.audacity-mode .au-loop-time-row .au-time-input,html body.audacity-mode .studio-dialog .au-time-input{background:var(--a3-readout)!important;color:#fff!important;border:0!important;box-shadow:none!important;font:15px var(--mo-ui)!important;letter-spacing:1.5px}
+
+@media (prefers-reduced-motion:reduce){html body.audacity-mode :is(.au-transport button,.au-tool-grid button,.au-wide,.au-track-ms button,.au-track-effects,.au-ruler-gutter button){transition:none}}

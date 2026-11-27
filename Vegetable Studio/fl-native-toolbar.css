@@ -1,0 +1,518 @@
+/* Native FL Studio 2026 toolbar/browser polish, following the live reference.
+   Existing controls are reordered visually; no decorative controls or values added. */
+
+.toolbar {
+  height: 80px;
+  color: #bec9ce;
+  background: #566168;
+  border-bottom: 1px solid #334850;
+  box-shadow: inset 0 -1px #78888d40;
+}
+.toolbar .top-row,
+.toolbar .second-row {
+  height: 40px;
+  align-items: center;
+  gap: 3px;
+  padding: 3px 5px;
+}
+.toolbar .top-row {background: #566168; border-bottom: 1px solid #465158;}
+.toolbar .second-row {background: #535f66;}
+.toolbar button,
+.toolbar select,
+.toolbar input {
+  border-radius: 3px;
+  font-weight: 400;
+}
+.toolbar .brand {order: 0; flex-shrink: 0; opacity: .86;}
+.toolbar .top-row nav {
+  order: 1;
+  flex: 0 0 auto;
+  height: 32px;
+  padding: 1px;
+  border: 1px solid #3a5158;
+  border-radius: 1px;
+  background: linear-gradient(#577173, #4e696d);
+  box-shadow: inset 0 1px #a7b7b021;
+}
+.toolbar .top-row nav button {
+  height: 28px;
+  min-height: 28px;
+  padding: 0 2.5px;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  color: #e7eade;
+  font-family: "Vegetable FL Narrow", "Arial Narrow", Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 27px;
+  letter-spacing: 0;
+}
+.toolbar .top-row nav button:hover {color: #fff5d6; background: #8a9c8b26;}
+.toolbar .transport {order: 2; gap: 0; margin-left: 3px;}
+.toolbar .transport-btn {
+  flex: 0 0 31px;
+  width: 31px;
+  height: 32px;
+  min-height: 32px;
+  border: 1px solid #2c404c;
+  border-radius: 0;
+  background: linear-gradient(#43515a, #2e3d47);
+  color: #becbd3;
+  box-shadow: inset 0 1px #8fadb12e, 0 1px #30424a;
+}
+.toolbar #mode {
+  width: 31px;
+  height: 32px;
+  min-height: 32px;
+  padding: 0;
+  border-radius: 12px 0 0 12px;
+  font-family: "Vegetable FL UI", Arial, sans-serif;
+  font-size: 10px;
+  line-height: 15px;
+  letter-spacing: 0;
+}
+.toolbar #mode span {font-size: 9px; line-height: 15px;}
+.toolbar #stop {border-radius: 0 12px 12px 0;}
+.toolbar .transport-btn.record {
+  flex: 0 0 29px;
+  width: 29px;
+  height: 29px;
+  min-height: 29px;
+  margin: 0 4px;
+  border: 1px solid #344d58;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 30%, #667e85, #4c636d 53%, #344c59 66%, #4c636d 100%);
+  box-shadow: inset 0 1px #b0bcc239, 0 1px #293d48;
+  color: #ef6568;
+}
+.toolbar #tempo {
+  order: 3;
+  flex: 0 0 55px;
+  width: 55px;
+  height: 27px;
+  padding: 0 2px;
+  margin: 0 5px 0 0;
+  border: 1px solid #81999e;
+  border-radius: 3px;
+  background: linear-gradient(#e0e9e6, #c0d3d3);
+  box-shadow: inset 0 1px #fff6;
+  color: #263d49;
+  font-family: "Vegetable FL Narrow", "Arial Narrow", Arial, sans-serif;
+  font-size: 19px;
+  line-height: 25px;
+  letter-spacing: -.4px;
+}
+.toolbar #metronome {order: 4;}
+.toolbar #typing-keyboard {order: 5;}
+.toolbar .top-row .tool-square {
+  flex: 0 0 31px;
+  width: 31px;
+  height: 32px;
+  min-height: 32px;
+  padding: 0;
+  border: 1px solid #2c4350;
+  background: linear-gradient(#4a5962, #35444f);
+  box-shadow: inset 0 1px #93acb333, inset 0 0 0 1px #26384088, 0 1px #304450;
+  color: #bfced5;
+}
+.toolbar .top-row .tool-square.lit {
+  color: #fff0c8;
+  border-color: #b76c20;
+  background: linear-gradient(#fff1ad 0%, #ffc35a 12%, #ff9c20 57%, #ec7812 100%);
+  box-shadow: inset 0 0 0 1px #ffde79, 0 0 4px #ef8d2a66;
+  text-shadow: 0 1px #b26a27;
+}
+.toolbar .time-display {
+  order: 6;
+  flex: 0 0 130px;
+  width: 130px;
+  min-width: 130px;
+  height: 33px;
+  padding: 0 12px 0 5px;
+  margin-left: 3px;
+  border: 1px solid #324a51;
+  border-radius: 0;
+  background: #446266;
+  box-shadow: inset 0 1px #9fc1b826;
+  color: #c6e0db;
+  font-family: "Vegetable FL Narrow", "Arial Narrow", Arial, sans-serif;
+  font-size: 31px;
+  font-weight: 400;
+  line-height: 32px;
+  letter-spacing: .6px;
+  text-align: right;
+}
+.toolbar .time-display small {
+  top: 1px;
+  right: 4px;
+  color: #abc8ce;
+  font-family: "Vegetable FL UI", Arial, sans-serif;
+  font-size: 6px;
+  font-weight: 400;
+  letter-spacing: .2px;
+}
+.toolbar .monitor {order: 7; flex: 0 1 158px; height: 33px; margin-left: 2px; background: #33434d; border-color: #2c414b;}
+.toolbar .monitor span {color: #8197a4; font-family: "Vegetable FL UI", Arial, sans-serif; font-size: 7px; letter-spacing: 0;}
+.toolbar .brand-title {order: 8; color: #93a4ac; font-size: 9px; font-weight: 400; letter-spacing: .5px;}
+.toolbar .cloud-button {
+  order: 9;
+  flex-shrink: 0;
+  height: 29px;
+  min-height: 29px;
+  margin-left: 5px;
+  padding: 0 8px;
+  border: 1px solid #314956;
+  background: linear-gradient(#576c75, #3e5765);
+  box-shadow: inset 0 1px #8c9fa733;
+  color: #bbcbd0;
+  font-family: "Vegetable FL UI", Arial, sans-serif;
+  font-size: 10px;
+  letter-spacing: 0;
+}
+
+.toolbar .hint-display {
+  order: 0;
+  flex: 0 0 277px;
+  height: 32px;
+  padding: 2px 5px;
+  border-color: #2c414d;
+  background: #374953;
+  box-shadow: inset 0 1px #7c92992e;
+}
+.toolbar .hint-display strong,
+.toolbar .hint-display span {
+  font-family: "Vegetable FL UI", Arial, sans-serif;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 12px;
+  letter-spacing: 0;
+}
+.toolbar .hint-display strong {color: #b1c0c8;}
+.toolbar .hint-display span {color: #9aadb8;}
+.toolbar #undo {order: 1;}
+.toolbar #redo {order: 2;}
+.toolbar .snap-label {order: 3; gap: 5px; padding: 0 4px; color: #9db0bd;}
+.toolbar .snap-label select {
+  height: 25px;
+  width: 65px;
+  padding: 1px 5px;
+  border: 1px solid #293e4a;
+  background: linear-gradient(#263b49, #1f3442);
+  color: #b8cad3;
+  font-family: "Vegetable FL UI", Arial, sans-serif;
+  font-size: 11px;
+}
+.toolbar #previous-pattern {order: 4; width: 18px; min-width: 18px; padding: 0;}
+.toolbar #pattern-select {
+  order: 5;
+  flex: 0 0 112px;
+  width: 112px;
+  height: 27px;
+  padding: 0 5px;
+  border: 1px solid #829fa7;
+  border-radius: 2px;
+  background: linear-gradient(#c9dcdd, #a9c4cc);
+  box-shadow: inset 0 1px #efffff4d;
+  color: #28434f;
+  font-family: "Vegetable FL Narrow", "Arial Narrow", Arial, sans-serif;
+  font-size: 16px;
+  line-height: 25px;
+}
+.toolbar #add-pattern {order: 6; width: 18px; min-width: 18px; margin: 0 4px 0 -2px; padding: 0;}
+.toolbar .window-buttons {order: 7; gap: 2px; margin-right: 3px;}
+.toolbar .window-buttons button,
+.toolbar .second-row > button {
+  height: 31px;
+  min-height: 31px;
+  padding: 0 3px;
+  border: 1px solid #2d4553;
+  border-radius: 2px;
+  background: linear-gradient(#4b5b65, #364650);
+  box-shadow: inset 0 1px #93abb533, inset 0 0 0 1px #28394377, 0 1px #304650;
+  color: #bdcbd3;
+}
+.toolbar .window-buttons button {width: 31px;}
+.toolbar .window-buttons button[data-window="playlist"] {order: 0;}
+.toolbar .window-buttons button[data-window="piano"] {order: 1;}
+.toolbar .window-buttons button[data-window="rack"] {order: 2;}
+.toolbar .window-buttons button[data-window="mixer"] {order: 3;}
+.toolbar .window-buttons button.lit {
+  color: #d4dde0;
+  background: linear-gradient(#50616b, #35454f);
+  border-color: #293e48;
+  box-shadow: inset 0 0 0 1px #71808955, 0 1px #304650;
+}
+.toolbar #save {order: 8;}
+.toolbar #export {order: 9;}
+.toolbar .session-status {order: 10; font-family: "Vegetable FL UI", Arial, sans-serif; font-size: 8px; letter-spacing: .2px; color: #91a7b3;}
+.toolbar #help {order: 11;}
+
+.browser {
+  flex: 0 0 240px;
+  width: 240px;
+  min-width: 240px;
+  background: #273236;
+  border-right: 2px solid #1e323b;
+  color: #a5b4bc;
+  font-family: "Vegetable FL UI", Arial, sans-serif;
+  font-weight: 400;
+}
+.browser > .panel-heading {
+  height: 24px;
+  min-height: 24px;
+  padding: 0 7px;
+  border-bottom: 1px solid #223840;
+  background: #3a4d56;
+  box-shadow: inset 0 1px #7e919629;
+}
+.browser > .panel-heading > span {font-family: "Vegetable FL UI", Arial, sans-serif; font-size: 11px; color: #8e9fa9;}
+.browser > .panel-heading > button {color: #9aadb7; font-size: 19px;}
+.browser .browser-tabs {height: 33px; min-height: 33px; gap: 13px; padding: 3px 8px; background: #1c2d35; border-bottom: 1px solid #263a43;}
+.browser .browser-tabs button {width: 28px; height: 27px; min-height: 27px; padding: 0; color: #9dafb9;}
+.browser .browser-tabs button.selected {border: 1px solid #df8d2e; border-radius: 7px; background: #213844; color: #ed982d;}
+.browser .browser-search {margin: 7px 6px 4px; padding-left: 7px; height: 26px; border: 1px solid #21343d; border-radius: 3px; background: #0d1b26; color: #a0b1bc;}
+.browser .browser-search input {height: 24px; min-width: 0; padding: 3px 4px; color: #b6c4cc; font-family: "Vegetable FL UI", Arial, sans-serif; font-size: 11px; letter-spacing: -.1px;}
+.browser .browser-search input::placeholder {color: #99a8b2; opacity: 1;}
+.browser #browser-tree {padding: 3px 4px;}
+.browser .cloud-library-browser {font-family: "Vegetable FL UI", Arial, sans-serif; font-size: 11px;}
+.browser .library-shell {padding: 2px 2px 12px; font-family: "Vegetable FL UI", Arial, sans-serif;}
+.browser .library-shell button {font-family: inherit; font-weight: 400;}
+.browser .library-tabs {gap: 2px; margin: 1px 0 5px; padding-bottom: 4px; border-bottom: 1px solid #1f333d;}
+.browser .library-tabs button {min-height: 24px; padding: 4px 2px; font-size: 9px; line-height: 16px; letter-spacing: .1px; color: #91a4af;}
+.browser .library-tabs button.active {background: transparent; box-shadow: inset 0 -2px #ed9b45; color: #e4a15b;}
+.browser .library-filter-panel {margin: 5px 4px 7px; font-size: 9px; color: #8ea4b1;}
+.browser .library-heading {min-height: 28px; padding: 3px 3px; border-top-color: #596e7830; border-bottom-color: #1f3038; background: #303d44;}
+.browser .library-heading strong {font-size: 10px; font-weight: 400; color: #a9bdc9;}
+.browser .library-count {padding: 6px 6px; color: #819aa9; font-size: 9px;}
+.browser .library-sound-row,
+.browser .library-asset-row {min-height: 31px; padding: 2px 3px; gap: 3px; border-bottom-color: #3b535d24;}
+.browser .library-sound-row.selected {background:#354954;box-shadow:inset 2px 0 #e1a65f;}
+.browser .library-sound-row.selected .library-sound-name {color:#e0e7e9;}
+.browser .library-sound-row.previewing .library-preview-button {color:#e7aa60;}
+.browser .library-sound-name:focus-visible {outline:1px solid #aabdc6;outline-offset:-1px;}
+.browser .library-shell .library-sound-name,
+.browser .library-shell .library-asset-name {padding: 4px 2px; font-family: "Vegetable FL UI", Arial, sans-serif; font-size: 11px; font-weight: 400; line-height: 18px; color: #a8b9c4; letter-spacing: -.2px;}
+.browser .library-sound-row small,
+.browser .library-asset-row small {font-family: "Vegetable FL UI", Arial, sans-serif; font-size: 8px; color: #7f99aa;}
+.browser .library-shell .library-preview-button {min-width: 19px; padding: 1px 2px; font-size: 13px; color: #a7becb;}
+.browser .library-shell .library-add {min-width: 20px; padding: 0 3px; font-family: "Vegetable FL UI", Arial, sans-serif; font-size: 19px; color: #a8b6bc;}
+.browser .library-shell .library-more {margin-top: 7px; min-height: 26px; padding: 4px; border: 1px solid #2a414d; background: linear-gradient(#405a69, #314a5a); font-family: "Vegetable FL UI", Arial, sans-serif; font-size: 10px; color: #a6bdcd;}
+.browser .browser-footer {background: #1c323d; border-top-color: #3c5360; font-family: "Vegetable FL UI", Arial, sans-serif;}
+.browser .browser-footer strong {font-family: "Vegetable FL UI", Arial, sans-serif; font-size: 11px; font-weight: 400; color: #a4b9c7;}
+.browser.collapsed {flex-basis: 34px; width: 34px; min-width: 34px;}
+
+@media (max-width: 1100px) {
+  .toolbar .top-row {gap: 2px; padding-left: 3px; padding-right: 3px;}
+  .toolbar .top-row nav button {font-size: 12px; padding: 0 2px;}
+  .toolbar .brand-title {display: none;}
+  .toolbar .monitor {flex-basis: 110px;}
+  .toolbar .hint-display {flex-basis: 220px; width: 220px; min-width: 150px;}
+  .toolbar #pattern-select {flex-basis: 105px; width: 105px;}
+  .browser:not(.collapsed) {flex-basis: 200px; width: 200px; min-width: 200px;}
+}
+@media (max-width: 800px) {
+  .toolbar .monitor {display: none;}
+  .toolbar .transport-btn {width: 28px; flex-basis: 28px;}
+  .toolbar .time-display {flex-basis: 112px; width: 112px; min-width: 112px; font-size: 27px;}
+  .toolbar .cloud-button {margin-left: auto; padding: 0 5px; font-size: 9px;}
+  .toolbar .hint-display {flex-basis: 180px; width: 180px; min-width: 140px;}
+  .toolbar .window-buttons button {width: 27px;}
+  .toolbar .snap-label {gap: 2px; padding: 0 2px;}
+  .toolbar .snap-label select {width: 57px;}
+  .toolbar #pattern-select {flex-basis: 100px; width: 100px;}
+  .browser:not(.collapsed) {flex-basis: 170px; width: 170px; min-width: 170px;}
+}
+
+/* Keep native two-row control sizes and DOM/tab order. Groups pack together;
+   unsupported native controls do not reserve empty columns between live ones. */
+.toolbar .top-row,
+.toolbar .second-row {overflow-x:auto;overflow-y:hidden;scrollbar-width:thin;}
+.toolbar .top-row {gap:3px;}
+.toolbar .top-row > * {flex-shrink:0;}
+.toolbar .top-row > .brand {order:0;}
+.toolbar .top-row > nav {order:1;}
+.toolbar .top-row > .transport {order:2;}
+.toolbar .top-row > #tempo {order:3;}
+.toolbar .top-row > #metronome {order:4;}
+.toolbar .top-row > .time-display {order:5;}
+.toolbar .top-row > .monitor {order:6;}
+.toolbar .top-row > .toolbar-actions {order:7;}
+.toolbar .top-row > .brand-title {order:8;min-width:0;overflow:hidden;text-overflow:ellipsis;}
+.toolbar .top-row > #cloud {order:9;}
+.toolbar .toolbar-actions {display:flex;align-items:center;gap:2px;margin-left:2px;flex-shrink:0;}
+.toolbar .toolbar-actions > button,
+.toolbar .toolbar-pattern > button,
+.toolbar .second-row > #typing-keyboard {
+  display:flex;align-items:center;justify-content:center;
+  width:31px;min-width:31px;height:32px;min-height:32px;padding:0;
+  border:1px solid #2d4553;border-radius:3px;
+  background:linear-gradient(#4c5a63,#374650);
+  box-shadow:inset 0 1px #93abb52b,inset 0 0 0 1px #28394355,0 1px #304650;
+  color:#bdcbd3;font-size:19px;line-height:28px;
+}
+.toolbar .toolbar-actions > button {order:initial;}
+.toolbar .toolbar-actions > button:hover,
+.toolbar .toolbar-pattern > button:hover {background:linear-gradient(#60717a,#455761);border-color:#6c818d;color:#e2ebee;}
+.toolbar .second-row > .hint-display {order:0;}
+.toolbar .second-row > .toolbar-monitor-level {order:0;flex:0 0 42px;display:flex;align-items:center;justify-content:center;height:32px;}
+.toolbar #monitor-volume {
+  position:relative;display:block;width:29px;min-width:29px;height:29px;min-height:29px;
+  padding:0;border:1px solid #324650;border-radius:50%;
+  background:conic-gradient(from 230deg,#b7cbd0 0deg calc(var(--rotation,130deg) + 130deg),#364d58 calc(var(--rotation,130deg) + 130deg) 360deg);
+  box-shadow:inset 0 1px #94a4a655,0 1px #2b404a;
+  touch-action:none;cursor:ns-resize;
+}
+.toolbar #monitor-volume::before {content:"";position:absolute;inset:3px;border:1px solid #304650;border-radius:50%;background:radial-gradient(circle at 42% 32%,#60727a,#465b65 65%,#344d59);box-shadow:inset 0 1px #8b9da12e;}
+.toolbar #monitor-volume > span {position:absolute;inset:4px;border-radius:50%;transform:rotate(var(--rotation,130deg));}
+.toolbar #monitor-volume > span::after {content:"";position:absolute;top:1px;left:calc(50% - 1px);width:2px;height:5px;border-radius:1px;background:#b4c4ca;box-shadow:0 1px #283e48;}
+.toolbar #monitor-volume:focus-visible {outline:1px solid #d7e8dc;outline-offset:2px;}
+.toolbar #monitor-volume[data-preview="true"] {border-color:#9cb98c;}
+.toolbar .second-row > #typing-keyboard {order:1;}
+.toolbar .second-row > .snap-label {order:2;flex-shrink:0;}
+.toolbar .second-row > .toolbar-pattern {order:3;}
+.toolbar .second-row > .window-buttons {order:4;flex-shrink:0;}
+.toolbar .second-row > .session-status {order:5;}
+.toolbar .toolbar-pattern {display:flex;align-items:center;flex:0 0 auto;gap:0;}
+.toolbar .toolbar-pattern > #previous-pattern,
+.toolbar .toolbar-pattern > #next-pattern,
+.toolbar .toolbar-pattern > #clone-pattern,
+.toolbar .toolbar-pattern > #add-pattern {width:18px;min-width:18px;margin:0;padding:0;font-size:14px;border-radius:2px;}
+.toolbar .toolbar-pattern > #pattern-select {margin:0;}
+.toolbar .second-row > #typing-keyboard.lit {
+  color:#fff0c8;border-color:#b76c20;
+  background:linear-gradient(#fff1ad 0%,#ffc35a 12%,#ff9c20 57%,#ec7812 100%);
+  box-shadow:inset 0 0 0 1px #ffde79,0 0 4px #ef8d2a66;
+  text-shadow:0 1px #b26a27;
+}
+
+@media (min-width:1450px) {
+  .toolbar .top-row {
+    display:grid;grid-template-columns:66px 294px 130px 92px 36px 133px 166px 166px minmax(0,1fr) auto;
+    column-gap:0;padding:3px 5px;overflow-x:hidden;
+  }
+  .toolbar .top-row > .brand {grid-column:1;}
+  .toolbar .top-row > nav {grid-column:2;justify-self:start;max-width:294px;}
+  .toolbar .top-row > .transport {grid-column:3;margin:0;}
+  .toolbar .top-row > #tempo {grid-column:4;margin:0;}
+  .toolbar .top-row > #tap-tempo {grid-column:4;justify-self:end;margin:0;}
+  .toolbar .top-row > #metronome {grid-column:5;}
+  .toolbar .top-row > .time-display {grid-column:6;margin:0;}
+  .toolbar .top-row > .monitor {grid-column:7;display:block;width:163px;min-width:163px;margin:0;}
+  .toolbar .top-row > .toolbar-actions {grid-column:8;display:grid;grid-template-columns:repeat(5,31px);gap:2px;margin:0;}
+  .toolbar .toolbar-actions > #undo {grid-column:1;}
+  .toolbar .toolbar-actions > #redo {grid-column:2;}
+  .toolbar .toolbar-actions > #help {grid-column:3;}
+  .toolbar .toolbar-actions > #save {grid-column:4;}
+  .toolbar .toolbar-actions > #export {grid-column:5;}
+  .toolbar .top-row > .brand-title {grid-column:9;justify-self:end;margin:0 8px;}
+  .toolbar .top-row > #cloud {grid-column:10;margin:0;}
+  .toolbar .second-row {
+    display:grid;grid-template-columns:277px 48px 34px 86px 176px 132px minmax(0,1fr);
+    column-gap:0;padding:3px 0;overflow-x:hidden;
+  }
+  .toolbar .second-row > .hint-display {grid-column:1;width:277px;min-width:277px;margin:0;}
+  .toolbar .second-row > .toolbar-monitor-level {grid-column:2;width:48px;justify-self:start;}
+  .toolbar .second-row > #typing-keyboard {grid-column:3;}
+  .toolbar .second-row > .snap-label {grid-column:4;justify-self:start;width:83px;margin:0;padding:0;gap:0;}
+  .toolbar .second-row > .snap-label select {margin-left:auto;}
+  .toolbar .second-row > .toolbar-pattern {grid-column:5;}
+  .toolbar .toolbar-pattern > #pattern-select {width:102px;min-width:102px;flex-basis:102px;}
+  .toolbar .second-row > .window-buttons {grid-column:6;margin:0;}
+  .toolbar .second-row > .session-status {grid-column:7;justify-self:end;}
+}
+@media (min-width:1450px) and (max-width:1600px) {.toolbar .brand-title {display:none;}}
+@media (max-width:1449px) {
+  .toolbar .top-row {display:flex;}
+  .toolbar .top-row > .toolbar-actions {margin-left:2px;}
+  .toolbar .top-row > #cloud {margin-left:auto;}
+  .toolbar .top-row > .brand-title {display:none;}
+  .toolbar .second-row {display:flex;}
+  .toolbar .toolbar-pattern > #pattern-select {width:112px;flex-basis:112px;}
+}
+@media (max-width:1100px) {
+  .toolbar .top-row > .monitor {display:none;}
+  .toolbar .top-row > .transport {margin-left:0;}
+  .toolbar .toolbar-actions > button {width:28px;min-width:28px;}
+  .toolbar .top-row > #cloud {margin-left:3px;}
+}
+@media (max-width:800px) {
+  .toolbar .top-row,.toolbar .second-row {gap:2px;}
+  .toolbar .toolbar-actions {gap:1px;}
+  .toolbar .toolbar-actions > button {width:26px;min-width:26px;}
+  .toolbar .toolbar-pattern > #pattern-select {width:100px;flex-basis:100px;}
+}
+/* Keep the utility cluster's compact visual order equal to DOM/tab order. */
+.toolbar .toolbar-actions > #undo {order:0;}
+.toolbar .toolbar-actions > #redo {order:1;}
+.toolbar .toolbar-actions > #help {order:2;}
+.toolbar .toolbar-actions > #save {order:3;}
+.toolbar .toolbar-actions > #export {order:4;}
+
+.toolbar .top-row > #tap-tempo {order:3;flex:0 0 auto;width:28px;min-width:28px;height:27px;min-height:27px;margin:0 3px 0 -2px;padding:0;font-family:"Vegetable FL Condensed",Arial,sans-serif;font-size:9px;letter-spacing:.3px;color:#bdcbd3;border:1px solid #2d4553;background:linear-gradient(#4c5a63,#374650);box-shadow:inset 0 1px #93abb52b,0 1px #304650;}
+.toolbar .top-row > #tap-tempo:active {background:linear-gradient(#ffc35a,#ec7812);color:#fff0c8;}
+.toolbar #tempo {cursor:ns-resize;}
+.toolbar #tempo:focus {cursor:text;}
+.toolbar #tempo:disabled {cursor:default;}
+.toolbar .time-display {cursor:pointer;}
+
+/* ---------------------------------------------------------------------------
+   FL 2026 default toolbar order (parity pass).
+   Row 1: menu | transport + tempo | time | typing keyboard | countdown |
+          loop recording | metronome | output monitor | CPU & memory | project actions | cloud
+   Row 2: hint | Browser, Channel rack, Piano roll, Playlist, Mixer | snap | pattern | volume
+   Both rows are plain flex rows. The earlier fixed-column grid put two controls
+   (#tempo and #tap-tempo) in one column without a row, so the grid auto-placed
+   every later control (metronome, time panel, monitor, actions) on an implicit
+   second line that the 40 px row clips: the time panel was never visible. */
+header.toolbar .top-row,
+header.toolbar .second-row {display:flex;flex-wrap:nowrap;align-items:center;column-gap:3px;overflow-x:auto;overflow-y:hidden;}
+header.toolbar .top-row > *,
+header.toolbar .second-row > * {flex-shrink:0;grid-column:auto;grid-row:auto;}
+header.toolbar .top-row > .brand {order:0;}
+header.toolbar .top-row > nav {order:1;max-width:none;}
+header.toolbar .top-row > .transport {order:2;margin:0 0 0 4px;}
+header.toolbar .top-row > #tempo {order:3;margin:0;}
+header.toolbar .top-row > #tap-tempo {order:4;margin:0 2px 0 0;}
+header.toolbar .top-row > .time-display {order:5;margin:0 3px 0 2px;flex:0 0 136px;width:136px;min-width:136px;display:block;}
+header.toolbar .top-row > #typing-keyboard {order:6;}
+header.toolbar .top-row > #countdown-toggle {order:7;}
+header.toolbar .top-row > #loop-record-toggle {order:8;}
+header.toolbar .top-row > #metronome {order:9;}
+header.toolbar .top-row > .monitor {order:10;display:block;flex:0 6 163px;width:163px;min-width:36px;margin:0 0 0 3px;}
+header.toolbar .top-row > .cpu-panel {order:11;}
+header.toolbar .top-row > .toolbar-actions {order:12;display:flex;gap:2px;margin:0 0 0 3px;}
+header.toolbar .top-row > .brand-title {order:13;margin:0 8px 0 auto;}
+header.toolbar .top-row > #cloud {order:14;margin:0 0 0 auto;}
+header.toolbar .top-row > .brand-title + #cloud,
+header.toolbar .top-row > .brand-title:not([hidden]) ~ #cloud {margin-left:0;}
+header.toolbar .top-row > #typing-keyboard,
+header.toolbar .top-row > #countdown-toggle,
+header.toolbar .top-row > #loop-record-toggle {display:flex;align-items:center;justify-content:center;}
+header.toolbar .top-row .tool-square .studio-icon {width:19px;height:19px;}
+header.toolbar .top-row .tool-square[aria-pressed="true"],
+header.toolbar .top-row .tool-square.lit {
+  color:#fff0c8;border-color:#b76c20;
+  background:linear-gradient(#fff1ad 0%,#ffc35a 12%,#ff9c20 57%,#ec7812 100%);
+  box-shadow:inset 0 0 0 1px #ffde79,0 0 4px #ef8d2a66;text-shadow:0 1px #b26a27;
+}
+header.toolbar .cpu-panel {
+  display:flex;align-items:stretch;gap:3px;flex:0 0 150px;width:150px;height:33px;padding:1px 3px;margin-left:2px;
+  border:1px solid #2c414b;background:#33434d;box-shadow:inset 0 1px #9fc1b81a;color:#c6e0db;
+  font-family:"Vegetable FL Narrow","Arial Narrow",Arial,sans-serif;
+}
+header.toolbar .cpu-panel .cpu-numbers {display:flex;flex-direction:column;justify-content:center;width:46px;line-height:14px;text-align:right;}
+header.toolbar .cpu-panel .cpu-numbers b {font-size:14px;font-weight:400;font-variant-numeric:tabular-nums;}
+header.toolbar .cpu-panel .cpu-numbers small {margin-left:2px;font-family:"Vegetable FL UI",Arial,sans-serif;font-size:7px;color:#8197a4;}
+header.toolbar .cpu-panel canvas {flex:1 1 auto;min-width:0;width:92px;height:29px;align-self:center;background:#2b3a43;}
+header.toolbar .second-row > .hint-display {order:0;margin:0;}
+header.toolbar .second-row > .window-buttons {order:1;margin:0 4px 0 3px;display:flex;gap:2px;}
+header.toolbar .second-row > .snap-label {order:2;margin:0;}
+header.toolbar .second-row > .toolbar-pattern {order:3;}
+header.toolbar .second-row > .toolbar-monitor-level {order:4;flex:0 0 40px;width:40px;}
+header.toolbar .second-row > .session-status {order:5;margin-left:auto;}
+header.toolbar .window-buttons > button {order:initial !important;display:flex;align-items:center;justify-content:center;}
+header.toolbar .window-buttons > #view-browser .studio-icon {width:20px;height:20px;}
+@media (max-width:1500px) {header.toolbar .top-row > .brand-title {display:none;}}
+@media (max-width:1280px) {header.toolbar .top-row > .cpu-panel canvas {display:none;} header.toolbar .cpu-panel {flex-basis:54px;width:54px;}}
+@media (max-width:1100px) {header.toolbar .top-row > .monitor {display:none;}}
